@@ -1,2 +1,1 @@
-# Playlist
-Personal playlist running on Youtube's IFrame API
+WIP. Make sure to use uBlock Origin.
