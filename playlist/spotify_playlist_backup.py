@@ -45,7 +45,7 @@ def playlist_backup(user_id, playlist_id, find_best_yt_match = False, cover_art_
         if find_best_yt_match:
             yt_id, yt_title, yt_duration_s = yt_search_video_get_data(title, artists)
             sleep(1)
-        album_filename = sp_album_URI + "_" + clean_filename(album) + ".jpg"
+        album_filename = sp_album_URI.split(":")[-1] + "_" + clean_filename(album) + ".jpg"
         if cover_art_save_dir: save_cover(element, cover_art_save_dir, album_filename)
         df.loc[len(df)] = [title,                   # title
                            artists,                 # artists
