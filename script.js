@@ -139,3 +139,19 @@ document.addEventListener(
   },
   false
 );
+
+// https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
+function validVideoId(id) {
+  var img = new Image();
+  img.src = "http://img.youtube.com/vi/" + id + "/mqdefault.jpg";
+  img.onload = function() {
+    // HACK a mq thumbnail has (in almost every case) width of 320.
+    // If the video does not exist (therefore thumbnail doesn't exist), a default thumbnail of 120 width is returned.
+    // Function returns true for private videos, which can't be played by the API.
+    var valid = !(img.width === 120);
+    console.log(valid);
+    if (valid) {
+      // Here will eventually go code that visually and/or functionally disables the track/"removes" it from the playlist.
+    }
+  }
+}
