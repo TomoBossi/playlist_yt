@@ -1,5 +1,4 @@
-// uBlock Origin Certified
-// Playlist in JSON format
+// Playlist in JSON format. Hidden videos don't work.
 var playlist = {
   0: { id: "F4Ec98UJXfA", start: 0, end: 0 },
   1: { id: "eE6f_KG1flI", start: 0, end: 0 },
