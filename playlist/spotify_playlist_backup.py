@@ -40,32 +40,31 @@ def playlist_backup(user_id, playlist_id, find_best_yt_match = False, cover_art_
         album = element["track"]["album"]["name"]
         artists = ", ".join([artist["name"] for artist in element["track"]["artists"]])
         sp_duration_s = int(float(element["track"]["duration_ms"])/1000)
+        sp_album_URI = element["track"]["album"]["uri"]
         yt_id, yt_title, yt_duration_s = "", "", 0
         if find_best_yt_match:
             yt_id, yt_title, yt_duration_s = yt_search_video_get_data(title, artists)
             sleep(1)
-        album_filename = clean_filename(album) + ".jpg"
+        album_filename = sp_album_URI + "_" + clean_filename(album) + ".jpg"
         if cover_art_save_dir: save_cover(element, cover_art_save_dir, album_filename)
-        df.loc[len(df)] = [title,                            # title
-                           artists,                          # artists
-                           album,                            # album
-                           element["added_at"],              # sp_datetime_added
-                           sp_duration_s,                    # sp_duration_s
-                           element["track"]["uri"],          # sp_track_URI
-                           element["track"]["album"]["uri"], # sp_album_URI
-                           yt_id,                            # yt_id
-                           yt_title,                         # yt_title
-                           yt_duration_s,                    # yt_duration_s
-                           0,                                # yt_start_s
-                           0,                                # yt_end_s
-                           album_filename,]                  # album_cover_filename
+        df.loc[len(df)] = [title,                   # title
+                           artists,                 # artists
+                           album,                   # album
+                           element["added_at"],     # sp_datetime_added
+                           sp_duration_s,           # sp_duration_s
+                           element["track"]["uri"], # sp_track_URI
+                           sp_album_URI,            # sp_album_URI
+                           yt_id,                   # yt_id
+                           yt_title,                # yt_title
+                           yt_duration_s,           # yt_duration_s
+                           0,                       # yt_start_s
+                           0,                       # yt_end_s
+                           album_filename,]         # album_cover_filename
     return df
 
 def save_cover(playlist_element, save_dir, album_filename):
-    album_uri = playlist_element["track"]["album"]["id"]
-    album_title = playlist_element["track"]["album"]["name"]
     cover_url = playlist_element["track"]["album"]["images"][0]["url"] # First image ([0]) is always largest
-    full_save_path = os.path.join(save_dir, album_uri + "_" + album_filename)
+    full_save_path = os.path.join(save_dir, album_filename)
     if not os.path.isfile(full_save_path):
         response = requests.get(cover_url)
         with open(full_save_path, "wb") as f:
