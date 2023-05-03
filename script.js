@@ -16,7 +16,7 @@ var digitLogger;
 init();
 
 async function init() {
-  const res = await fetch("https://raw.githubusercontent.com/TomoBossi/playlist/main/playlist/dementiawave20230503_curated.json");
+  const res = await fetch("playlist/dementiawave20230503_curated.json"); // "https://raw.githubusercontent.com/TomoBossi/playlist/main/playlist/dementiawave20230503_curated.json");
   playlist = await res.json();
   playlistLength = await Object.keys(playlist).length;
   currentTrack = await playlist[currentTrackIndex];
