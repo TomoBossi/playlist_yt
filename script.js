@@ -18,8 +18,8 @@ init();
 async function init() {
   const res = await fetch("playlist/dementiawave20230503_curated.json"); // "https://raw.githubusercontent.com/TomoBossi/playlist/main/playlist/dementiawave20230503_curated.json");
   playlist = await res.json();
-  playlistLength = await Object.keys(playlist).length;
-  currentTrack = await playlist[currentTrackIndex];
+  playlistLength = Object.keys(playlist).length;
+  currentTrack = playlist[currentTrackIndex];
   currentVolume = 100;
   muted = false;
   digitLogger = "";
@@ -30,13 +30,13 @@ async function init() {
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
-// This function flags the API as ready once it downloads, and also creates the player.
+// This function flags the API as ready and creates the player. Triggers once the API has fully downloaded.
 function onYouTubeIframeAPIReady() {
   playerAPIisReady = true;
   player = new YT.Player("player", {
     videoId: "",
-    height: "400",
-    width: "400",
+    height: "0",
+    width: "0",
     playerVars: {
       playsinline: 1
     },
@@ -50,6 +50,12 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   player.setVolume(currentVolume);
   playIndex(currentTrackIndex);
+}
+
+function onPlayerStateChange(event) {
+  if (player.getPlayerState() == playerState["ENDED"]) {
+    playNext();
+  }
 }
 
 function playIndex(index) {
@@ -84,12 +90,6 @@ function skip(seconds) {
     }
   }
   player.seekTo(parseInt(time));
-}
-
-function onPlayerStateChange(event) {
-  if (player.getPlayerState() == playerState["ENDED"]) {
-    playNext();
-  }
 }
 
 function changeVolume(volumeDelta = 0, muted = false) {
@@ -154,6 +154,14 @@ document.addEventListener(
   false
 );
 
+function updateDigitLogger(key) {
+  if (!(isNaN(Number(key)) || key === null || key === ' ')) {
+    digitLogger += key;
+  } else {
+    digitLogger = "";
+  }
+}
+
 // https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
 function validVideoId(yt_id) {
   var img = new Image();
@@ -167,13 +175,5 @@ function validVideoId(yt_id) {
     if (valid) {
       // Here will eventually go code that visually and/or functionally disables the track/"removes" it from the playlist.
     }
-  }
-}
-
-function updateDigitLogger(key) {
-  if (!(isNaN(Number(key)) || key === null || key === ' ')) {
-    digitLogger += key;
-  } else {
-    digitLogger = "";
   }
 }
