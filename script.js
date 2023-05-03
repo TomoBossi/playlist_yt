@@ -1,9 +1,9 @@
 // Playlist in JSON format. Hidden videos don't work.
 var playlist = {
-  0: { id: "F4Ec98UJXfA", start: 0, end: 0 },
-  1: { id: "eE6f_KG1flI", start: 0, end: 0 },
-  2: { id: "1-ACA6Hh85w", start: 815, end: 815 + 342 },
-  3: { id: "1RyDuyjgd2Q", start: 0, end: 0 }
+  0: { id: "F4Ec98UJXfA", start: 0, end: 0, volume_multiplier: 0.7 },
+  1: { id: "eE6f_KG1flI", start: 0, end: 0, volume_multiplier: 0.8 },
+  2: { id: "1-ACA6Hh85w", start: 815, end: 815 + 342, volume_multiplier: 0.9 },
+  3: { id: "1RyDuyjgd2Q", start: 0, end: 0, volume_multiplier: 1.0 }
 };
 
 var playlistLength = Object.keys(playlist).length;
@@ -11,6 +11,13 @@ var currentTrackIndex = 0;
 var currentTrack = playlist[currentTrackIndex];
 var currentVolume = 100;
 var muted = false;
+var digitLogger = ""
+
+var playerState = {
+  ENDED: 0,
+  PLAYING: 1,
+  PAUSED: 2
+};
 
 // This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement("script");
@@ -42,7 +49,7 @@ function createPlayer(id) {
 
 function onPlayerReady(event) {
   player.setVolume(currentVolume);
-  player.playVideo();
+  playIndex(currentTrackIndex);
 }
 
 function playIndex(index) {
@@ -52,6 +59,7 @@ function playIndex(index) {
     startSeconds: currentTrack["start"],
     endSeconds: currentTrack["end"]
   });
+  changeVolume();
 }
 
 function playNext() {
@@ -82,21 +90,15 @@ function initTrackId(track) {
   return track["id"] + "?start=" + track["start"] + "&end=" + track["end"];
 }
 
-var state = {
-  ENDED: 0,
-  PLAYING: 1,
-  PAUSED: 2
-};
-
 function onPlayerStateChange(event) {
-  if (player.getPlayerState() == state["ENDED"]) {
+  if (player.getPlayerState() == playerState["ENDED"]) {
     playNext();
   }
 }
 
-function changeVolume(volumeDelta, muted = false) {
+function changeVolume(volumeDelta = 0, muted = false) {
   currentVolume = Math.min(Math.max(currentVolume + volumeDelta, 0), 100);
-  player.setVolume(currentVolume * !muted);
+  player.setVolume(currentVolume * currentTrack["volume_multiplier"] * !muted);
 }
 
 function playerExists() {
@@ -107,11 +109,19 @@ function playerExists() {
 document.addEventListener(
   "keypress",
   (event) => {
+    // console.log(event.key);
     // console.log(event.code);
     if (playerAPIisReady) {
       switch (event.code) {
+        case "Enter":
+          if (digitLogger) {
+            currentTrackIndex = Number(digitLogger);
+            currentTrackIndex %= playlistLength;
+            playIndex(currentTrackIndex);
+          }
+          break;
         case "Space":
-          if (player.getPlayerState() == state["PLAYING"]) {
+          if (player.getPlayerState() == playerState["PLAYING"]) {
             player.pauseVideo();
           } else {
             player.playVideo();
@@ -142,6 +152,7 @@ document.addEventListener(
           skip(5);
           break;
       }
+      updateDigitLogger(event.key);
     }
   },
   false
@@ -160,5 +171,13 @@ function validVideoId(id) {
     if (valid) {
       // Here will eventually go code that visually and/or functionally disables the track/"removes" it from the playlist.
     }
+  }
+}
+
+function updateDigitLogger(key) {
+  if (!(isNaN(Number(key)) || key === null || key === ' ')) {
+    digitLogger += key;
+  } else {
+    digitLogger = "";
   }
 }
