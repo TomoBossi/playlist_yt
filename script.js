@@ -18,7 +18,6 @@ init();
 async function init() {
   const res = await fetch("https://raw.githubusercontent.com/TomoBossi/playlist/main/playlist/dementiawave20230503_curated.json");
   playlist = await res.json();
-  playlist = await playlist;
   playlistLength = await Object.keys(playlist).length;
   currentTrack = await playlist[currentTrackIndex];
   currentVolume = 100;
@@ -36,8 +35,8 @@ function onYouTubeIframeAPIReady() {
   playerAPIisReady = true;
   player = new YT.Player("player", {
     videoId: "",
-    height: "0",
-    width: "0",
+    height: "400",
+    width: "400",
     playerVars: {
       playsinline: 1
     },
