@@ -1,9 +1,9 @@
 // Playlist in JSON format. Hidden videos don't work.
 var playlist = {
-  0: { id: "F4Ec98UJXfA", start: 0, end: 0, volume_multiplier: 0.7 },
-  1: { id: "eE6f_KG1flI", start: 0, end: 0, volume_multiplier: 0.8 },
-  2: { id: "1-ACA6Hh85w", start: 815, end: 815 + 342, volume_multiplier: 0.9 },
-  3: { id: "1RyDuyjgd2Q", start: 0, end: 0, volume_multiplier: 1.0 }
+  0: { yt_id: "F4Ec98UJXfA", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 0.7 },
+  1: { yt_id: "eE6f_KG1flI", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 0.8 },
+  2: { yt_id: "1-ACA6Hh85w", yt_start_s: 815, yt_end_s: 815 + 342, volume_multiplier: 0.9 },
+  3: { yt_id: "1RyDuyjgd2Q", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 1.0 }
 };
 
 var playlistLength = Object.keys(playlist).length;
@@ -29,12 +29,8 @@ var player;
 var playerAPIisReady = false;
 function onYouTubeIframeAPIReady() {
   playerAPIisReady = true;
-  createPlayer(initTrackId(currentTrack));
-}
-
-function createPlayer(id) {
   player = new YT.Player("player", {
-    videoId: id,
+    videoId: "",
     height: "0",
     width: "0",
     playerVars: {
@@ -55,9 +51,9 @@ function onPlayerReady(event) {
 function playIndex(index) {
   currentTrack = playlist[index];
   player.loadVideoById({
-    videoId: currentTrack["id"],
-    startSeconds: currentTrack["start"],
-    endSeconds: currentTrack["end"]
+    videoId: currentTrack["yt_id"],
+    startSeconds: currentTrack["yt_start_s"],
+    endSeconds: currentTrack["yt_end_s"]
   });
   changeVolume();
 }
@@ -76,18 +72,14 @@ function playPrev() {
 
 function skip(seconds) {
   var time = player.getCurrentTime() + seconds;
-  time = Math.max(currentTrack["start"], time);
-  if (currentTrack["end"]) {
-    time = Math.min(currentTrack["end"], time);
-    if (time == currentTrack["end"]) {
+  time = Math.max(currentTrack["yt_start_s"], time);
+  if (currentTrack["yt_end_s"]) {
+    time = Math.min(currentTrack["yt_end_s"], time);
+    if (time == currentTrack["yt_end_s"]) {
       playNext();
     }
   }
   player.seekTo(parseInt(time));
-}
-
-function initTrackId(track) {
-  return track["id"] + "?start=" + track["start"] + "&end=" + track["end"];
 }
 
 function onPlayerStateChange(event) {
@@ -125,7 +117,7 @@ document.addEventListener(
             player.pauseVideo();
           } else {
             player.playVideo();
-          } 
+          }
           break;
         case "KeyM":
           muted = !muted;
@@ -159,10 +151,10 @@ document.addEventListener(
 );
 
 // https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
-function validVideoId(id) {
+function validVideoId(yt_id) {
   var img = new Image();
-  img.src = "http://img.youtube.com/vi/" + id + "/mqdefault.jpg";
-  img.onload = function() {
+  img.src = "http://img.youtube.com/vi/" + yt_id + "/mqdefault.jpg";
+  img.onload = function () {
     // HACK a mq thumbnail has (in almost every case) width of 320.
     // If the video does not exist (therefore thumbnail doesn't exist), a default thumbnail of 120 width is returned.
     // Function returns true for private videos, which can't be played by the API.
