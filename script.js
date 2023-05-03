@@ -10,6 +10,7 @@ var playlistLength = Object.keys(playlist).length;
 var currentTrackIndex = 0;
 var currentTrack = playlist[currentTrackIndex];
 var currentVolume = 100;
+var muted = false;
 
 // This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement("script");
@@ -93,9 +94,9 @@ function onPlayerStateChange(event) {
   }
 }
 
-function changeVolume(volumeDelta) {
+function changeVolume(volumeDelta, muted = false) {
   currentVolume = Math.min(Math.max(currentVolume + volumeDelta, 0), 100);
-  player.setVolume(currentVolume);
+  player.setVolume(currentVolume * !muted);
 }
 
 function playerExists() {
@@ -107,31 +108,37 @@ document.addEventListener(
   "keypress",
   (event) => {
     // console.log(event.code);
-    // console.log(event.keyCode);
     if (playerAPIisReady) {
-      switch (event.keyCode) {
-        case 32: // Space
+      switch (event.code) {
+        case "Space":
           if (player.getPlayerState() == state["PLAYING"]) {
             player.pauseVideo();
           } else {
             player.playVideo();
-          }
-        case 119: // W
+          } 
+          break;
+        case "KeyM":
+          muted = !muted;
+          changeVolume(0, muted);
+          break;
+        case "KeyW":
+          muted = false;
           changeVolume(5);
           break;
-        case 97: // A
+        case "KeyA":
           playPrev();
           break;
-        case 115: // S
+        case "KeyS":
+          muted = false;
           changeVolume(-5);
           break;
-        case 100: // D
+        case "KeyD":
           playNext();
           break;
-        case 113: // Q
+        case "KeyQ":
           skip(-5);
           break;
-        case 101: // E
+        case "KeyE":
           skip(5);
           break;
       }
