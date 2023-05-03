@@ -1,3 +1,8 @@
+fetch("./playlist/playlist.json")
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
+
 // Playlist in JSON format. Hidden videos don't work.
 var playlist = {
   0: { yt_id: "F4Ec98UJXfA", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 0.7 },
