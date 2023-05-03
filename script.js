@@ -1,22 +1,19 @@
-fetch("./playlist/playlist.json")
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.log(error));
+async function init() {
+  const res = await fetch("https://raw.githubusercontent.com/TomoBossi/playlist/main/playlist/dementiawave20230502_curated.json");
+  playlist = await res.json();
+}
 
-// Playlist in JSON format. Hidden videos don't work.
-var playlist = {
-  0: { yt_id: "F4Ec98UJXfA", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 0.7 },
-  1: { yt_id: "eE6f_KG1flI", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 0.8 },
-  2: { yt_id: "1-ACA6Hh85w", yt_start_s: 815, yt_end_s: 815 + 342, volume_multiplier: 0.9 },
-  3: { yt_id: "1RyDuyjgd2Q", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 1.0 }
-};
+var player;
+var playerAPIisReady = false;
+var playlist;
+init();
 
 var playlistLength = Object.keys(playlist).length;
 var currentTrackIndex = 0;
 var currentTrack = playlist[currentTrackIndex];
 var currentVolume = 100;
 var muted = false;
-var digitLogger = ""
+var digitLogger = "";
 
 var playerState = {
   ENDED: 0,
@@ -24,14 +21,21 @@ var playerState = {
   PAUSED: 2
 };
 
+// Playlist in JSON format. Hidden videos don't work.
+// var playlist = {
+//   0: { yt_id: "F4Ec98UJXfA", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 0.7 },
+//   1: { yt_id: "eE6f_KG1flI", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 0.8 },
+//   2: { yt_id: "1-ACA6Hh85w", yt_start_s: 815, yt_end_s: 815 + 342, volume_multiplier: 0.9 },
+//   3: { yt_id: "1RyDuyjgd2Q", yt_start_s: 0, yt_end_s: 0, volume_multiplier: 1.0 }
+// };
+
 // This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName("script")[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 // This function flags the API as ready once it downloads, and also creates the player.
-var player;
-var playerAPIisReady = false;
+
 function onYouTubeIframeAPIReady() {
   playerAPIisReady = true;
   player = new YT.Player("player", {

@@ -47,7 +47,7 @@ def playlist_backup(user_id, playlist_id, find_best_yt_match = False, cover_art_
         yt_id, yt_title, yt_duration_s = "", "", 0
         if find_best_yt_match:
             yt_id, yt_title, yt_duration_s = yt_search_video_get_data(title, artists)
-            sleep(1)
+            sleep(0.1)
         album_filename = sp_album_URI.split(":")[-1] + "_" + clean_filename(album) + ".jpg"
         if cover_art_save_dir: save_cover(element, cover_art_save_dir, album_filename)
         df.loc[len(df)] = [title,                   # title
@@ -129,7 +129,7 @@ if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = playlist_backup("n58k0fnejbizfknk4i4m76mkt", 
                          "2YvcU4kgVHhFSQSmbO6cUS", 
-                         find_best_yt_match = False,
+                         find_best_yt_match = True,
                          cover_art_save_dir = "") # "../images/cover_art/")
     df.to_json("dementiawave" + datetime.today().strftime('%Y%m%d') + ".json", orient = "split")
     os.remove(".cache")
