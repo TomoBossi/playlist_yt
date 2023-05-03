@@ -26,16 +26,19 @@ def playlist_backup(user_id, playlist_id, find_best_yt_match = False, cover_art_
                                  "sp_duration_s", 
                                  "sp_track_URI", 
                                  "sp_album_URI", 
-                                 "yt_id",
-                                 "yt_title",
-                                 "yt_duration_s",
-                                 "yt_start_s",
-                                 "yt_end_s",
+                                 "yt_id", 
+                                 "yt_title", 
+                                 "yt_duration_s", 
+                                 "yt_start_s", 
+                                 "yt_end_s", 
+                                 "volume_multiplier",
                                  "album_cover_filename"])
     while playlist["next"]:
         playlist = sp.next(playlist)
         playlist_items.extend(playlist["items"])
-    for element in playlist_items:
+    playlist_length = len(playlist_items)
+    print_progress(0, playlist_length)
+    for idx, element in enumerate(playlist_items):
         title = element["track"]["name"]
         album = element["track"]["album"]["name"]
         artists = ", ".join([artist["name"] for artist in element["track"]["artists"]])
@@ -59,7 +62,9 @@ def playlist_backup(user_id, playlist_id, find_best_yt_match = False, cover_art_
                            yt_duration_s,           # yt_duration_s
                            0,                       # yt_start_s
                            0,                       # yt_end_s
-                           album_filename,]         # album_cover_filename
+                           1.0,                     # volume_multiplier
+                           album_filename]          # album_cover_filename
+        print_progress(idx + 1, playlist_length)
     return df
 
 def save_cover(playlist_element, save_dir, album_filename):
@@ -112,13 +117,22 @@ def parse_duration(yt_video_duration: str) -> int: # "PT2H12M40S"
         prev_is_digit = False
     return sum([60**idx * int(num) for idx, num in enumerate(res[::-1])])
 
+def print_progress(completed, total, n_steps = 20):
+    n_per_step = int(total/n_steps)
+    n_steps_completed = int(completed/n_per_step)
+    progress_bar = "[" + "#"*n_steps_completed + "-"*(n_steps - n_steps_completed) + "]"
+    completed = str(completed).rjust(len(str(total)), "0")
+    progress_counter = f"[{completed}/{total}]"
+    print(progress_bar + " " + progress_counter, end="\r")
+
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = playlist_backup("n58k0fnejbizfknk4i4m76mkt", 
                          "2YvcU4kgVHhFSQSmbO6cUS", 
                          find_best_yt_match = False,
-                         cover_art_save_dir = "../images/cover_art/")
+                         cover_art_save_dir = "") # "../images/cover_art/")
     df.to_json("dementiawave" + datetime.today().strftime('%Y%m%d') + ".json", orient = "split")
+    os.remove(".cache")
 
 """ 
 https://spotipy.readthedocs.io/en/2.22.1/
