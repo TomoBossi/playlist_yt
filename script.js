@@ -1,36 +1,36 @@
+var playerAPIisReady = false;
+var currentTrackIndex = 0;
+var currentVolume = 100;
+var shuffle = false;
+var muted = false;
+var digitLogger = "";
+var playlistLength;
+var currentTrack;
+var playlist;
+var player;
+
 var playerState = {
   ENDED: 0,
   PLAYING: 1,
   PAUSED: 2
 };
 
-var player;
-var playlist;
-var playerAPIisReady = false;
-var playlistLength;
-var currentTrackIndex = 0;
-var currentTrack;
-var currentVolume;
-var muted;
-var digitLogger;
 init();
 
 async function init() {
-  const res = await fetch("playlist/dementiawave20230503_curated.json"); // "https://raw.githubusercontent.com/TomoBossi/playlist/main/playlist/dementiawave20230503_curated.json");
+  const res = await fetch("playlist/dementiawave20230503_curated.json");
   playlist = await res.json();
   playlistLength = Object.keys(playlist).length;
   currentTrack = playlist[currentTrackIndex];
-  currentVolume = 100;
-  muted = false;
-  digitLogger = "";
-  // This code loads the IFrame Player API code asynchronously.
+  // This code loads the IFrame Player API code asynchronously
   var tag = document.createElement("script");
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
-// This function flags the API as ready and creates the player. Triggers once the API has fully downloaded.
+// This function flags the API as ready and creates the player
+// Triggers once the API has fully downloaded
 function onYouTubeIframeAPIReady() {
   playerAPIisReady = true;
   player = new YT.Player("player", {
@@ -71,12 +71,18 @@ function playIndex(index) {
 function playNext() {
   currentTrackIndex++;
   currentTrackIndex %= playlistLength;
+  if (shuffle) {
+    currentTrackIndex = Math.floor(Math.random() * (playlistLength + 1));
+  }
   playIndex(currentTrackIndex);
 }
 
 function playPrev() {
   currentTrackIndex += playlistLength - 1;
   currentTrackIndex %= playlistLength;
+  if (shuffle) {
+    currentTrackIndex = Math.floor(Math.random() * (playlistLength + 1));
+  }
   playIndex(currentTrackIndex);
 }
 
@@ -147,6 +153,9 @@ document.addEventListener(
         case "KeyE":
           skip(5);
           break;
+        case "KeyR":
+          shuffle = !shuffle;
+          break;
       }
       updateDigitLogger(event.key);
     }
@@ -162,18 +171,14 @@ function updateDigitLogger(key) {
   }
 }
 
-// https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
 function validVideoId(yt_id) {
+  // https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
   var img = new Image();
   img.src = "http://img.youtube.com/vi/" + yt_id + "/mqdefault.jpg";
   img.onload = function () {
-    // HACK a mq thumbnail has (in almost every case) width of 320.
-    // If the video does not exist (therefore thumbnail doesn't exist), a default thumbnail of 120 width is returned.
-    // Function returns true for private videos, which can't be played by the API.
     var valid = !(img.width === 120);
     console.log(valid);
     if (valid) {
-      // Here will eventually go code that visually and/or functionally disables the track/"removes" it from the playlist.
     }
   }
 }
