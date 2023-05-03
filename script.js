@@ -9,7 +9,7 @@ var currentTrack;
 var playlist;
 var player;
 
-var playerState = {
+const playerState = {
   ENDED: 0,
   PLAYING: 1,
   PAUSED: 2
@@ -86,6 +86,22 @@ function playPrev() {
   playIndex(currentTrackIndex);
 }
 
+function playLogged() {
+  if (digitLogger) {
+    currentTrackIndex = Number(digitLogger);
+    currentTrackIndex %= playlistLength;
+    playIndex(currentTrackIndex);
+  }
+}
+
+function pause() {
+  if (player.getPlayerState() == playerState["PLAYING"]) {
+    player.pauseVideo();
+  } else {
+    player.playVideo();
+  }
+}
+
 function skip(seconds) {
   var time = player.getCurrentTime() + seconds;
   time = Math.max(currentTrack["yt_start_s"], time);
@@ -98,7 +114,8 @@ function skip(seconds) {
   player.seekTo(parseInt(time));
 }
 
-function changeVolume(volumeDelta = 0, muted = false) {
+function changeVolume(volumeDelta = 0, mute = false) {
+  muted = mute;
   currentVolume = Math.min(Math.max(currentVolume + volumeDelta, 0), 100);
   player.setVolume(currentVolume * currentTrack["volume_multiplier"] * !muted);
 }
@@ -116,32 +133,21 @@ document.addEventListener(
     if (playerAPIisReady) {
       switch (event.code) {
         case "Enter":
-          if (digitLogger) {
-            currentTrackIndex = Number(digitLogger);
-            currentTrackIndex %= playlistLength;
-            playIndex(currentTrackIndex);
-          }
+          playLogged();
           break;
         case "Space":
-          if (player.getPlayerState() == playerState["PLAYING"]) {
-            player.pauseVideo();
-          } else {
-            player.playVideo();
-          }
+          pause();
           break;
         case "KeyM":
-          muted = !muted;
-          changeVolume(0, muted);
+          changeVolume(0, mute = !muted);
           break;
         case "KeyW":
-          muted = false;
           changeVolume(5);
           break;
         case "KeyA":
           playPrev();
           break;
         case "KeyS":
-          muted = false;
           changeVolume(-5);
           break;
         case "KeyD":
@@ -178,7 +184,6 @@ function validVideoId(yt_id) {
   img.onload = function () {
     var valid = !(img.width === 120);
     console.log(valid);
-    if (valid) {
-    }
+    if (valid) {}
   }
 }
