@@ -1,12 +1,13 @@
 var playerAPIready = false;
 var currentTrackIndex = 0;
+var currentTrackDuration = 0;
+var currentTrackElapsed = 0;
 var currentVolume = 100;
 var shuffle = false;
 var replay = false;
 var paused = false;
 var muted = false;
 var digitLogger = "";
-var secondsElapsed = 0;
 var playlistLength;
 var currentTrack;
 var playlist;
@@ -20,7 +21,6 @@ const playerState = {
 };
 
 init();
-// getElapsedTime();
 
 async function init() {
   const res = await fetch("playlist/dementiawave20230503_curated.json");
@@ -50,24 +50,37 @@ function onYouTubeIframeAPIReady() {
       onStateChange: onPlayerStateChange
     }
   });
+}
+
+function onPlayerReady(event) {
   trackElapsedTime();
+  player.setVolume(currentVolume);
+  playIndex(currentTrackIndex);
 }
 
 function trackElapsedTime() {
   // https://stackoverflow.com/a/39160557
-  checkInt = setInterval(function() {
-    secondsElapsed = player.getCurrentTime();
+  check = setInterval(function() {
+    currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
   }, 100)
-}
-
-function onPlayerReady(event) {
-  player.setVolume(currentVolume);
-  playIndex(currentTrackIndex);
 }
 
 function onPlayerStateChange(event) {
   if (player.getPlayerState() == playerState["ENDED"]) {
     playNext();
+  }
+  else {
+    updateCurrentTrackDuration();
+  }
+}
+
+function updateCurrentTrackDuration() {
+  if (!currentTrack["yt_start_s"] && !currentTrack["yt_end_s"]) {
+    currentTrackDuration = player.getDuration();
+  } else if (currentTrack["yt_start_s"] && !currentTrack["yt_end_s"]) {
+    currentTrackDuration = player.getDuration() - currentTrack["yt_start_s"];
+  } else {
+    currentTrackDuration = currentTrack["yt_end_s"] - currentTrack["yt_start_s"];
   }
 }
 
@@ -123,7 +136,6 @@ function togglePause() {
     player.playVideo();
     paused = false;
   }
-  updateDisplay();
 }
 
 function skip(seconds) {
@@ -132,6 +144,29 @@ function skip(seconds) {
   if (currentTrack["yt_end_s"]) {
     time = Math.min(currentTrack["yt_end_s"], time);
     if (time == currentTrack["yt_end_s"]) {
+      time = 0;
+      playNext();
+    }
+  }
+  player.seekTo(parseInt(time));
+}
+
+function seekLogged() {
+  if (digitLogger) {
+    seek(parseFloat("0." + digitLogger));
+  }
+}
+
+function restartCurrentTrack() {
+  seek(0);
+}
+
+function seek(fraction) {
+  var time = currentTrack["yt_start_s"] + fraction * currentTrackDuration;
+  if (currentTrack["yt_end_s"]) {
+    time = Math.min(currentTrack["yt_end_s"], time);
+    if (time == currentTrack["yt_end_s"]) {
+      time = 0;
       playNext();
     }
   }
@@ -142,7 +177,6 @@ function changeVolume(volumeDelta = 0, mute = false) {
   muted = mute;
   currentVolume = Math.min(Math.max(currentVolume + volumeDelta, 0), 100);
   player.setVolume(currentVolume * currentTrack["volume_multiplier"] * !mute);
-  updateDisplay();
 }
 
 function toggleMute() {
@@ -151,20 +185,20 @@ function toggleMute() {
 
 function toggleShuffle() {
   shuffle = !shuffle;
-  updateDisplay();
 }
 
 function toggleReplay() {
   replay = !replay;
-  updateDisplay();
 }
+
+//
 
 // Keyboard event listeners
 document.addEventListener(
   "keypress",
   (event) => {
-    // console.log(event.key);
-    // console.log(event.code);
+    console.log(event.key);
+    console.log(event.code);
     if (playerAPIready) {
       switch (event.code) {
         case "Enter":
@@ -176,11 +210,14 @@ document.addEventListener(
         case "KeyM":
           toggleMute();
           break;
-        case "KeyF":
+        case "KeyZ":
           toggleShuffle();
           break;
-        case "KeyR":
+        case "KeyX":
           toggleReplay();
+          break;
+        case "KeyR":
+          restartCurrentTrack();
           break;
         case "KeyS":
           changeVolume(-5);
@@ -200,8 +237,12 @@ document.addEventListener(
         case "KeyE":
           skip(5);
           break;
+        case "Period":
+          seekLogged();
+          break;
       }
       updateDigitLogger(event.key);
+      updateDisplay();
     }
   },
   false
@@ -212,8 +253,10 @@ function updateDigitLogger(key) {
     digitLogger += key;
   } else {
     digitLogger = "";
-  }
+  } 
 }
+
+//
 
 function validVideoId(yt_id) {
   // https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
@@ -249,4 +292,14 @@ function updateTitle() {
     title = "\u{1F501} " + title;
   }
   document.title = title;
+}
+
+function trackDurationForDisplay() {
+  if (!currentTrack["yt_start_s"] && !currentTrack["yt_end_s"]) {
+    currentTrackDuration = currentTrack["yt_duration_s"];
+  } else if (currentTrack["yt_start_s"] && !currentTrack["yt_end_s"]) {
+    currentTrackDuration = currentTrack["yt_duration_s"] - currentTrack["yt_start_s"];
+  } else {
+    currentTrackDuration = currentTrack["yt_end_s"] - currentTrack["yt_start_s"];
+  }
 }
