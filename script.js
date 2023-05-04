@@ -1,4 +1,4 @@
-var playerAPIisReady = false;
+var playerAPIready = false;
 var currentTrackIndex = 0;
 var currentVolume = 100;
 var shuffle = false;
@@ -35,7 +35,7 @@ async function init() {
 // This function flags the API as ready and creates the player
 // Triggers once the API has fully downloaded
 function onYouTubeIframeAPIReady() {
-  playerAPIisReady = true;
+  playerAPIready = true;
   player = new YT.Player("player", {
     videoId: "",
     height: "0",
@@ -69,7 +69,7 @@ function playIndex(index) {
     startSeconds: currentTrack["yt_start_s"],
     endSeconds: currentTrack["yt_end_s"]
   });
-  changeVolume();
+  changeVolume(0, muted);
   updateDisplay();
 }
 
@@ -98,6 +98,7 @@ function playPrev() {
 function playLogged() {
   if (digitLogger) {
     replay = false;
+    muted = false;
     currentTrackIndex = Number(digitLogger);
     currentTrackIndex %= playlistLength;
     playIndex(currentTrackIndex);
@@ -135,7 +136,7 @@ function changeVolume(volumeDelta = 0, mute = false) {
 }
 
 function toggleMute() {
-  changeVolume(0, mute = !muted);
+  changeVolume(0, !muted);
 }
 
 function toggleShuffle() {
@@ -154,7 +155,7 @@ document.addEventListener(
   (event) => {
     // console.log(event.key);
     // console.log(event.code);
-    if (playerAPIisReady) {
+    if (playerAPIready) {
       switch (event.code) {
         case "Enter":
           playLogged();
@@ -216,7 +217,7 @@ function validVideoId(yt_id) {
 }
 
 function updateDisplay() {
-  if (playerAPIisReady) {
+  if (playerAPIready) {
     updateTitle();
   }
 }
