@@ -16,7 +16,7 @@ yt = build("youtube", "v3", developerKey = yt_api_key)
 sp_credentials = spotipy.oauth2.SpotifyClientCredentials(sp_client_id, sp_client_secret)
 sp = spotipy.Spotify(client_credentials_manager = sp_credentials)
 
-def playlist_backup(user_id, playlist_id, find_best_yt_match = False, cover_art_save_dir = ""):
+def playlist_backup(user_id, playlist_id, start_idx = 0, find_best_yt_match = False, cover_art_save_dir = ""):
     playlist = sp.user_playlist_tracks(user_id, playlist_id)
     playlist_items = playlist["items"]
     df = pd.DataFrame(columns = ["title", 
@@ -38,7 +38,7 @@ def playlist_backup(user_id, playlist_id, find_best_yt_match = False, cover_art_
         playlist_items.extend(playlist["items"])
     playlist_length = len(playlist_items)
     print_progress(0, playlist_length)
-    for idx, element in enumerate(playlist_items):
+    for idx, element in enumerate(playlist_items[start_idx:]):
         title = element["track"]["name"]
         album = element["track"]["album"]["name"]
         artists = ", ".join([artist["name"] for artist in element["track"]["artists"]])
@@ -63,6 +63,25 @@ def playlist_backup(user_id, playlist_id, find_best_yt_match = False, cover_art_
                            0,                       # yt_end_s
                            1.0,                     # volume_multiplier
                            album_filename]          # album_cover_filename
+
+        # # Print element in json format
+        # print('"{abs_id}": '.format(abs_id = start_idx + idx) + '{')
+        # print(f'  "title": "{title}",')
+        # print(f'  "artists": "{artists}",')
+        # print(f'  "album": "{album}",')
+        # print(f'  "sp_datetime_added": "{element["added_at"]}",')
+        # print(f'  "sp_duration_s": {sp_duration_s},')
+        # print(f'  "sp_track_URI": "{element["track"]["uri"]}",')
+        # print(f'  "sp_album_URI": "{sp_album_URI}",')
+        # print(f'  "yt_id": "{yt_id}",')
+        # print(f'  "yt_title": "{yt_title}",')
+        # print(f'  "yt_duration_s": {yt_duration_s},')
+        # print(f'  "yt_start_s": 0,')
+        # print(f'  "yt_end_s": 0,')
+        # print(f'  "volume_multiplier": 1,')
+        # print(f'  "album_cover_filename": "{album_filename}"')
+        # print('},')
+
         print_progress(idx + 1, playlist_length)
     return df
 
@@ -127,10 +146,11 @@ def print_progress(completed, total, n_steps = 20):
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = playlist_backup("n58k0fnejbizfknk4i4m76mkt", 
-                         "2YvcU4kgVHhFSQSmbO6cUS", 
-                         find_best_yt_match = False,
+                         "2YvcU4kgVHhFSQSmbO6cUS",
+                         start_idx = 0,
+                         find_best_yt_match = True,
                          cover_art_save_dir = "") # "../images/cover_art/")
-    df.to_json("dementiawave" + datetime.today().strftime("%Y%m%d") + ".json", orient = "index")
+    # df.to_json("dementiawave" + datetime.today().strftime("%Y%m%d") + ".json", orient = "index")
     os.remove(".cache")
 
 """ 
