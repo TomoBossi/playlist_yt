@@ -6,6 +6,7 @@ var replay = false;
 var paused = false;
 var muted = false;
 var digitLogger = "";
+var secondsElapsed = 0;
 var playlistLength;
 var currentTrack;
 var playlist;
@@ -19,6 +20,7 @@ const playerState = {
 };
 
 init();
+// getElapsedTime();
 
 async function init() {
   const res = await fetch("playlist/dementiawave20230503_curated.json");
@@ -48,6 +50,14 @@ function onYouTubeIframeAPIReady() {
       onStateChange: onPlayerStateChange
     }
   });
+  trackElapsedTime();
+}
+
+function trackElapsedTime() {
+  // https://stackoverflow.com/a/39160557
+  checkInt = setInterval(function() {
+    secondsElapsed = player.getCurrentTime();
+  }, 100)
 }
 
 function onPlayerReady(event) {
