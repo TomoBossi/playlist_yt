@@ -4,7 +4,8 @@ For now, the player can be controlled using keyboard only:
  - Q-E to go back/fast-forward 5 seconds
  - Spacebar to toggle pause
  - M to toggle mute
- - R to toggle shuffle
+ - R to toggle replay
+ - F to toggle shuffle
  - Any sequence of digits followed by Enter to jump to the track of specified index (modulo the playlist's length)
 
 script.js uses Google's Youtube IFrame API to play a fixed playlist of videos.

@@ -2,6 +2,8 @@ var playerAPIisReady = false;
 var currentTrackIndex = 0;
 var currentVolume = 100;
 var shuffle = false;
+var replay = false;
+var paused = false;
 var muted = false;
 var digitLogger = "";
 var playlistLength;
@@ -12,7 +14,8 @@ var player;
 const playerState = {
   ENDED: 0,
   PLAYING: 1,
-  PAUSED: 2
+  PAUSED: 2,
+  BUFFERING: 3,
 };
 
 init();
@@ -59,6 +62,7 @@ function onPlayerStateChange(event) {
 }
 
 function playIndex(index) {
+  paused = false;
   currentTrack = playlist[index];
   player.loadVideoById({
     videoId: currentTrack["yt_id"],
@@ -66,40 +70,49 @@ function playIndex(index) {
     endSeconds: currentTrack["yt_end_s"]
   });
   changeVolume();
+  updateDisplay();
 }
 
 function playNext() {
-  currentTrackIndex++;
-  currentTrackIndex %= playlistLength;
-  if (shuffle) {
-    currentTrackIndex = Math.floor(Math.random() * (playlistLength + 1));
+  if (!replay) {
+    currentTrackIndex++;
+    currentTrackIndex %= playlistLength;
+    if (shuffle) {
+      currentTrackIndex = Math.floor(Math.random() * (playlistLength + 1));
+    }
   }
   playIndex(currentTrackIndex);
 }
 
 function playPrev() {
-  currentTrackIndex += playlistLength - 1;
-  currentTrackIndex %= playlistLength;
-  if (shuffle) {
-    currentTrackIndex = Math.floor(Math.random() * (playlistLength + 1));
+  if (!replay) {
+    currentTrackIndex += playlistLength - 1;
+    currentTrackIndex %= playlistLength;
+    if (shuffle) {
+      currentTrackIndex = Math.floor(Math.random() * (playlistLength + 1));
+    }
   }
   playIndex(currentTrackIndex);
 }
 
 function playLogged() {
   if (digitLogger) {
+    replay = false;
     currentTrackIndex = Number(digitLogger);
     currentTrackIndex %= playlistLength;
     playIndex(currentTrackIndex);
   }
 }
 
-function pause() {
+function togglePause() {
   if (player.getPlayerState() == playerState["PLAYING"]) {
     player.pauseVideo();
-  } else {
+    paused = true;
+  } else if (player.getPlayerState() == playerState["PAUSED"]) {
     player.playVideo();
+    paused = false;
   }
+  updateDisplay();
 }
 
 function skip(seconds) {
@@ -117,11 +130,22 @@ function skip(seconds) {
 function changeVolume(volumeDelta = 0, mute = false) {
   muted = mute;
   currentVolume = Math.min(Math.max(currentVolume + volumeDelta, 0), 100);
-  player.setVolume(currentVolume * currentTrack["volume_multiplier"] * !muted);
+  player.setVolume(currentVolume * currentTrack["volume_multiplier"] * !mute);
+  updateDisplay();
 }
 
-function playerExists() {
-  return typeof player != "undefined";
+function toggleMute() {
+  changeVolume(0, mute = !muted);
+}
+
+function toggleShuffle() {
+  shuffle = !shuffle;
+  updateDisplay();
+}
+
+function toggleReplay() {
+  replay = !replay;
+  updateDisplay();
 }
 
 // Keyboard event listeners
@@ -136,19 +160,25 @@ document.addEventListener(
           playLogged();
           break;
         case "Space":
-          pause();
+          togglePause();
           break;
         case "KeyM":
-          changeVolume(0, mute = !muted);
+          toggleMute();
+          break;
+        case "KeyF":
+          toggleShuffle();
+          break;
+        case "KeyR":
+          toggleReplay();
+          break;
+        case "KeyS":
+          changeVolume(-5);
           break;
         case "KeyW":
           changeVolume(5);
           break;
         case "KeyA":
           playPrev();
-          break;
-        case "KeyS":
-          changeVolume(-5);
           break;
         case "KeyD":
           playNext();
@@ -158,9 +188,6 @@ document.addEventListener(
           break;
         case "KeyE":
           skip(5);
-          break;
-        case "KeyR":
-          shuffle = !shuffle;
           break;
       }
       updateDigitLogger(event.key);
@@ -186,4 +213,29 @@ function validVideoId(yt_id) {
     console.log(valid);
     if (valid) {}
   }
+}
+
+function updateDisplay() {
+  if (playerAPIisReady) {
+    updateTitle();
+  }
+}
+
+function updateTitle() {
+  var title = title = currentTrack["title"] + " - " + currentTrack["artists"] + " | \u{1F50A}" + currentVolume + "%";
+  if (!paused) {
+    title = "\u23F5 " + title;
+  } else {
+    title = "\u23F8 " + title;
+  }
+  if (muted) {
+    title = "\u{1F507} " + title;
+  }
+  if (shuffle) {
+    title = "\u{1F500} " + title;
+  }
+  if (replay) {
+    title = "\u{1F501} " + title;
+  }
+  document.title = title;
 }
