@@ -1,19 +1,24 @@
+// Inner logic / Backend
+
+const randomStarterTrack = true;
+var prevTrack
 var playerAPIready = false;
-var currentTrackIndex = 0;
 var currentTrackDuration = 0;
 var currentTrackElapsed = 0;
-var currentVolume = 100;
+var currentVolume = 50;
 var shuffle = false;
 var replay = false;
 var paused = false;
 var muted = false;
 var digitLogger = "";
+var currentTrackIndex;
 var playlistLength;
 var currentTrack;
 var playlist;
 var player;
 
 const playerState = {
+  UNSTARTED: -1,
   ENDED: 0,
   PLAYING: 1,
   PAUSED: 2,
@@ -26,6 +31,7 @@ async function init() {
   const res = await fetch("playlist/dementiawave20230503_curated.json");
   playlist = await res.json();
   playlistLength = Object.keys(playlist).length;
+  currentTrackIndex = randomIndex() * randomStarterTrack;
   currentTrack = playlist[currentTrackIndex];
   // This code loads the IFrame Player API code asynchronously
   var tag = document.createElement("script");
@@ -47,7 +53,8 @@ function onYouTubeIframeAPIReady() {
     },
     events: {
       onReady: onPlayerReady,
-      onStateChange: onPlayerStateChange
+      onStateChange: onPlayerStateChange,
+      onError: tryNext
     }
   });
 }
@@ -60,72 +67,59 @@ function onPlayerReady(event) {
 
 function trackElapsedTime() {
   // https://stackoverflow.com/a/39160557
-  check = setInterval(function() {
+  setInterval(() => {
     currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
-  }, 100)
+  }, 
+  100);
 }
 
 function onPlayerStateChange(event) {
   if (player.getPlayerState() == playerState["ENDED"]) {
     playNext();
   }
-  else {
-    updateCurrentTrackDuration();
-  }
+  updateCurrentTrackDuration();
 }
 
-function updateCurrentTrackDuration() {
-  if (!currentTrack["yt_start_s"] && !currentTrack["yt_end_s"]) {
-    currentTrackDuration = player.getDuration();
-  } else if (currentTrack["yt_start_s"] && !currentTrack["yt_end_s"]) {
-    currentTrackDuration = player.getDuration() - currentTrack["yt_start_s"];
-  } else {
-    currentTrackDuration = currentTrack["yt_end_s"] - currentTrack["yt_start_s"];
-  }
+function tryNext(event) {
+  setTimeout(() => {
+    replay = false;
+    playNext();
+  }, 
+  10);
 }
 
 function playIndex(index) {
   paused = false;
-  currentTrack = playlist[index];
+  currentTrackIndex = index;
+  currentTrack = playlist[currentTrackIndex];
   player.loadVideoById({
     videoId: currentTrack["yt_id"],
     startSeconds: currentTrack["yt_start_s"],
     endSeconds: currentTrack["yt_end_s"]
   });
   changeVolume(0, muted);
-  updateDisplay();
+  updateDisplay(); // Unsettling
 }
 
 function playNext() {
-  if (!replay) {
-    currentTrackIndex++;
-    currentTrackIndex %= playlistLength;
-    if (shuffle) {
-      currentTrackIndex = Math.floor(Math.random() * (playlistLength + 1));
-    }
-  }
-  playIndex(currentTrackIndex);
+  playIndex(movedIndex(1));
 }
 
 function playPrev() {
-  if (!replay) {
-    currentTrackIndex += playlistLength - 1;
-    currentTrackIndex %= playlistLength;
-    if (shuffle) {
-      currentTrackIndex = Math.floor(Math.random() * (playlistLength + 1));
-    }
-  }
-  playIndex(currentTrackIndex);
+  playIndex(movedIndex(-1));
 }
 
-function playLogged() {
-  if (digitLogger) {
-    replay = false;
-    muted = false;
-    currentTrackIndex = Number(digitLogger);
-    currentTrackIndex %= playlistLength;
-    playIndex(currentTrackIndex);
+function movedIndex(increment) {
+  var index = currentTrackIndex;
+  if (!replay) {
+    if (shuffle) {
+      index = randomIndex();
+    } else {
+      index += playlistLength + increment;
+      index %= playlistLength;
+    }
   }
+  return index;
 }
 
 function togglePause() {
@@ -138,22 +132,20 @@ function togglePause() {
   }
 }
 
+function seek(seconds) {
+  seconds = Math.max(seconds, 0);
+  seconds += currentTrack["yt_start_s"];
+  seconds = Math.min(currentTrackDuration + currentTrack["yt_start_s"], seconds);
+  player.seekTo(seconds);
+}
+
 function skip(seconds) {
-  var time = player.getCurrentTime() + seconds;
-  time = Math.max(currentTrack["yt_start_s"], time);
-  if (currentTrack["yt_end_s"]) {
-    time = Math.min(currentTrack["yt_end_s"], time);
-    if (time == currentTrack["yt_end_s"]) {
-      time = 0;
-      playNext();
-    }
-  }
-  player.seekTo(parseInt(time));
+  seek(player.getCurrentTime() + seconds);
 }
 
 function seekLogged() {
   if (digitLogger) {
-    seek(parseFloat("0." + digitLogger));
+    seek(parseFloat("0." + digitLogger) * currentTrackDuration);
   }
 }
 
@@ -161,22 +153,18 @@ function restartCurrentTrack() {
   seek(0);
 }
 
-function seek(fraction) {
-  var time = currentTrack["yt_start_s"] + fraction * currentTrackDuration;
-  if (currentTrack["yt_end_s"]) {
-    time = Math.min(currentTrack["yt_end_s"], time);
-    if (time == currentTrack["yt_end_s"]) {
-      time = 0;
-      playNext();
-    }
-  }
-  player.seekTo(parseInt(time));
-}
-
-function changeVolume(volumeDelta = 0, mute = false) {
+function changeVolume(volumeDelta, mute = false) {
   muted = mute;
   currentVolume = Math.min(Math.max(currentVolume + volumeDelta, 0), 100);
   player.setVolume(currentVolume * currentTrack["volume_multiplier"] * !mute);
+}
+
+function playLogged() {
+  if (digitLogger) {
+    replay = false;
+    muted = false;
+    playIndex(Number(digitLogger % playlistLength));
+  }
 }
 
 function toggleMute() {
@@ -191,14 +179,40 @@ function toggleReplay() {
   replay = !replay;
 }
 
-//
+function updateCurrentTrackDuration() {
+  currentTrackDuration = Math.max(currentTrack["yt_end_s"] - currentTrack["yt_start_s"], 0);
+  currentTrackDuration += (player.getDuration() - currentTrack["yt_start_s"])*(currentTrackDuration == 0);
+}
 
-// Keyboard event listeners
+function updateDigitLogger(key) {
+  if (!(isNaN(Number(key)) || key === null || key === ' ')) {
+    digitLogger += key;
+  } else {
+    digitLogger = "";
+  } 
+}
+
+function randomIndex() {
+  return Math.floor(Math.random() * (playlistLength + 1));
+}
+
+function validYtVideo(index, callback = console.log) {
+  // https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
+  var valid;
+  var img = new Image();
+  img.src = "http://img.youtube.com/vi/" + playlist[index]["yt_id"] + "/mqdefault.jpg";
+  img.onload = () => {
+    callback(!(img.width === 120));
+  }
+}
+
+// Interaction
+
 document.addEventListener(
   "keypress",
   (event) => {
-    console.log(event.key);
-    console.log(event.code);
+    // console.log(event.key);
+    // console.log(event.code);
     if (playerAPIready) {
       switch (event.code) {
         case "Enter":
@@ -248,26 +262,7 @@ document.addEventListener(
   false
 );
 
-function updateDigitLogger(key) {
-  if (!(isNaN(Number(key)) || key === null || key === ' ')) {
-    digitLogger += key;
-  } else {
-    digitLogger = "";
-  } 
-}
-
-//
-
-function validVideoId(yt_id) {
-  // https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
-  var img = new Image();
-  img.src = "http://img.youtube.com/vi/" + yt_id + "/mqdefault.jpg";
-  img.onload = function () {
-    var valid = !(img.width === 120);
-    console.log(valid);
-    if (valid) {}
-  }
-}
+// Graphics / Frontend
 
 function updateDisplay() {
   if (playerAPIready) {
@@ -276,30 +271,18 @@ function updateDisplay() {
 }
 
 function updateTitle() {
-  var title = title = currentTrack["title"] + " - " + currentTrack["artists"] + " | \u{1F50A}" + currentVolume + "%";
-  if (!paused) {
-    title = "\u23F5 " + title;
-  } else {
-    title = "\u23F8 " + title;
-  }
-  if (muted) {
-    title = "\u{1F507} " + title;
-  }
-  if (shuffle) {
-    title = "\u{1F500} " + title;
-  }
-  if (replay) {
-    title = "\u{1F501} " + title;
-  }
+  var title = currentTrack["title"] + " - " + currentTrack["artists"] 
+  title += " | \u{1F50A}" + currentVolume + "%";
+  title = "\u23F5 ".repeat(!paused) + title
+  title = "\u23F8 ".repeat(paused) + title
+  title = "\u{1F507} ".repeat(muted) + title
+  title = "\u{1F500} ".repeat(shuffle) + title
+  title = "\u{1F501} ".repeat(replay) + title
   document.title = title;
 }
 
-function trackDurationForDisplay() {
-  if (!currentTrack["yt_start_s"] && !currentTrack["yt_end_s"]) {
-    currentTrackDuration = currentTrack["yt_duration_s"];
-  } else if (currentTrack["yt_start_s"] && !currentTrack["yt_end_s"]) {
-    currentTrackDuration = currentTrack["yt_duration_s"] - currentTrack["yt_start_s"];
-  } else {
-    currentTrackDuration = currentTrack["yt_end_s"] - currentTrack["yt_start_s"];
-  }
+function trackDurationForDisplay(index) {
+  var displayDuration = Math.max(playlist[index]["yt_end_s"] - playlist[index]["yt_start_s"], 0);
+  displayDuration += (playlist[index]["yt_duration_s"] - playlist[index]["yt_start_s"])*(displayDuration == 0);
+  return displayDuration;
 }
