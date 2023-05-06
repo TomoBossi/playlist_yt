@@ -8,7 +8,7 @@ def isSquare(img: tuple): # img is (filename, image)
 def smallestSize(file_img_array: list[tuple]):
     return min([min(img[1].size) for img in file_img_array])
 
-def resizeImg(img: tuple, size: int, file_name_array: list[str], prev_sizes_array: list[str]):
+def resizeImg(img: tuple, size: int, file_name_array: list[str], prev_sizes_array: list[int]):
     filename, image = img
     if filename.split("_")[-1][:-4] not in [str(prev) for prev in prev_sizes_array]:
         new_filename = filename[:-4] + "_" + str(size) + filename[-4:]
