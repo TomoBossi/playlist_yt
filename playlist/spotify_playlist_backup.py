@@ -7,14 +7,6 @@ import urllib.request
 from datetime import datetime
 from googleapiclient.discovery import build
 
-yt_api_key = os.environ["YOUTUBE_DATA_API_KEY"]
-sp_client_id = os.environ["SPOTIPY_CLIENT_ID"]
-sp_client_secret = os.environ["SPOTIPY_CLIENT_SECRET"]
-
-yt = build("youtube", "v3", developerKey = yt_api_key)
-sp_credentials = spotipy.oauth2.SpotifyClientCredentials(sp_client_id, sp_client_secret)
-sp = spotipy.Spotify(client_credentials_manager = sp_credentials)
-
 def playlist_backup(user_id, playlist_id, start_idx = 0, find_best_yt_match = False, cover_art_save_dir = ""):
     playlist = sp.user_playlist_tracks(user_id, playlist_id)
     playlist_items = playlist["items"]
@@ -169,11 +161,19 @@ def print_progress(completed, total, n_steps = 20):
     print(progress_bar + " " + progress_counter, end="\r")
 
 if __name__ == "__main__":
+    yt_api_key = os.environ["YOUTUBE_DATA_API_KEY"]
+    sp_client_id = os.environ["SPOTIPY_CLIENT_ID"]
+    sp_client_secret = os.environ["SPOTIPY_CLIENT_SECRET"]
+
+    yt = build("youtube", "v3", developerKey = yt_api_key)
+    sp_credentials = spotipy.oauth2.SpotifyClientCredentials(sp_client_id, sp_client_secret)
+    sp = spotipy.Spotify(client_credentials_manager = sp_credentials)
+
     os.chdir(os.path.dirname(__file__))
     df = playlist_backup(
         "n58k0fnejbizfknk4i4m76mkt", 
         "2YvcU4kgVHhFSQSmbO6cUS",
-        start_idx = 411, # 0,
+        start_idx = 512, # 0,
         find_best_yt_match = True,
         cover_art_save_dir = "" # "../images/cover_art/"
     ) 
