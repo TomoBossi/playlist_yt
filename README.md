@@ -1,4 +1,5 @@
-For now, the player can be controlled using keyboard only:
+Clicking or tapping the screen will play the next song.
+Other than that, for now the player can be controlled using keyboard only:
  - A-D to play previous/next track
  - S-W to lower/increase volume by 5%
  - Q-E to go back/fast-forward 5 seconds

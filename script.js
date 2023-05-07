@@ -38,7 +38,7 @@ async function init() {
   const res = await fetch("playlist/dementiawave20230503_curated.json");
   playlist = await res.json();
   playlistLength = Object.keys(playlist).length;
-  currentTrackIndex = randomIndex() * randomStarterTrack;
+  currentTrackIndex = randomIndex() * randomStarterTrack - 1 * isMobile;
   currentTrack = playlist[currentTrackIndex];
   // This code loads the IFrame Player API code asynchronously
   var tag = document.createElement("script");
