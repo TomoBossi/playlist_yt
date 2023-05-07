@@ -8,8 +8,9 @@ window.mobileCheck = function() {
 };
 
 const isMobile = window.mobileCheck();
-const randomStarterTrack = !isMobile;
+const randomStarterTrack = !isMobile; // Temp
 var playerAPIready = false;
+var currentPlayerState = -1;
 var currentTrackDuration = 0;
 var currentTrackElapsed = 0;
 var currentVolume = 50;
@@ -24,7 +25,7 @@ var currentTrack;
 var playlist;
 var player;
 
-const playerState = {
+const playerStateMap = {
   UNSTARTED: -1,
   ENDED: 0,
   PLAYING: 1,
@@ -68,24 +69,29 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerReady(event) {
-  trackElapsedTime();
+  trackStateChanges();
   player.setVolume(currentVolume);
   playIndex(currentTrackIndex);
 }
 
-function trackElapsedTime() {
+function trackStateChanges() {
   // https://stackoverflow.com/a/39160557
   setInterval(() => {
     currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
+    currentPlayerState = player.getPlayerState();
   }, 
   100);
 }
 
 function onPlayerStateChange(event) {
-  if (player.getPlayerState() == playerState["ENDED"]) {
+  if (videoIs("ENDED")) {
     playNext();
   }
   updateCurrentTrackDuration();
+}
+
+function videoIs(state) {
+  return player.getPlayerState() == playerStateMap[state];
 }
 
 function tryNext(event) {
@@ -131,10 +137,10 @@ function movedIndex(increment) {
 }
 
 function togglePause() {
-  if (player.getPlayerState() == playerState["PLAYING"]) {
+  if (videoIs("PLAYING")) {
     player.pauseVideo();
     paused = true;
-  } else if (player.getPlayerState() == playerState["PAUSED"]) {
+  } else if (videoIs("PAUSED")) {
     player.playVideo();
     paused = false;
   }
@@ -215,6 +221,12 @@ function validYtVideo(index, callback = console.log) {
 }
 
 // Interaction
+
+document.body.onclick = () => {  // document.getElementById("body's id")
+  if (isMobile) {
+    playNext();
+  }
+};
 
 document.addEventListener(
   "keypress",
