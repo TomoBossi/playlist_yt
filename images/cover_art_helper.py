@@ -13,7 +13,7 @@ def resizeImg(img: tuple, size: int, file_name_array: list[str], prev_sizes_arra
     if filename.split("_")[-1][:-4] not in [str(prev) for prev in prev_sizes_array]:
         new_filename = filename[:-4] + "_" + str(size) + filename[-4:]
         if new_filename not in file_name_array:
-            new_image = image.resize((size, size))
+            new_image = image.convert("RGB").resize((size, size))
             new_image.save(new_filename, quality = 95)
 
 os.chdir(os.path.join(os.path.dirname(__file__), "cover_art"))
