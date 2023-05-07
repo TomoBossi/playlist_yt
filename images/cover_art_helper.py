@@ -19,10 +19,10 @@ def resizeImg(img: tuple, size: int, file_name_array: list[str], prev_sizes_arra
 os.chdir(os.path.join(os.path.dirname(__file__), "cover_art"))
 file_name_array = os.listdir()
 file_img_array = [(f, Image.open(f)) for f in file_name_array]
-prev_sizes = [440, 100]
+sizes = [440, 100]
 for counter, img in enumerate(file_img_array):
-    resizeImg(img, 440, file_name_array, prev_sizes)
-    resizeImg(img, 100, file_name_array, prev_sizes)
+    resizeImg(img, 440, file_name_array, sizes)
+    resizeImg(img, 100, file_name_array, sizes)
     print("(" + str(counter + 1) + "/" + str(len(file_img_array)) + ")", end = "\r")
 
 # rectangularImgs = [file_name_array[i] for i in range(len(file_img_array)) if not isSquare(file_img_array[i])]
