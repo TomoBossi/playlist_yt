@@ -31,16 +31,16 @@ def add(df,
     df = df.sort_index().reset_index(drop=True)
     return df
 
-def remove(df, index):
-    df = df.drop(index)
-    df = df.sort_index().reset_index(drop=True)
-    return df
-
 def move(df, origin, destination):
     row = df.loc[origin]
     df = df.drop(origin)
     df.loc[destination + 0.5] = row
     df = df.sort_index().reset_index(drop=True)
+    return df
+
+def remove(df, index):
+    df = df.drop(index)
+    df = df.reset_index(drop=True)
     return df
 
 if __name__ == "__main__":
