@@ -281,20 +281,20 @@ function buildHTML() {
     const div_row = document.createElement("div");
     const div_info = document.createElement("div");
     const title = document.createElement("h3");
-    const artists_album = document.createElement("p");
+    const album_artists = document.createElement("p");
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
 
     title.innerHTML = `${playlist[index]["title"]}`;
-    artists_album.innerHTML = `${playlist[index]["artists"] + " - " + playlist[index]["album"]}`;
+    album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
     cover.setAttribute("src", `${"images/cover_art/" + playlist[index]["album_cover_filename"].slice(0,-4) + "_100.jpg"}`);
     title.classList.add("prevent-select");
-    artists_album.classList.add("prevent-select");
+    album_artists.classList.add("prevent-select");
     cover.classList.add("prevent-select");
     div_info.classList.add("info");
 
     div_info.appendChild(title);
-    div_info.appendChild(artists_album);
+    div_info.appendChild(album_artists);
     cover_div.appendChild(cover);
     div_row.appendChild(cover_div);
     div_row.appendChild(div_info);
@@ -303,9 +303,9 @@ function buildHTML() {
     var infoHasAsian = playlist[index]["artists"].match(REGEX_ASIAN) 
     infoHasAsian |= playlist[index]["album"].match(REGEX_ASIAN);
     if (titleHasAsian) {title.classList.add("asian");}
-    if (titleHasAsian) {artists_album.classList.add("asian");}
+    if (titleHasAsian) {album_artists.classList.add("asian");}
     title.classList.add("fade");
-    artists_album.classList.add("fade");
+    album_artists.classList.add("fade");
     cover_div.classList.add("cover-placeholder");
     div_row.setAttribute("id", index);
     div_row.setAttribute("ondblclick", `playIndex(${index})`);
@@ -316,7 +316,7 @@ function buildHTML() {
       if (!valid) {
         div_row.classList.add("invalid-video");
         title.classList.add("invalid-video");
-        artists_album.classList.add("invalid-video");
+        album_artists.classList.add("invalid-video");
         cover.classList.add("invalid-video");
       }
     }));
