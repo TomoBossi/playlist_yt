@@ -1776,9 +1776,9 @@
     "album_cover_filename": "1qaq3gfrFUMwNoZ5lM2i7z_Bicicleta_(Remastered_2012).jpg"
   },
   "111": {
-    "title": "Tema De Nayla - Remastered 2012",
+    "title": "Tema De Nayla",
     "artists": "Serú Girán",
-    "album": "Bicicleta (Remastered 2012)",
+    "album": "Bicicleta",
     "sp_datetime_added": "2023-03-09T01:21:36Z",
     "sp_duration_s": 411,
     "sp_track_URI": "spotify:track:39Uy8JIX1MsL8qV2kfxjwO",
@@ -5314,7 +5314,7 @@
   "332": {
     "title": "Snow",
     "artists": "Bill Kiley",
-    "album": "Katana Zero (Original Soundtrack)",
+    "album": "Katana Zero OST",
     "sp_datetime_added": "2023-04-15T19:48:40Z",
     "sp_duration_s": 140,
     "sp_track_URI": "spotify:track:5qNrC3mNXzUJRfzwp8Ov6p",
@@ -5330,7 +5330,7 @@
   "333": {
     "title": "Rain on Brick",
     "artists": "Bill Kiley",
-    "album": "Katana Zero (Original Soundtrack)",
+    "album": "Katana Zero OST",
     "sp_datetime_added": "2023-04-16T19:23:38Z",
     "sp_duration_s": 84,
     "sp_track_URI": "spotify:track:2jRKOHOLv8b60sy6ypdUIk",
@@ -5346,7 +5346,7 @@
   "334": {
     "title": "Blue Room (Kz-Version)",
     "artists": "Tunç Çakır, LudoWic",
-    "album": "Katana Zero (Original Soundtrack)",
+    "album": "Katana Zero OST",
     "sp_datetime_added": "2023-04-23T16:19:32Z",
     "sp_duration_s": 174,
     "sp_track_URI": "spotify:track:0pzZirsJKOdPQOevRbULLY",
@@ -5362,7 +5362,7 @@
   "335": {
     "title": "Third District",
     "artists": "LudoWic",
-    "album": "Katana Zero (Original Soundtrack)",
+    "album": "Katana Zero OST",
     "sp_datetime_added": "2023-04-15T19:58:43Z",
     "sp_duration_s": 274,
     "sp_track_URI": "spotify:track:7r7WQZcwEzTw4IemGUXpyc",
@@ -5378,7 +5378,7 @@
   "336": {
     "title": "Kill Your TV",
     "artists": "Bill Kiley",
-    "album": "Katana Zero (Original Soundtrack)",
+    "album": "Katana Zero OST",
     "sp_datetime_added": "2023-04-16T19:30:48Z",
     "sp_duration_s": 82,
     "sp_track_URI": "spotify:track:2UDKKI8m5guz4RNN5uEr2a",
@@ -5394,7 +5394,7 @@
   "337": {
     "title": "End of the Road",
     "artists": "Bill Kiley",
-    "album": "Katana Zero (Original Soundtrack)",
+    "album": "Katana Zero OST",
     "sp_datetime_added": "2023-04-15T19:51:23Z",
     "sp_duration_s": 309,
     "sp_track_URI": "spotify:track:3FGNrbyFIogNMDt3PT4Aev",
@@ -6546,7 +6546,7 @@
   "409": {
     "title": "The Zoomans",
     "artists": "Steven Universe, aivi & surasshu",
-    "album": "Steven Universe: Season 4 (Score from the Original Soundtrack)",
+    "album": "Steven Universe OST - Vol. IV",
     "sp_datetime_added": "2023-01-27T16:17:21Z",
     "sp_duration_s": 268,
     "sp_track_URI": "spotify:track:4dS9TTVPa3K7eVTSRePxGy",
