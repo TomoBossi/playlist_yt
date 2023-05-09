@@ -310,6 +310,7 @@ function buildHTML() {
     div_row.setAttribute("id", index);
     div_row.setAttribute("ondblclick", `playIndex(${index})`);
     if (isMobile) {div_row.setAttribute("onclick", `playIndex(${index})`);}
+    if (!isMobile) {div_row.classList.add("hover");}
 
     validYtVideo(index, callback = (valid => {
       if (!valid) {
