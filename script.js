@@ -287,7 +287,7 @@ function buildHTML() {
 
     title.innerHTML = `${playlist[index]["title"]}`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
-    cover.setAttribute("src", `${"images/cover_art/" + playlist[index]["album_cover_filename"].slice(0,-4) + "_100.jpg"}`);
+    cover.setAttribute("src", `${"images/cover_art/" + playlist[index]["album_cover_filename"].slice(0,-4) + "_50.jpg"}`);
     title.classList.add("prevent-select");
     album_artists.classList.add("prevent-select");
     cover.classList.add("prevent-select");
@@ -344,9 +344,9 @@ function updateDisplay() {
 function updateTitle() {
   var title = currentTrack["title"] + " - " + currentTrack["artists"];
   title += " | \u{1F50A}" + currentVolume + "%";
-  title = "\u23F5 ".repeat(!paused) + title;
-  title = "\u23F8 ".repeat(paused) + title;
   title = "\u{1F507} ".repeat(muted) + title;
+  title = "\u25B6\uFE0F ".repeat(!paused) + title;
+  title = "\u23F8\uFE0F ".repeat(paused) + title;
   title = "\u{1F500} ".repeat(shuffle) + title;
   title = "\u{1F501} ".repeat(replay) + title;
   document.title = title;
