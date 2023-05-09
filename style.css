@@ -1,3 +1,7 @@
+:root {
+  --scale: 0.8;
+}
+
 body {
   background-color: black;
 }
@@ -8,12 +12,17 @@ body {
   user-select: none; /* Standard syntax */
 }
 
-div[playing="true"] {
+section > div {
+  border: 3px solid rgb(60, 60, 60);
+  background-color: rgb(10, 10, 10);
+}
+
+section > div[playing="true"] {
   border: solid rgb(20, 240, 240);
   background-color: rgb(45, 45, 45);
 }
 
-div[playing="false"] {
+section > div[playing="false"] {
   border: 3px solid rgb(60, 60, 60);
   background-color: rgb(10, 10, 10);
 }
@@ -24,12 +33,12 @@ section > div:hover:not(.invalid-video) {
 }
 
 section > div {
-  clear: both;
+  max-height: calc(var(--scale)*58px);
   overflow: hidden;
-  border-radius: 5px;
-  padding: 6px;
-  padding-bottom: 2px;
-  margin: 15px;
+  border-radius: calc(var(--scale)*5px);
+  padding: calc(var(--scale)*6px);
+  padding-bottom: calc(var(--scale)*2px);
+  margin: calc(var(--scale)*15px);
 }
 
 div.invalid-video {
@@ -40,12 +49,23 @@ img.invalid-video {
   opacity: 0.3;
 }
 
-img {
-  margin: 2px;
-  margin-bottom: 6px;
-  margin-right: 10px;
-  width: 50px;
+.cover-placeholder {
+  background-color: rgb(30, 30, 30);
+  margin: calc(var(--scale)*2px);
+  margin-bottom: calc(var(--scale)*6px);
+  margin-right: calc(var(--scale)*10px);
+  width: calc(var(--scale)*50px);
+  height: calc(var(--scale)*50px);
   float: left;
+}
+
+img {
+  width: calc(var(--scale)*50px);
+  float: left;
+}
+
+.fade {
+  mask-image: linear-gradient(90deg, #000 70%, transparent);
 }
 
 h3.invalid-video, p.invalid-video {
@@ -53,17 +73,33 @@ h3.invalid-video, p.invalid-video {
 }
 
 h3, p {
-  margin: 2px;
+  position: relative;
+  max-width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: calc(var(--scale)*2px);
+}
+
+h3.asian {
+  top: calc(var(--scale)*-6px);
+}
+
+p.asian {
+  top: calc(var(--scale)*-10px)
 }
 
 h3 {
-  height: 25px;
+  font-size: calc(var(--scale)*24px);
+  top: 0;
+  left: 0;
   color: white;
   font-family: Helvetica, sans-serif;
 }
 
 p {
-  max-height: 5px;
+  font-size: calc(var(--scale)*16px);
+  top: calc(var(--scale)*0px);
+  left: 0px;
   color: rgb(200, 200, 200);
   font-family: Helvetica, sans-serif;
 }

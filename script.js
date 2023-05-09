@@ -275,24 +275,38 @@ document.addEventListener(
 // Graphics / Frontend
 
 function buildHTML() {
+  const REGEX_ASIAN = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/;
   const main = document.getElementById("list");
   Object.keys(playlist).forEach(index => {
     const div_row = document.createElement("div");
-    const div = document.createElement("div");
+    const div_info = document.createElement("div");
     const title = document.createElement("h3");
     const artists_album = document.createElement("p");
+    const cover_div = document.createElement("div");
     const cover = document.createElement("img");
+
     title.innerHTML = `${playlist[index]["title"]}`;
     artists_album.innerHTML = `${playlist[index]["artists"] + " - " + playlist[index]["album"]}`;
     cover.setAttribute("src", `${"images/cover_art/" + playlist[index]["album_cover_filename"].slice(0,-4) + "_100.jpg"}`);
-
     title.classList.add("prevent-select");
     artists_album.classList.add("prevent-select");
     cover.classList.add("prevent-select");
-    div.appendChild(title);
-    div.appendChild(artists_album);
-    div_row.appendChild(cover);
-    div_row.appendChild(div);
+    div_info.classList.add("info");
+
+    div_info.appendChild(title);
+    div_info.appendChild(artists_album);
+    cover_div.appendChild(cover);
+    div_row.appendChild(cover_div);
+    div_row.appendChild(div_info);
+
+    var titleHasAsian = playlist[index]["title"].match(REGEX_ASIAN);
+    var infoHasAsian = playlist[index]["artists"].match(REGEX_ASIAN) 
+    infoHasAsian |= playlist[index]["album"].match(REGEX_ASIAN);
+    if (titleHasAsian) {title.classList.add("asian");}
+    if (titleHasAsian) {artists_album.classList.add("asian");}
+    title.classList.add("fade");
+    artists_album.classList.add("fade");
+    cover_div.classList.add("cover-placeholder");
     div_row.setAttribute("id", index);
     div_row.setAttribute("ondblclick", `playIndex(${index})`);
     if (isMobile) {div_row.setAttribute("onclick", `playIndex(${index})`);}
