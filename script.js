@@ -62,12 +62,12 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerReady(event) {
-  trackStateChanges();
+  checkForStateChanges();
   player.setVolume(currentVolume);
   playIndex(currentTrackIndex);
 }
 
-function trackStateChanges() {
+function checkForStateChanges() {
   // https://stackoverflow.com/a/39160557
   setInterval(() => {
     currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
@@ -217,12 +217,6 @@ function validYtVideo(index, callback = console.log) {
 
 // Interaction
 
-// document.body.onclick = () => {  // document.getElementById("body_id")
-//   if (isMobile) {
-//     playNext();
-//   }
-// };
-
 document.addEventListener(
   "keypress",
   (event) => {
@@ -234,6 +228,7 @@ document.addEventListener(
           playLogged();
           break;
         case "Space":
+          event.preventDefault();
           togglePause();
           break;
         case "KeyM":
