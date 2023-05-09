@@ -217,11 +217,11 @@ function validYtVideo(index, callback = console.log) {
 
 // Interaction
 
-document.body.onclick = () => {  // document.getElementById("body_id")
-  if (isMobile) {
-    playNext();
-  }
-};
+// document.body.onclick = () => {  // document.getElementById("body_id")
+//   if (isMobile) {
+//     playNext();
+//   }
+// };
 
 document.addEventListener(
   "keypress",
