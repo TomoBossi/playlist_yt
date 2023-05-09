@@ -5410,7 +5410,7 @@
   "338": {
     "title": "Thus Spoke Brooks",
     "artists": "アトラスサウンドチーム",
-    "album": "Catherine & Catherine Full Body Soundtrack Set",
+    "album": "Catherine OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 111,
     "sp_track_URI": "spotify:track:7vlzWYWAgQdkmib9sH3tt6",
@@ -5426,7 +5426,7 @@
   "339": {
     "title": "Lost Lamb",
     "artists": "アトラスサウンドチーム",
-    "album": "Catherine & Catherine Full Body Soundtrack Set",
+    "album": "Catherine OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 150,
     "sp_track_URI": "spotify:track:2dKdh36BDnnqUbandS0G3i",
@@ -5442,7 +5442,7 @@
   "340": {
     "title": "Hopes and Dreams",
     "artists": "Garoad",
-    "album": "VA-11 Hall-A (Original Soundtrack: Second Round)",
+    "album": "VA-11 Hall-A OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 47,
     "sp_track_URI": "spotify:track:4ReoCtPDVO83gAFgW3zSXD",
@@ -5458,7 +5458,7 @@
   "341": {
     "title": "Metropolis",
     "artists": "Garoad",
-    "album": "VA-11 Hall-A: Prologue (Orignal Soundtrack: Sounds from the Future)",
+    "album": "VA-11 Hall-A Prologue OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 66,
     "sp_track_URI": "spotify:track:4XFDvNk1JDO2ihWPtNOd0J",
@@ -5474,7 +5474,7 @@
   "342": {
     "title": "A Neon Glow Lights the Way",
     "artists": "Garoad",
-    "album": "VA-11 Hall-A (Original Soundtrack: Second Round)",
+    "album": "VA-11 Hall-A OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 152,
     "sp_track_URI": "spotify:track:2LHubvEigYkHGYMaQKbntF",
@@ -5490,7 +5490,7 @@
   "343": {
     "title": "A. Rene",
     "artists": "Garoad",
-    "album": "VA-11 Hall-A (Original Soundtrack: Second Round)",
+    "album": "VA-11 Hall-A OST",
     "sp_datetime_added": "2022-11-04T12:49:59Z",
     "sp_duration_s": 204,
     "sp_track_URI": "spotify:track:5WBfWYKdGixrgf7lopXJoe",
@@ -5522,7 +5522,7 @@
   "345": {
     "title": "A Gaze That Invited Disaster",
     "artists": "Garoad",
-    "album": "VA-11 Hall-A (Original Soundtrack: Second Round)",
+    "album": "VA-11 Hall-A OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 223,
     "sp_track_URI": "spotify:track:4wnsWtaiurBtGhlh8sE0S4",
@@ -5554,7 +5554,7 @@
   "347": {
     "title": "Base of the Titans",
     "artists": "Garoad",
-    "album": "VA-11 Hall-A: Prologue (Orignal Soundtrack: Sounds from the Future)",
+    "album": "VA-11 Hall-A Prologue OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 153,
     "sp_track_URI": "spotify:track:0m4XmLte39qdks3o7dTgF8",
@@ -5570,7 +5570,7 @@
   "348": {
     "title": "Dusk",
     "artists": "Garoad",
-    "album": "VA-11 Hall-A: Prologue (Orignal Soundtrack: Sounds from the Future)",
+    "album": "VA-11 Hall-A Prologue OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 198,
     "sp_track_URI": "spotify:track:3etyOKYTKOHj2ibNwfrnFw",
@@ -5586,7 +5586,7 @@
   "349": {
     "title": "Spirit Potion",
     "artists": "Garoad",
-    "album": "VA-11 Hall-A: Prologue (Orignal Soundtrack: Sounds from the Future)",
+    "album": "VA-11 Hall-A Prologue OST",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 204,
     "sp_track_URI": "spotify:track:3C2Z8bQ0TP60wATPGumrIM",
@@ -6833,8 +6833,8 @@
   },
   "427": {
     "title": "Rain",
-    "artists": "-",
-    "album": "-",
+    "artists": "Mother Nature",
+    "album": "Earthmosphere",
     "sp_datetime_added": "2021-09-16T23:18:40Z",
     "sp_duration_s": 220,
     "sp_track_URI": "spotify:track:53QeelegqpAqMah5XNh5ef",
@@ -7602,7 +7602,7 @@
   "475": {
     "title": "Seagull",
     "artists": "Sunset Rollercoaster",
-    "album": "TV ANIMATION \"Sonny Boy\" original soundtrack",
+    "album": "Sonny Boy OST",
     "sp_datetime_added": "2021-10-08T04:47:32Z",
     "sp_duration_s": 153,
     "sp_track_URI": "spotify:track:11dNggmyQ1Bf2Q5AxoQ8j0",
@@ -7874,7 +7874,7 @@
   "492": {
     "title": "Beacon",
     "artists": "Ogawa & Tokoro",
-    "album": "TV ANIMATION \"Sonny Boy\" original soundtrack",
+    "album": "Sonny Boy OST",
     "sp_datetime_added": "2021-10-14T11:14:00Z",
     "sp_duration_s": 170,
     "sp_track_URI": "spotify:track:07JKOZMslcWF8I9fcvnSrW",
@@ -15074,7 +15074,7 @@
   "942": {
     "title": "Tune from diamond",
     "artists": "The Natsuyasumi Band",
-    "album": "TV ANIMATION \"Sonny Boy\" original soundtrack",
+    "album": "Sonny Boy OST",
     "sp_datetime_added": "2021-10-13T23:33:02Z",
     "sp_duration_s": 276,
     "sp_track_URI": "spotify:track:2EkLVeHsCaKpynENj5FB5k",
@@ -16433,7 +16433,7 @@
   },
   "1027": {
     "title": "El Hijo del Sol",
-    "artists": "El Polen, uan Luis Pereira, Raúl Pereira, Fernando Silva, Ernesto Pinto, Cuto Vásquez, Alex Abad",
+    "artists": "El Polen, Juan Luis Pereira, Raúl Pereira, Fernando Silva, Ernesto Pinto, Cuto Vásquez, Alex Abad",
     "album": "Fuera de la Ciudad",
     "sp_datetime_added": "2022-07-03T19:34:48Z",
     "sp_duration_s": 827,
@@ -17122,7 +17122,7 @@
   "1070": {
     "title": "サニーボーイ・ラプソディ",
     "artists": "toe",
-    "album": "TV ANIMATION \"Sonny Boy\" original soundtrack",
+    "album": "Sonny Boy OST",
     "sp_datetime_added": "2021-10-07T21:06:20Z",
     "sp_duration_s": 245,
     "sp_track_URI": "spotify:track:0tGMbuxapT6wDc7wjFx6yB",

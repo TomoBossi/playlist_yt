@@ -1,12 +1,69 @@
-html {
-  margin: 0px;
-  height: 100%;
-  width: 100%;
-}
-
 body {
   background-color: black;
-  margin: 0px;
-  min-height: 100%;
-  width: 100%;
+}
+
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+div[playing="true"] {
+  border: solid rgb(20, 240, 240);
+  background-color: rgb(45, 45, 45);
+}
+
+div[playing="false"] {
+  border: 3px solid rgb(60, 60, 60);
+  background-color: rgb(10, 10, 10);
+}
+
+section > div:hover:not(.invalid-video) {
+  border: solid white;
+  background-color: rgb(60, 60, 60);
+}
+
+section > div {
+  clear: both;
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 6px;
+  padding-bottom: 2px;
+  margin: 15px;
+}
+
+div.invalid-video {
+  background-color: black;
+}
+
+img.invalid-video {
+  opacity: 0.3;
+}
+
+img {
+  margin: 2px;
+  margin-bottom: 6px;
+  margin-right: 10px;
+  width: 50px;
+  float: left;
+}
+
+h3.invalid-video, p.invalid-video {
+  color: rgb(50, 50, 50);
+}
+
+h3, p {
+  margin: 2px;
+}
+
+h3 {
+  height: 25px;
+  color: white;
+  font-family: Helvetica, sans-serif;
+}
+
+p {
+  max-height: 5px;
+  color: rgb(200, 200, 200);
+  font-family: Helvetica, sans-serif;
 }

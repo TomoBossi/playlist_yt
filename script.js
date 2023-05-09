@@ -1,7 +1,7 @@
 // Inner logic / Backend
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
-const randomStarterTrack = !isMobile; // Temp
+const randomStarterTrack = true;
 var playerAPIready = false;
 var currentPlayerState = -1;
 var currentTrackDuration = 0;
@@ -33,18 +33,18 @@ async function init() {
   playlist = await res.json();
   playlistLength = Object.keys(playlist).length;
   currentTrackIndex = randomIndex() * randomStarterTrack;
-  if (isMobile) {currentTrackIndex = playlistLength - 1;} // Temp
   currentTrack = playlist[currentTrackIndex];
   // This code loads the IFrame Player API code asynchronously
   var tag = document.createElement("script");
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  buildHTML();
 }
 
-// This function flags the API as ready and creates the player
-// Triggers once the API has fully downloaded
 function onYouTubeIframeAPIReady() {
+  // This function flags the API as ready and creates the player
+  // Triggers once the API has fully downloaded
   playerAPIready = true;
   player = new YT.Player("player", {
     videoId: "",
@@ -80,6 +80,7 @@ function onPlayerStateChange(event) {
   if (videoIs("ENDED")) {
     playNext();
   }
+  highlightCurrentTrack();
   updateCurrentTrackDuration();
 }
 
@@ -209,13 +210,14 @@ function validYtVideo(index, callback = console.log) {
   var img = new Image();
   img.src = "http://img.youtube.com/vi/" + playlist[index]["yt_id"] + "/mqdefault.jpg";
   img.onload = () => {
-    callback(!(img.width === 120));
+    valid = !(img.width === 120);
+    callback(valid);
   }
 }
 
 // Interaction
 
-document.body.onclick = () => {  // document.getElementById("body's id")
+document.body.onclick = () => {  // document.getElementById("body_id")
   if (isMobile) {
     playNext();
   }
@@ -277,6 +279,51 @@ document.addEventListener(
 
 // Graphics / Frontend
 
+function buildHTML() {
+  const main = document.getElementById("list");
+  Object.keys(playlist).forEach(index => {
+    const div_row = document.createElement("div");
+    const div = document.createElement("div");
+    const title = document.createElement("h3");
+    const artists_album = document.createElement("p");
+    const cover = document.createElement("img");
+    title.innerHTML = `${playlist[index]["title"]}`;
+    artists_album.innerHTML = `${playlist[index]["artists"] + " - " + playlist[index]["album"]}`;
+    cover.setAttribute("src", `${"images/cover_art/" + playlist[index]["album_cover_filename"].slice(0,-4) + "_100.jpg"}`);
+
+    title.classList.add("prevent-select");
+    artists_album.classList.add("prevent-select");
+    cover.classList.add("prevent-select");
+    div.appendChild(title);
+    div.appendChild(artists_album);
+    div_row.appendChild(cover);
+    div_row.appendChild(div);
+    div_row.setAttribute("id", index);
+    div_row.setAttribute("ondblclick", `playIndex(${index})`);
+
+    validYtVideo(index, callback = (valid => {
+      if (!valid) {
+        div_row.classList.add("invalid-video");
+        title.classList.add("invalid-video");
+        artists_album.classList.add("invalid-video");
+        cover.classList.add("invalid-video");
+      }
+    }));
+
+    main.appendChild(div_row);
+  });
+}
+
+function highlightCurrentTrack() {
+  Object.keys(playlist).forEach(index => {
+    if (index == currentTrackIndex) {
+      document.getElementById(index).setAttribute("playing", "true");
+    } else {
+      document.getElementById(index).setAttribute("playing", "false");
+    }
+  });
+}
+
 function updateDisplay() {
   if (playerAPIready) {
     updateTitle();
@@ -284,13 +331,13 @@ function updateDisplay() {
 }
 
 function updateTitle() {
-  var title = currentTrack["title"] + " - " + currentTrack["artists"] 
+  var title = currentTrack["title"] + " - " + currentTrack["artists"];
   title += " | \u{1F50A}" + currentVolume + "%";
-  title = "\u23F5 ".repeat(!paused) + title
-  title = "\u23F8 ".repeat(paused) + title
-  title = "\u{1F507} ".repeat(muted) + title
-  title = "\u{1F500} ".repeat(shuffle) + title
-  title = "\u{1F501} ".repeat(replay) + title
+  title = "\u23F5 ".repeat(!paused) + title;
+  title = "\u23F8 ".repeat(paused) + title;
+  title = "\u{1F507} ".repeat(muted) + title;
+  title = "\u{1F500} ".repeat(shuffle) + title;
+  title = "\u{1F501} ".repeat(replay) + title;
   document.title = title;
 }
 
