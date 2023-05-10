@@ -80,6 +80,7 @@ function checkForStateChanges() {
 function onPlayerStateChange(event) {
   if (videoIs("ENDED")) {
     playNext();
+    setTimeout(() => {}, 100);
   }
   highlightCurrentTrack();
   updateCurrentTrackDuration();
