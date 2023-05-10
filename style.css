@@ -7,9 +7,10 @@ body {
 }
 
 .prevent-select {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 section > div {
@@ -19,7 +20,7 @@ section > div {
 
 section > div[playing="true"] {
   border: calc(var(--scale)*3px) solid rgb(20, 240, 240);
-  background-color: rgb(45, 45, 45);
+  background-color: rgb(30, 30, 30);
 }
 
 section > div[playing="false"] {
@@ -29,7 +30,7 @@ section > div[playing="false"] {
 
 section > div.hover:hover:not(.invalid-video) {
   border: calc(var(--scale)*3px) solid white;
-  background-color: rgb(60, 60, 60);
+  background-color: rgb(40, 40, 40);
 }
 
 section > div {
@@ -67,7 +68,22 @@ img {
 .fade {
   -webkit-mask-image: linear-gradient(90deg, #000 70%, transparent);
   -moz-mask-image: linear-gradient(90deg, #000 70%, transparent);
+  -ms-mask-image: linear-gradient(90deg, #000 70%, transparent);
   mask-image: linear-gradient(90deg, #000 70%, transparent);
+}
+
+span.index {
+  font-weight: normal;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* .info {
+  position: flex;
+  display: flex;
+} */
+
+h3:not(.invalid-video) > span.index {
+  color:rgb(120, 120, 120);
 }
 
 h3.invalid-video, p.invalid-video {
@@ -75,33 +91,23 @@ h3.invalid-video, p.invalid-video {
 }
 
 h3, p {
+  font-family: Helvetica, sans-serif;
+  line-height: calc(var(--scale)*25px);
   position: relative;
   max-width: 80%;
   overflow: hidden;
   white-space: nowrap;
-  margin: calc(var(--scale)*2px);
-}
-
-h3.asian {
-  top: calc(var(--scale)*-6px);
-}
-
-p.asian {
-  top: calc(var(--scale)*-10px)
+  margin: 0;
 }
 
 h3 {
   font-size: calc(var(--scale)*24px);
-  top: 0;
-  left: 0;
+  top: calc(var(--scale)*3px);
   color: white;
-  font-family: Helvetica, sans-serif;
 }
 
 p {
   font-size: calc(var(--scale)*16px);
-  top: calc(var(--scale)*0px);
-  left: 0px;
+  top: calc(var(--scale)*5px);
   color: rgb(200, 200, 200);
-  font-family: Helvetica, sans-serif;
 }

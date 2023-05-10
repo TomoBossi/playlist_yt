@@ -6,6 +6,7 @@ var playerAPIready = false;
 var currentPlayerState = -1;
 var currentTrackDuration = 0;
 var currentTrackElapsed = 0;
+var playableTracks = [];
 var currentVolume = 50;
 var shuffle = false;
 var replay = false;
@@ -34,12 +35,12 @@ async function init() {
   playlistLength = Object.keys(playlist).length;
   currentTrackIndex = randomIndex() * randomStarterTrack;
   currentTrack = playlist[currentTrackIndex];
+  buildHTML();
   // This code loads the IFrame Player API code asynchronously
   var tag = document.createElement("script");
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  buildHTML();
 }
 
 function onYouTubeIframeAPIReady() {
@@ -90,6 +91,7 @@ function videoIs(state) {
 
 function tryNext(event) {
   setTimeout(() => {
+    console.log("Error: Can't play track " + currentTrackIndex);
     replay = false;
     playNext();
   }, 
@@ -106,15 +108,11 @@ function playIndex(index) {
     endSeconds: currentTrack["yt_end_s"]
   });
   changeVolume(0, muted);
-  updateDisplay(); // Unsettling
+  updateDisplay();
 }
 
-function playNext() {
-  playIndex(movedIndex(1));
-}
-
-function playPrev() {
-  playIndex(movedIndex(-1));
+function playNext(step = 1) {
+  playIndex(movedIndex(step));
 }
 
 function movedIndex(increment) {
@@ -169,9 +167,12 @@ function changeVolume(volumeDelta, mute = false) {
 
 function playLogged() {
   if (digitLogger) {
-    replay = false;
-    muted = false;
-    playIndex(Number(digitLogger % playlistLength));
+    var index = Number(digitLogger) % playlistLength;
+    if (playableTracks.includes(index.toString())) {
+      replay = false;
+      muted = false;
+      playIndex(index);
+    }
   }
 }
 
@@ -250,7 +251,7 @@ document.addEventListener(
           changeVolume(5);
           break;
         case "KeyA":
-          playPrev();
+          playNext(-1);
           break;
         case "KeyD":
           playNext();
@@ -275,7 +276,6 @@ document.addEventListener(
 // Graphics / Frontend
 
 function buildHTML() {
-  const REGEX_ASIAN = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/;
   const main = document.getElementById("list");
   Object.keys(playlist).forEach(index => {
     const div_row = document.createElement("div");
@@ -285,7 +285,7 @@ function buildHTML() {
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
 
-    title.innerHTML = `${playlist[index]["title"]}`;
+    title.innerHTML = `${"<span class=\"index\">" + index + "</span> " + playlist[index]["title"] }`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
     cover.setAttribute("src", `${"images/cover_art/" + playlist[index]["album_cover_filename"].slice(0,-4) + "_50.jpg"}`);
     title.classList.add("prevent-select");
@@ -299,27 +299,22 @@ function buildHTML() {
     div_row.appendChild(cover_div);
     div_row.appendChild(div_info);
 
-    var titleHasAsian = playlist[index]["title"].match(REGEX_ASIAN);
-    var infoHasAsian = playlist[index]["artists"].match(REGEX_ASIAN) 
-    infoHasAsian |= playlist[index]["album"].match(REGEX_ASIAN);
-    if (titleHasAsian) {title.classList.add("asian");}
-    if (titleHasAsian) {album_artists.classList.add("asian");}
     title.classList.add("fade");
     album_artists.classList.add("fade");
     cover_div.classList.add("cover-placeholder");
     div_row.setAttribute("id", index);
-    div_row.setAttribute("ondblclick", `playIndex(${index})`);
-    if (isMobile) {div_row.setAttribute("onclick", `playIndex(${index})`);}
     if (!isMobile) {div_row.classList.add("hover");}
 
-    validYtVideo(index, callback = (valid => {
-      if (!valid) {
-        div_row.classList.add("invalid-video");
-        title.classList.add("invalid-video");
-        album_artists.classList.add("invalid-video");
-        cover.classList.add("invalid-video");
-      }
-    }));
+    if (playlist[index]["yt_id"]) {
+      playableTracks.push(index);
+      div_row.setAttribute("ondblclick", `playIndex(${index})`);
+      if (isMobile) {div_row.setAttribute("onclick", `playIndex(${index})`);}
+    } else {
+      div_row.classList.add("invalid-video");
+      title.classList.add("invalid-video");
+      album_artists.classList.add("invalid-video");
+      cover.classList.add("invalid-video");
+    }
 
     main.appendChild(div_row);
   });
