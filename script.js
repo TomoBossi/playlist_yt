@@ -286,7 +286,7 @@ function buildHTML() {
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
 
-    title.innerHTML = `${"<span class=\"index\">" + index + "</span> " + playlist[index]["title"] }`;
+    title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + playlist[index]["title"] }`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
     cover.setAttribute("src", `${"images/cover_art/" + playlist[index]["album_cover_filename"].slice(0,-4) + "_50.jpg"}`);
     title.classList.add("prevent-select");

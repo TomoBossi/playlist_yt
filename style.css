@@ -73,14 +73,9 @@ img {
 }
 
 span.index {
-  font-weight: normal;
+  font-weight: bold;
   font-family: 'Courier New', Courier, monospace;
 }
-
-/* .info {
-  position: flex;
-  display: flex;
-} */
 
 h3:not(.invalid-video) > span.index {
   color:rgb(120, 120, 120);

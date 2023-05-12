@@ -173,7 +173,7 @@ if __name__ == "__main__":
     df = playlist_backup(
         "n58k0fnejbizfknk4i4m76mkt", 
         "2YvcU4kgVHhFSQSmbO6cUS",
-        start_idx = 859, # 0,
+        start_idx = 1050, # 0,
         find_best_yt_match = True,
         cover_art_save_dir = "" # "../images/cover_art/"
     ) 
