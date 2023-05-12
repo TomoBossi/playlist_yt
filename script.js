@@ -280,10 +280,10 @@ function buildHTML() {
   const tracklist = document.getElementById("tracklist");
   const cover_large_div = document.getElementById("cover_large_div");
   const cover_large = document.createElement("img");
-  cover_large.setAttribute("id", "cover_large")
+  cover_large.setAttribute("id", "cover_large");
   cover_large.classList.add("prevent-select");
   cover_large_div.appendChild(cover_large);
-  cover_large_div.setAttribute("onclick", "hideCover()")
+  cover_large_div.setAttribute("onclick", "hideCover()");
 
   Object.keys(playlist).forEach(index => {
     const div_row = document.createElement("div");
