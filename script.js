@@ -30,7 +30,7 @@ const playerStateMap = {
 init();
 
 async function init() {
-  const res = await fetch("playlist/dementiawave20230503_curated.json");
+  const res = await fetch("playlist/playlist.json");
   playlist = await res.json();
   playlistLength = Object.keys(playlist).length;
   currentTrackIndex = randomIndex() * randomStarterTrack;
@@ -280,6 +280,7 @@ function buildHTML() {
   const tracklist = document.getElementById("tracklist");
   const cover_large_div = document.getElementById("cover_large_div");
   const cover_large = document.createElement("img");
+  cover_large.setAttribute("src", "images/logo.jpg"); // Temp
   cover_large.setAttribute("id", "cover_large");
   cover_large.classList.add("prevent-select");
   cover_large_div.appendChild(cover_large);
@@ -292,8 +293,8 @@ function buildHTML() {
     const album_artists = document.createElement("p");
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
-    const large_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_440.jpg";
-    const thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
+    var large_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_440.jpg";
+    var thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
 
     title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + playlist[index]["title"]}`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;

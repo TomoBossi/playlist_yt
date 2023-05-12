@@ -59,24 +59,24 @@ def playlist_backup(user_id, playlist_id, start_idx = 0, find_best_yt_match = Fa
         ]
 
         # Print element in json format
-        print('"{abs_id}": '.format(abs_id = start_idx + idx) + '{')
-        print(f'  "title": "{title}",')
-        print(f'  "artists": "{artists}",')
-        print(f'  "album": "{album}",')
-        print(f'  "sp_datetime_added": "{element["added_at"]}",')
-        print(f'  "sp_duration_s": {sp_duration_s},')
-        print(f'  "sp_track_URI": "{element["track"]["uri"]}",')
-        print(f'  "sp_album_URI": "{sp_album_URI}",')
-        print(f'  "yt_id": "{yt_id}",')
-        print(f'  "yt_title": "{yt_title}",')
-        print(f'  "yt_duration_s": {yt_duration_s},')
-        print(f'  "yt_start_s": 0,')
-        print(f'  "yt_end_s": 0,')
-        print(f'  "volume_multiplier": 1,')
-        print(f'  "album_cover_filename": "{album_filename}"')
-        print('},')
+        # print('"{abs_id}": '.format(abs_id = start_idx + idx) + '{')
+        # print(f'  "title": "{title}",')
+        # print(f'  "artists": "{artists}",')
+        # print(f'  "album": "{album}",')
+        # print(f'  "sp_datetime_added": "{element["added_at"]}",')
+        # print(f'  "sp_duration_s": {sp_duration_s},')
+        # print(f'  "sp_track_URI": "{element["track"]["uri"]}",')
+        # print(f'  "sp_album_URI": "{sp_album_URI}",')
+        # print(f'  "yt_id": "{yt_id}",')
+        # print(f'  "yt_title": "{yt_title}",')
+        # print(f'  "yt_duration_s": {yt_duration_s},')
+        # print(f'  "yt_start_s": 0,')
+        # print(f'  "yt_end_s": 0,')
+        # print(f'  "volume_multiplier": 1,')
+        # print(f'  "album_cover_filename": "{album_filename}"')
+        # print('},')
 
-        # print_progress(idx + 1, playlist_length)
+        print_progress(idx + 1, playlist_length)
     return df
 
 def save_cover(playlist_element, save_dir, album_filename):
@@ -173,11 +173,11 @@ if __name__ == "__main__":
     df = playlist_backup(
         "n58k0fnejbizfknk4i4m76mkt", 
         "2YvcU4kgVHhFSQSmbO6cUS",
-        start_idx = 1050, # 0,
-        find_best_yt_match = True,
+        start_idx = 0,
+        find_best_yt_match = False,
         cover_art_save_dir = "" # "../images/cover_art/"
     ) 
-    # df.to_json("dementiawave" + datetime.today().strftime("%Y%m%d") + ".json", orient = "index")
+    df.to_json("dementiawave" + datetime.today().strftime("%Y%m%d") + ".json", orient = "index")
     os.remove(".cache")
 
 """ 
