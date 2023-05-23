@@ -91,12 +91,10 @@ function videoIs(state) {
 }
 
 function tryNext(event) {
-  setTimeout(() => {
-    console.log("Error: Can't play track " + currentTrackIndex);
-    replay = false;
-    playNext();
-  },
-    10);
+  console.log("Error: Can't play track " + currentTrackIndex);
+  replay = false;
+  playNext();
+  // setTimeout(() => {},  100); // Revisar bug 
 }
 
 function playIndex(index) {
@@ -293,13 +291,12 @@ function buildHTML() {
     const album_artists = document.createElement("p");
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
-    var large_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_440.jpg";
     var thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
 
     title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + playlist[index]["title"]}`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
     cover.setAttribute("src", thumb_cover_path);
-    cover.setAttribute("onclick", `showCover(${large_cover_path})`);
+    cover.setAttribute("onclick", `showCover(${index})`);
     cover.classList.add("cover-thumb");
     title.classList.add("prevent-select");
     album_artists.classList.add("prevent-select");
@@ -333,10 +330,11 @@ function buildHTML() {
   });
 }
 
-function showCover(imgPath) {
+function showCover(index) {
+  var cover_large_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_440.jpg";
   const cover_large_div = document.getElementById("cover_large_div");
   const cover_large = document.getElementById("cover_large");
-  cover_large.setAttribute("src", imgPath);
+  cover_large.setAttribute("src", cover_large_path);
   cover_large.style.opacity = "1";
   cover_large_div.style.zIndex = "100";
 }
@@ -346,6 +344,7 @@ function hideCover() {
   const cover_large = document.getElementById("cover_large");
   cover_large.style.opacity = "0";
   cover_large_div.style.zIndex = "-1";
+  cover_large.setAttribute("src", "");
 }
 
 function highlightCurrentTrack() {
