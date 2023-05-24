@@ -105,12 +105,12 @@ function playIndex(index) {
   paused = false;
   currentTrackIndex = index;
   currentTrack = playlist[currentTrackIndex];
+  changeVolume(0, muted);
   player.loadVideoById({
     videoId: currentTrack["yt_id"],
     startSeconds: currentTrack["yt_start_s"],
     endSeconds: currentTrack["yt_end_s"]
   });
-  changeVolume(0, muted);
   updateDisplay();
 }
 
