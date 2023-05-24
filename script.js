@@ -19,6 +19,7 @@ var currentTrack;
 var playlist;
 var player;
 
+var prevState = -1;
 const playerStateMap = {
   UNSTARTED: -1,
   ENDED: 0,
@@ -78,23 +79,27 @@ function checkForStateChanges() {
 }
 
 function onPlayerStateChange(event) {
-  if (videoIs("ENDED")) {
+  console.log(player.getPlayerState(), prevState)
+  if (videoIs("ENDED") && !videoWas("UNSTARTED")) { // Second condition prevents unwanted triggers probably caused by a blocked ad ending.
     playNext();
-    setTimeout(() => { }, 100);
   }
   highlightCurrentTrack();
   updateCurrentTrackDuration();
+  prevState = player.getPlayerState();
 }
 
 function videoIs(state) {
   return player.getPlayerState() == playerStateMap[state];
 }
 
+function videoWas(state) {
+  return prevState == playerStateMap[state];
+}
+
 function tryNext(event) {
   console.log("Error: Can't play track " + currentTrackIndex);
   replay = false;
   playNext();
-  // setTimeout(() => {},  100); // Revisar bug 
 }
 
 function playIndex(index) {
