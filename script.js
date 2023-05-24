@@ -282,7 +282,7 @@ function buildHTML() {
   const tracklist = document.getElementById("tracklist");
   const cover_large_div = document.getElementById("cover_large_div");
   const cover_large = document.createElement("img");
-  cover_large.setAttribute("src", "images/logo.jpg"); // Temp
+  cover_large.setAttribute("src", "");
   cover_large.setAttribute("id", "cover_large");
   cover_large.classList.add("prevent-select");
   cover_large_div.appendChild(cover_large);
