@@ -79,8 +79,7 @@ function checkForStateChanges() {
 }
 
 function onPlayerStateChange(event) {
-  console.log(player.getPlayerState(), prevState)
-  if (videoIs("ENDED") && !videoWas("UNSTARTED")) { // Second condition prevents unwanted triggers probably caused by a blocked ad ending.
+  if (videoIs("ENDED") && !videoWas("UNSTARTED")) { // Second condition prevents unwanted triggers probably caused by a blocked ad ending
     playNext();
   }
   highlightCurrentTrack();
