@@ -46,7 +46,7 @@ def remove(df, index):
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove"][1] # safety [3]rd
+    mode = ["add", "move", "remove"][3] # safety [3]rd
 
     if mode == "add":
         df = add(df, 
@@ -64,10 +64,10 @@ if __name__ == "__main__":
         )
 
     if mode == "move":
-        df = move(df, 491, 496)
+        df = move(df, a, a)
 
     if mode == "remove":
-        df = remove(df, -1)
+        df = remove(df, a)
 
     df.to_json("playlist.json", orient = "index")
     # df.to_json("playlist" + datetime.today().strftime("%Y%m%d") + ".json", orient = "index")

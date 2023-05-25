@@ -1,5 +1,5 @@
 :root {
-  --scale: 0.8;
+  --scale: 1;
 }
 
 @media screen and (min-height: 1000px) {
@@ -137,4 +137,15 @@ p {
   font-size: calc(var(--scale)*16px);
   top: calc(var(--scale)*5px);
   color: rgb(200, 200, 200);
+}
+
+#readme > p {
+  max-width: 100%;
+  white-space: normal;
+  text-align: justify;
+  color: rgb(110, 110, 110);
+  padding: calc(var(--scale)*6px);
+  padding-top: 0;
+  margin: calc(var(--scale)*10px);
+  margin-top: 0;
 }
