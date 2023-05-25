@@ -50,17 +50,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df, 
-            index = 495,
-            title = "Notation", 
-            artists = "El Huervo", 
-            album = "Vandereer",
-            yt_id = "sYtFLU6xVn4",
-            yt_title = "El Huervo - Vandereer (Album)",
-            yt_duration_s = 3100 ,
+            index = ,
+            title = "", 
+            artists = "", 
+            album = "",
+            yt_id = "",
+            yt_title = "",
+            yt_duration_s = 0,
             yt_start_s = 0,
-            yt_end_s = 237,
+            yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "34IUri3MM0oqPrDSedlruH_Vandereer.jpg",
+            album_cover_filename = ".jpg",
         )
 
     if mode == "move":
