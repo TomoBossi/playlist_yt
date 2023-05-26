@@ -1,7 +1,13 @@
+// TODO add track duration as monospace floating top right text in format mm:ss, XX:XX if longer than 1 hr.
+// TODO add little button to launch YT frontend instance (e.g. yewtube) and corresponding video.
+// TODO add dynamic Total duration stat at the bottom of html.
+
 // Inner logic / Backend
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
 const randomStarterTrack = true;
+var debug = false;
+var debugUnplayable = []
 var playerAPIready = false;
 var currentPlayerState = -1;
 var currentTrackDuration = 0;
@@ -82,6 +88,9 @@ function onPlayerStateChange(event) {
   if (videoIs("ENDED") && !videoWas("UNSTARTED")) { // Second condition prevents unwanted triggers probably caused by a blocked ad ending
     playNext();
   }
+  if (debug && videoIs("PLAYING")) { // Toggle debug to test all tracks
+    playNext();
+  }
   highlightCurrentTrack();
   updateCurrentTrackDuration();
   prevState = player.getPlayerState();
@@ -96,7 +105,8 @@ function videoWas(state) {
 }
 
 function tryNext(event) {
-  console.log("Error: Can't play track " + currentTrackIndex);
+  console.log("Error: Can't play track " + currentTrackIndex, playlist[currentTrackIndex]["title"]);
+  if (!debugUnplayable.includes(currentTrackIndex)) {debugUnplayable.push(currentTrackIndex)}
   replay = false;
   playNext();
 }

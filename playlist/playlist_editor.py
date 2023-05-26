@@ -46,9 +46,6 @@ def remove(df, index):
 # Regiones trabajables: OSTs jazzeros entre Hotline Miami, lounge previo al DnB muy desorganizado.
 # Yuyos incomodos: Hana Valley, The Fall, Evil Thoughts y Mental Diving cerca del lounge, Who can it be now y dos temas de luxury elite.
 
-# TODO debug para, desde la consola, recorrer todas las canciones
-# chequeando existencia (thumbnail hack) y/o reproducibilidad (eventual status == "PLAYING")
-
 # TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
 
 if __name__ == "__main__":
@@ -57,18 +54,18 @@ if __name__ == "__main__":
     mode = ["add", "move", "remove"][0] # safety [3]rd
 
     if mode == "add":
-        df = add(df, 
-            index = 669,
-            title = "Evil Thoughts",
-            artists = "Brian Eno",
-            album = "Textures",
-            yt_id = "",
-            yt_title = "",
-            yt_duration_s = 123,
-            yt_start_s = 0,
-            yt_end_s = 0,
+        df = add(df,
+            index = 878,
+            title = "Premonition of Revival",
+            artists = "Kow Otani",
+            album = "Shadow of the Colossus OST",
+            yt_id = "57jIlw6HmCE",
+            yt_title = "Shadow of the Colossus Remake FULL Soundtrack",
+            yt_duration_s = 4549,
+            yt_start_s = 3255,
+            yt_end_s = 3301,
             volume_multiplier = 1.0,
-            album_cover_filename = "textures_eno.jpg",
+            album_cover_filename = "kow_otani_shadow_of_the_colossus_ost.jpg",
         )
 
     if mode == "move":
