@@ -46,9 +46,13 @@ def remove(df, index):
 def disable(df, indexes):
     pass
 
-# Regiones trabajables: OSTs jazzeros entre Hotline Miami, lounge previo al DnB muy desorganizado.
+# Regiones trabajables:
+# OSTs jazzeros entre Hotline Miami
+# lounge previo al DnB muy desorganizado.
 # Edge theme y temas del Trails se sienten medio fuera de lugar entre canciones rápidas
-# Yuyos incomodos: Hana Valley, The Fall, Evil Thoughts, MJ-xx y Mental Diving cerca del lounge, Who can it be now y dos temas de luxury elite.
+# Hana Valley
+# The Fall, Evil Thoughts, MJ-xx y Mental Diving cerca del lounge
+# Who can it be now y dos temas de luxury elite.
 
 # TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
 # TODO add func that takes unplayable track index list and removes yt_id automatically, overwrites .json file.
@@ -56,21 +60,23 @@ def disable(df, indexes):
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 403,
-            title = "Still, Move Forward!",
-            artists = "Kenji Hiramatsu",
-            album = "Xenoblade Chronicles 2 OST",
-            yt_id = "512pcIZOjm0",
-            yt_title = "Still, Move Forward! (Combat Theme 3) - Xenoblade Chronicles 2 OST [078]",
-            yt_duration_s = 383,
-            yt_start_s = 0,
-            yt_end_s = 0,
+            index = 361,
+            title = "Title Screen",
+            artists = "Keiichi Suzuki, Hirokazu Tanaka, Hiroshi Kanazu",
+            album = "Earthbound OST",
+
+            yt_id = "gKGIoy3e-rg",
+            yt_title = "EarthBound - FULL SNES OST",
+            yt_duration_s = 12420,
+            yt_start_s = 45,
+            yt_end_s = 60.5,
+
             volume_multiplier = 1.0,
-            album_cover_filename = "xenoblade_chronicles_2_ost.jpg",
+            album_cover_filename = "earthbound.jpg",
         )
 
     if mode == "move":
