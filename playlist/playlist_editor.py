@@ -44,29 +44,31 @@ def remove(df, index):
     return df
 
 # Regiones trabajables: OSTs jazzeros entre Hotline Miami, lounge previo al DnB muy desorganizado.
-# Yuyos incomodos: Hana Valley, The Fall y Mental Diving cerca del lounge, Who can it be now.
+# Yuyos incomodos: Hana Valley, The Fall, Evil Thoughts y Mental Diving cerca del lounge, Who can it be now y dos temas de luxury elite.
 
 # TODO debug para, desde la consola, recorrer todas las canciones
 # chequeando existencia (thumbnail hack) y/o reproducibilidad (eventual status == "PLAYING")
 
+# TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
+
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove"][3] # safety [3]rd
+    mode = ["add", "move", "remove"][0] # safety [3]rd
 
     if mode == "add":
         df = add(df, 
-            index = 547,
-            title = "Better (The Whispers - I Can Make It Better; James Brown - There It Is)",
-            artists = "SAINT PEPSI",
-            album = "Hit Vibes",
-            yt_id = "WYvji5AXOfk",
-            yt_title = "SAINT PEPSI - Better",
-            yt_duration_s = 234,
+            index = 669,
+            title = "Evil Thoughts",
+            artists = "Brian Eno",
+            album = "Textures",
+            yt_id = "",
+            yt_title = "",
+            yt_duration_s = 123,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "saint_pepsi_cherry_pepsi_better_alt1.jpg",
+            album_cover_filename = "textures_eno.jpg",
         )
 
     if mode == "move":
