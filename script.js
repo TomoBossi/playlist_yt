@@ -152,10 +152,12 @@ function togglePause() {
 }
 
 function seek(seconds) {
-  seconds = Math.max(seconds, 0);
-  seconds += currentTrack["yt_start_s"];
-  seconds = Math.min(currentTrackDuration + currentTrack["yt_start_s"], seconds);
-  player.seekTo(seconds);
+  seconds = Math.max(seconds, currentTrack["yt_start_s"]);
+  if (seconds >= currentTrackDuration + currentTrack["yt_start_s"]) {
+    playNext();
+  } else {
+    player.seekTo(seconds);
+  }
 }
 
 function skip(seconds) {
@@ -164,7 +166,7 @@ function skip(seconds) {
 
 function seekLogged() {
   if (digitLogger) {
-    seek(parseFloat("0." + digitLogger) * currentTrackDuration);
+    seek(parseFloat("0." + digitLogger) * currentTrackDuration + currentTrack["yt_start_s"]);
   }
 }
 
