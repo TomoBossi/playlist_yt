@@ -43,29 +43,34 @@ def remove(df, index):
     df = df.reset_index(drop=True)
     return df
 
+def disable(df, indexes):
+    pass
+
 # Regiones trabajables: OSTs jazzeros entre Hotline Miami, lounge previo al DnB muy desorganizado.
-# Yuyos incomodos: Hana Valley, The Fall, Evil Thoughts y Mental Diving cerca del lounge, Who can it be now y dos temas de luxury elite.
+# Edge theme y temas del Trails se sienten medio fuera de lugar entre canciones rápidas
+# Yuyos incomodos: Hana Valley, The Fall, Evil Thoughts, MJ-xx y Mental Diving cerca del lounge, Who can it be now y dos temas de luxury elite.
 
 # TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
+# TODO add func that takes unplayable track index list and removes yt_id automatically, overwrites .json file.
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove"][0] # safety [3]rd
+    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 878,
-            title = "Premonition of Revival",
-            artists = "Kow Otani",
-            album = "Shadow of the Colossus OST",
-            yt_id = "57jIlw6HmCE",
-            yt_title = "Shadow of the Colossus Remake FULL Soundtrack",
-            yt_duration_s = 4549,
-            yt_start_s = 3255,
-            yt_end_s = 3301,
+            index = 403,
+            title = "Still, Move Forward!",
+            artists = "Kenji Hiramatsu",
+            album = "Xenoblade Chronicles 2 OST",
+            yt_id = "512pcIZOjm0",
+            yt_title = "Still, Move Forward! (Combat Theme 3) - Xenoblade Chronicles 2 OST [078]",
+            yt_duration_s = 383,
+            yt_start_s = 0,
+            yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "kow_otani_shadow_of_the_colossus_ost.jpg",
+            album_cover_filename = "xenoblade_chronicles_2_ost.jpg",
         )
 
     if mode == "move":
@@ -73,6 +78,9 @@ if __name__ == "__main__":
 
     if mode == "remove":
         df = remove(df, a)
+
+    if mode == "disable":
+        df = disable(df, [])
 
     df.to_json("playlist.json", orient = "index")
     # df.to_json("playlist" + datetime.today().strftime("%Y%m%d") + ".json", orient = "index")
