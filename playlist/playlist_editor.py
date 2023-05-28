@@ -52,7 +52,8 @@ def disable(df, indexes):
 # Edge theme y temas del Trails se sienten medio fuera de lugar entre canciones rápidas
 # Hana Valley
 # The Fall, Evil Thoughts, MJ-xx y Mental Diving cerca del lounge
-# Who can it be now y dos temas de luxury elite.
+# Who can it be now y dos temas de luxury elite fuera de lugar
+# Born Slippy en el DnB
 
 # TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
 # TODO add func that takes unplayable track index list and removes yt_id automatically, overwrites .json file.
@@ -60,27 +61,25 @@ def disable(df, indexes):
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 361,
-            title = "Title Screen",
-            artists = "Keiichi Suzuki, Hirokazu Tanaka, Hiroshi Kanazu",
-            album = "Earthbound OST",
-
-            yt_id = "gKGIoy3e-rg",
-            yt_title = "EarthBound - FULL SNES OST",
-            yt_duration_s = 12420,
-            yt_start_s = 45,
-            yt_end_s = 60.5,
-
+            index = 571,
+            title = "リサフランク420 / 現代のコンピュー",
+            artists = "MACINTOSH PLUS",
+            album = "Floral Shoppe",
+            yt_id = "pp1NWRDl0pI",
+            yt_title = "Ａｅｓｔｈｅｔｉｃ Ｍｅｍｅｓ | 1½ Hour Vaporwave Mix",
+            yt_duration_s = 5108,
+            yt_start_s = 0,
+            yt_end_s = 437,
             volume_multiplier = 1.0,
-            album_cover_filename = "earthbound.jpg",
+            album_cover_filename = "vektroid_floral_shoppe.jpg",
         )
 
     if mode == "move":
-        df = move(df, 515, 541)
+        df = move(df, a, a)
 
     if mode == "remove":
         df = remove(df, a)

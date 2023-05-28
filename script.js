@@ -1,6 +1,6 @@
 // TODO add track duration as monospace floating top right text in format mm:ss, XX:XX if longer than 1 hr.
 // TODO add little button to launch YT frontend instance (e.g. yewtube) and corresponding video.
-// TODO add dynamic Total duration stat at the bottom of html.
+// TODO add dynamic total duration, n° of albums stats at the bottom of html.
 
 // Inner logic / Backend
 
