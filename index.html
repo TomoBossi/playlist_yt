@@ -10,8 +10,8 @@
     <div id="cover_large_div"></div>
     <section id="tracklist"></section>
     <div style="max-height:0;" id="player"></div>
-    <div id="readme">
-      <p style="min-height:94vh;">
+    <div id="readme" style="min-height:98vh;position:relative">
+      <p>
         I began building this playlist from nothingness years ago. 2017, maybe. Since then, this has
         become to me a sort of personal zen garden. I've seen this playlist grow slowly and organically over the years.
         Whenever I carefully choose where to plant a song or an album based on sound or theme or visuals or unlikely coincidences, 
@@ -27,7 +27,7 @@
         At that point the site would become a mere frontend for my playlist's metadata backup, but that might
         honestly be good enough.
         <br><br>
-        <a style="color:rgb(170, 170, 170);">Keyboard controls</a><br>
+        <span style="color:rgb(170, 170, 170);">Keyboard controls</span><br>
         - A-D to play previous/next track<br>
         - S-W to lower/increase volume by 5%<br>
         - Q-E to go back/fast-forward 5 seconds<br>
@@ -38,49 +38,9 @@
         - Z to toggle shuffle<br>
         - Any sequence of digits followed by Period (.) to jump to the fraction of the track specified by the sequence<br>
         - Any sequence of digits followed by Enter to jump to the track of index specified by the sequence<br>
-        <a style="color:black;">- Yes, it is really easy to make a keylogger using Javascript. Don't worry, this one isn't malicious</a>
+        <span style="color:black;">- Yes, it is really easy to make a keylogger using Javascript. Don't worry, this one isn't malicious</span>
       </p>
-      <p style="max-height:0;">
-        <br><br>
-        <a style="color:rgb(170, 170, 170);">Why and how</a><br>
-        This is my (only) personal playlist. Why is it online? I'll get to that later. Why here? I've never liked Spotify much.
-        Not because of how unfair it may or may not be to small musicians, rather because of my own end-user
-        experience. A lot of amazing music doesn't make it to Spotify, or if it does it's often region-locked.
-        Reasons for this vary. Generally speaking you are extremely likely to find a song if it's popular enough.
-        This makes Spotify a great platform for the average user, but it can be depressing for those with an interest
-        in the slightly "lesser-known" who care deeply about keeping all of their beloved music in one place. Most
-        of the music on this playlist is popular enough to exist on Spotify, but a lot of it isn't. Getting online access
-        to the whole of it was one of my main motivators in leaving Spotify.
-        <br><br>
-        This website uses Youtube's Iframe API. Youtube is, also, absolute trash.
-        At the time of writing this, and surely at the time of reading this as well, Google is one of the worlds
-        largest public enemies. The worst kind of enemy at that, one that pretends to be a friend. Google is
-        so powerful and so huge that it has become part of what we may in very abstract terms call "the system".
-        If you were to suddenly demolish Google and all it's services, the net loss for humanity, global economy,
-        and even culture would be incalculably high. Google's malignant tendrils of rot pierce the rest of 
-        "the system" in so many ways and from so many angles that, like a metastatic cancer on an already broken host,
-        it has become part of it. In other words, Google is so powerful, evil and opressive that you could make
-        the informed arguement that even doing something as seemingly inocuous as using its services for personal
-        purposes is profoundly unethical. Yet, I'm using Youtube's API. Sadly, it works really well.
-        I'd rather host all of the music files on this page's GitHub repo and learn how to make an audio
-        player from scratch to play .flac or hq .mp3 files, but GitHub would delete it all as soon as I'd do my
-        first push because of the sheer amount of space I'd require. Since we're at it, Microsoft is also terrible.
-        Yet, I'm also using GitHub. For now, though, this is as far as I'm willing to go when it comes to avoiding
-        these evils. Hopefully, I'll soon have enough resources to start self-hosting everything I make for the web.
-        <br><br>
-        Despite not being built for the purposes of listening to music, and despite the fact that it absolutely cannot
-        be trusted, Youtube is still all in all a much better vault for humanity's music than Spotify could ever hope
-        to be; this is largely due to users having lots of freedom when it comes to uploading "lesser-known" music,
-        which is often not even copyrighted. Why not a Youtube playlist, then? Simply because I'd rather not tie this
-        playlist to a particular Google account. Why not create and host this playlist on a privacy-focused Youtube
-        frontend? I'm not too confident on the long term survivability of these sites and their users' data.
-        Besides, building this website has been a great excuse for me to learn some long-needed HTML and CSS. Apart from
-        the Iframe API, this website was built from scratch using plain Javascript, HTML and CSS with basically no prior experience
-        working with the latter two. But why even host my playlist instead of just keeping a local copy for myself?
-        It comes down to the fact that I feel very much in love with the idea of sharing this playlist with the
-        vastness of the Internet in a playable format. The reason being that this is for me, essentially, an
-        art project.
-      </p>
+      <p id="playlist_duration" style="top:auto;position:absolute;bottom:0;left:0;"></p>
     </div>
     <script type="text/javascript" src="./script.js"></script>
   </body>

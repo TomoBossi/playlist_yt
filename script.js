@@ -299,6 +299,7 @@ function buildHTML() {
   cover_large.classList.add("prevent-select");
   cover_large_div.appendChild(cover_large);
   cover_large_div.setAttribute("onclick", "hideCover()");
+  var totalPlaylistDuration = 0;
 
   Object.keys(playlist).forEach(index => {
     const div_row = document.createElement("div");
@@ -308,6 +309,9 @@ function buildHTML() {
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
     var thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
+    var duration = trackDurationForDisplay(index);
+    totalPlaylistDuration += duration;
+    var formattedDuration = formattedParsedDuration(duration);
 
     title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + playlist[index]["title"]}`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
@@ -344,6 +348,9 @@ function buildHTML() {
 
     tracklist.appendChild(div_row);
   });
+  const [totalDays, totalHours, totalMinutes, totalSeconds] = parseDuration(totalPlaylistDuration);
+  const playlist_duration = document.getElementById("playlist_duration");
+  playlist_duration.innerHTML = `Total length: ${totalDays} days, ${totalHours} hours, ${totalMinutes} minutes and ${totalSeconds} seconds`;
 }
 
 function showCover(index) {
@@ -394,4 +401,24 @@ function trackDurationForDisplay(index) {
   var displayDuration = Math.max(playlist[index]["yt_end_s"] - playlist[index]["yt_start_s"], 0);
   displayDuration += (playlist[index]["yt_duration_s"] - playlist[index]["yt_start_s"]) * (displayDuration == 0);
   return displayDuration;
+}
+
+function parseDuration(seconds) {
+  seconds = Math.floor(seconds)
+  var perDay = 60*60*24;
+  var perHr = 60*60;
+  var perMin = 60;
+  var days = Math.floor(seconds / perDay);
+  seconds -= days*perDay;
+  var hours = Math.floor(seconds / perHr);
+  seconds -= hours*perHr;
+  var minutes = Math.floor(seconds / perMin);
+  seconds -= minutes*perMin;
+  return [days, hours, minutes, seconds];
+}
+
+function formattedParsedDuration(seconds) {
+  var [days, hours, minutes, seconds] = parseDuration(seconds);
+  minutes = minutes + 60*hours + 24*60*days;
+  return minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
 }
