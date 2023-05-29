@@ -234,10 +234,10 @@ function validYtVideo(index, callback = console.log) {
 // Interaction
 
 document.addEventListener(
-  "keypress",
+  "keydown",
   (event) => {
     // console.log(event.key);
-    // console.log(event.code);
+    console.log(event.code);
     if (playerAPIready) {
       switch (event.code) {
         case "Enter":
@@ -279,6 +279,10 @@ document.addEventListener(
           break;
         case "Period":
           seekLogged();
+          break;
+        case "Tab":
+          event.preventDefault();
+          autoScroll();
           break;
       }
       updateDigitLogger(event.key);
@@ -370,7 +374,14 @@ function hideCover() {
   cover_large.setAttribute("src", "");
 }
 
+function autoScroll() {
+  // https://www.w3schools.com/jsref/met_win_scrollto.asp
+  // https://stackoverflow.com/a/28222246/14067090
+  window.scrollTo(0, window.scrollY + document.getElementById(currentTrackIndex).getBoundingClientRect().top);
+}
+
 function highlightCurrentTrack() {
+  // Naive
   Object.keys(playlist).forEach(index => {
     if (index == currentTrackIndex) {
       document.getElementById(index).setAttribute("playing", "true");
