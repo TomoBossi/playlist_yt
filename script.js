@@ -6,6 +6,7 @@
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
 const randomStarterTrack = true;
+const frontend = "https://yewtu.be/watch?v="
 var debug = false;
 var debugUnplayable = []
 var playerAPIready = false;
@@ -310,31 +311,31 @@ function buildHTML() {
     const div_info = document.createElement("div");
     const title = document.createElement("h3");
     const album_artists = document.createElement("p");
+    const outButton = document.createElement("span");
     const duration = document.createElement("h4");
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
     var thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
     var trackDuration = trackDurationForDisplay(index);
     var formattedDuration = "??:??"
-    if (trackDuration < 3600*2) {
-      formattedDuration = formattedParsedDuration(trackDuration);
-      totalPlaylistDuration += trackDuration;
-    }
 
     title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + playlist[index]["title"]}`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
-    duration.innerHTML = formattedDuration;
+    outButton.innerHTML = "arrow_outward";
     cover.setAttribute("src", thumb_cover_path);
     cover.setAttribute("onclick", `showCover(${index})`);
     cover.classList.add("cover-thumb");
     title.classList.add("prevent-select");
     album_artists.classList.add("prevent-select");
+    outButton.classList.add("material-symbols-outlined");
+    outButton.classList.add("prevent-select");
     duration.classList.add("prevent-select");
     cover.classList.add("prevent-select");
     div_info.classList.add("info");
 
     div_info.appendChild(title);
     div_info.appendChild(album_artists);
+    div_info.append(outButton);
     div_info.appendChild(duration);
     cover_div.appendChild(cover);
     div_row.appendChild(cover_div);
@@ -349,14 +350,21 @@ function buildHTML() {
     if (playlist[index]["yt_id"]) {
       playableTracks.push(index);
       div_row.setAttribute("ondblclick", `playIndex(${index})`);
+      outButton.setAttribute("onclick", `openTab(${index})`);
       if (isMobile) { div_row.setAttribute("onclick", `playIndex(${index})`); }
+      if (trackDuration < 3600*2) {
+        formattedDuration = formattedParsedDuration(trackDuration);
+        totalPlaylistDuration += trackDuration;
+      }
     } else {
       div_row.classList.add("invalid-video");
       title.classList.add("invalid-video");
       album_artists.classList.add("invalid-video");
+      outButton.classList.add("invalid-video");
+      duration.classList.add("invalid-video");
       cover.classList.add("invalid-video");
     }
-
+    duration.innerHTML = formattedDuration;
     tracklist.appendChild(div_row);
   });
   const [totalDays, totalHours, totalMinutes, totalSeconds] = parseDuration(totalPlaylistDuration);
@@ -379,6 +387,15 @@ function hideCover() {
   cover_large.style.opacity = "0";
   cover_large_div.style.zIndex = "-1";
   cover_large.setAttribute("src", "");
+}
+
+function openTab(index) {
+  var link = frontend + playlist[index]["yt_id"];
+  var start = playlist[index]["yt_start_s"];
+  var end = playlist[index]["yt_end_s"];
+  if (start) { link += "&start=" + Math.floor(start) + "s"; }
+  if (end) { link += "&end=" + Math.floor(end) + "s"; }
+  window.open(link, "_blank");
 }
 
 function autoScroll() {
