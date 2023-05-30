@@ -16,6 +16,10 @@ body {
   background-color: black;
 }
 
+#player {
+  max-height: 0;
+}
+
 #tracklist {
   z-index: -1;
 }
@@ -45,33 +49,31 @@ body {
   user-select: none;
 }
 
-section > div {
-  border: calc(var(--scale)*3px) solid rgb(60, 60, 60);
-  background-color: rgb(10, 10, 10);
-}
-
-section > div[playing="true"] {
-  border: calc(var(--scale)*3px) solid rgb(20, 240, 240);
-  background-color: rgb(30, 30, 30);
-}
-
-section > div[playing="false"] {
-  border: calc(var(--scale)*3px) solid rgb(60, 60, 60);
-  background-color: rgb(10, 10, 10);
-}
-
-section > div.hover:hover:not(.invalid-video) {
-  border: calc(var(--scale)*3px) solid white;
-  background-color: rgb(40, 40, 40);
-}
-
-section > div {
+#tracklist > div {
   max-height: calc(var(--scale)*58px);
+  position: relative;
   overflow: hidden;
   border-radius: calc(var(--scale)*5px);
   padding: calc(var(--scale)*6px);
   padding-bottom: calc(var(--scale)*2px);
   margin: calc(var(--scale)*15px);
+  border: calc(var(--scale)*3px) solid rgb(60, 60, 60);
+  background-color: rgb(10, 10, 10);
+}
+
+#tracklist > div[playing="true"] {
+  border: calc(var(--scale)*3px) solid rgb(20, 240, 240);
+  background-color: rgb(30, 30, 30);
+}
+
+#tracklist > div[playing="false"] {
+  border: calc(var(--scale)*3px) solid rgb(60, 60, 60);
+  background-color: rgb(10, 10, 10);
+}
+
+#tracklist > div.hover:hover:not(.invalid-video) {
+  border: calc(var(--scale)*3px) solid white;
+  background-color: rgb(40, 40, 40);
 }
 
 div.invalid-video {
@@ -137,14 +139,32 @@ h3 {
   color: white;
 }
 
+h4 {
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+  max-width: 100%;
+  position: absolute;
+  margin-right: calc(var(--scale)*10px);
+  margin-top: calc(var(--scale)*4px);
+  right: 0;
+  text-align: right;
+  font-size: calc(var(--scale)*20px);
+  top: calc(var(--scale)*3px);
+  color: rgb(125, 125, 125);
+}
+
 p {
   font-size: calc(var(--scale)*16px);
   top: calc(var(--scale)*5px);
   color: rgb(200, 200, 200);
 }
 
+#readme {
+  min-height: 98vh;
+  position:relative;
+}
+
 #readme > p {
-  font-size: calc(var(--scale)*16px);
   max-width: 100%;
   white-space: normal;
   text-align: justify;
@@ -153,4 +173,11 @@ p {
   padding-top: 0;
   margin: calc(var(--scale)*10px);
   margin-top: 0;
+}
+
+#playlist_duration {
+  top: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }

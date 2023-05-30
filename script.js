@@ -310,25 +310,32 @@ function buildHTML() {
     const div_info = document.createElement("div");
     const title = document.createElement("h3");
     const album_artists = document.createElement("p");
+    const duration = document.createElement("h4");
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
     var thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
-    var duration = trackDurationForDisplay(index);
-    totalPlaylistDuration += duration;
-    var formattedDuration = formattedParsedDuration(duration);
+    var trackDuration = trackDurationForDisplay(index);
+    var formattedDuration = "??:??"
+    if (trackDuration < 3600*2) {
+      formattedDuration = formattedParsedDuration(trackDuration);
+      totalPlaylistDuration += trackDuration;
+    }
 
     title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + playlist[index]["title"]}`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
+    duration.innerHTML = formattedDuration;
     cover.setAttribute("src", thumb_cover_path);
     cover.setAttribute("onclick", `showCover(${index})`);
     cover.classList.add("cover-thumb");
     title.classList.add("prevent-select");
     album_artists.classList.add("prevent-select");
+    duration.classList.add("prevent-select");
     cover.classList.add("prevent-select");
     div_info.classList.add("info");
 
     div_info.appendChild(title);
     div_info.appendChild(album_artists);
+    div_info.appendChild(duration);
     cover_div.appendChild(cover);
     div_row.appendChild(cover_div);
     div_row.appendChild(div_info);
@@ -354,7 +361,7 @@ function buildHTML() {
   });
   const [totalDays, totalHours, totalMinutes, totalSeconds] = parseDuration(totalPlaylistDuration);
   const playlist_duration = document.getElementById("playlist_duration");
-  playlist_duration.innerHTML = `Total length: ${totalDays} days, ${totalHours} hours, ${totalMinutes} minutes and ${totalSeconds} seconds`;
+  playlist_duration.innerHTML = `Total length (no rain): ${totalDays} days, ${totalHours} hours, ${totalMinutes} minutes and ${totalSeconds} seconds`;
 }
 
 function showCover(index) {
