@@ -1,12 +1,8 @@
-// TODO add track duration as monospace floating top right text in format mm:ss, XX:XX if longer than 1 hr.
-// TODO add little button to launch YT frontend instance (e.g. yewtube) and corresponding video.
-// TODO add dynamic total duration, n° of albums stats at the bottom of html.
-
 // Inner logic / Backend
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
+const frontend = "https://yewtu.be/watch?v=";
 const randomStarterTrack = true;
-const frontend = "https://yewtu.be/watch?v="
 var debug = false;
 var debugUnplayable = []
 var playerAPIready = false;
@@ -238,7 +234,7 @@ document.addEventListener(
   "keydown",
   (event) => {
     // console.log(event.key);
-    console.log(event.code);
+    // console.log(event.code);
     if (playerAPIready) {
       switch (event.code) {
         case "Enter":
@@ -399,8 +395,6 @@ function openTab(index) {
 }
 
 function autoScroll() {
-  // https://www.w3schools.com/jsref/met_win_scrollto.asp
-  // https://stackoverflow.com/a/28222246/14067090
   window.scrollTo(0, window.scrollY + document.getElementById(currentTrackIndex).getBoundingClientRect().top);
 }
 

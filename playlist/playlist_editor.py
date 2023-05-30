@@ -10,7 +10,7 @@ def add(df,
         yt_title, 
         yt_duration_s, 
         album_cover_filename, 
-        yt_start_s = 0, 
+        yt_start_s = 0,
         yt_end_s = 0,
         volume_multiplier = 1.0):
     df.loc[index - 0.5] = [
@@ -61,7 +61,7 @@ def disable(df, indexes):
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
