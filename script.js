@@ -103,7 +103,9 @@ function videoWas(state) {
 
 function tryNext(event) {
   console.log("Error: Can't play track " + currentTrackIndex, playlist[currentTrackIndex]["title"]);
-  if (!debugUnplayable.includes(currentTrackIndex)) {debugUnplayable.push(currentTrackIndex)}
+  if (!debugUnplayable.includes(currentTrackIndex) && playlist[currentTrackIndex]["yt_id"]) {
+    debugUnplayable.push(currentTrackIndex);
+  }
   replay = false;
   playNext();
 }
