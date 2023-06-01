@@ -65,17 +65,21 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 571,
-            title = "リサフランク420 / 現代のコンピュー",
-            artists = "MACINTOSH PLUS",
-            album = "Floral Shoppe",
-            yt_id = "pp1NWRDl0pI",
-            yt_title = "Ａｅｓｔｈｅｔｉｃ Ｍｅｍｅｓ | 1½ Hour Vaporwave Mix",
-            yt_duration_s = 5108,
+            index = 1099,
+
+            title = "Skate",
+
+            artists = "Evan-Daniel Rose-González",
+            album = "Zineth OST",
+            yt_id = "qgkz2kzZuy0",
+            yt_title = "Zineth Soundtrack - Skate (Trailer track)",
+            yt_duration_s = 133,
+
             yt_start_s = 0,
-            yt_end_s = 437,
+            yt_end_s = 0,
+
             volume_multiplier = 1.0,
-            album_cover_filename = "vektroid_floral_shoppe.jpg",
+            album_cover_filename = "zineth_ost.jpg",
         )
 
     if mode == "move":

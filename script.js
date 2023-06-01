@@ -1,7 +1,7 @@
 // Inner logic / Backend
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
-const frontend = "https://yewtu.be/watch?v=";
+const frontend = "https://piped.kavin.rocks/watch?v="; // "https://yewtu.be/watch?v=";
 const randomStarterTrack = true;
 var debug = false;
 var debugUnplayable = []
