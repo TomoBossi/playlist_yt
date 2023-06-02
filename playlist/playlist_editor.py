@@ -65,31 +65,34 @@ def disable(df, indexes):
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 1099,
-            title = "Skate",
-            artists = "Evan-Daniel Rose-González",
-            album = "Zineth OST",
-            yt_id = "qgkz2kzZuy0",
-            yt_title = "Zineth Soundtrack - Skate (Trailer track)",
-            yt_duration_s = 133,
-            yt_start_s = 0,
-            yt_end_s = 0,
+            index = 873,
+            title = "Yojouhan Ki Owari",
+            
+            artists = "Michiru Ōshima",
+            album = "Tatami Galaxy OST",
+            yt_id = "SWC_NsJGfO4",
+            yt_title = "Tatami Galaxy (Yojouhan Shinwa Taikei) - Full Original Soundtrack",
+            yt_duration_s = 3534,
+
+            yt_start_s = 3252,
+            yt_end_s = 3354,
+            
             volume_multiplier = 1.0,
-            album_cover_filename = "zineth_ost.jpg",
+            album_cover_filename = "tatami_galaxy_ost.jpg",
         )
 
     if mode == "move":
-        df = move(df, a, a)
+        df = move(df, _, _)
 
     if mode == "remove":
-        df = remove(df, a)
+        df = remove(df, _)
 
     if mode == "disable":
-        df = disable(df, [0])
+        df = disable(df, [])
 
     df.to_json("playlist.json", orient = "index")
     # df.to_json("playlist" + datetime.today().strftime("%Y%m%d") + ".json", orient = "index")
