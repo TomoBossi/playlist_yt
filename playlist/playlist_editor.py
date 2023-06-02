@@ -44,7 +44,12 @@ def remove(df, index):
     return df
 
 def disable(df, indexes):
-    pass
+    for idx in indexes:
+        yt_id = df.loc[idx]["yt_id"]
+        if yt_id:
+            df.at[idx, "yt_title"] = yt_id + " " + df.loc[idx]["yt_title"]
+            df.at[idx, "yt_id"] = ""
+    return df
 
 # Regiones trabajables:
 # OSTs jazzeros entre Hotline Miami
@@ -56,7 +61,6 @@ def disable(df, indexes):
 # Born Slippy en el DnB
 
 # TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
-# TODO add func that takes unplayable track index list and removes yt_id automatically, overwrites .json file.
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
@@ -66,18 +70,14 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = 1099,
-
             title = "Skate",
-
             artists = "Evan-Daniel Rose-González",
             album = "Zineth OST",
             yt_id = "qgkz2kzZuy0",
             yt_title = "Zineth Soundtrack - Skate (Trailer track)",
             yt_duration_s = 133,
-
             yt_start_s = 0,
             yt_end_s = 0,
-
             volume_multiplier = 1.0,
             album_cover_filename = "zineth_ost.jpg",
         )
@@ -89,7 +89,7 @@ if __name__ == "__main__":
         df = remove(df, a)
 
     if mode == "disable":
-        df = disable(df, [])
+        df = disable(df, [0])
 
     df.to_json("playlist.json", orient = "index")
     # df.to_json("playlist" + datetime.today().strftime("%Y%m%d") + ".json", orient = "index")
