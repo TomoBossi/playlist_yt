@@ -59,7 +59,6 @@ def disable(df, indexes):
 # The Fall, Evil Thoughts, MJ-xx y Mental Diving cerca del lounge
 # Who can it be now y dos temas de luxury elite fuera de lugar
 # Born Slippy en el DnB
-
 # TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
 
 if __name__ == "__main__":
@@ -69,20 +68,21 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 873,
-            title = "Yojouhan Ki Owari",
-            
-            artists = "Michiru Ōshima",
-            album = "Tatami Galaxy OST",
-            yt_id = "SWC_NsJGfO4",
-            yt_title = "Tatami Galaxy (Yojouhan Shinwa Taikei) - Full Original Soundtrack",
-            yt_duration_s = 3534,
+            index = 1268,
 
-            yt_start_s = 3252,
-            yt_end_s = 3354,
+            title = "Just Forget",
+            artists = "Force of Nature",
+
+            album = "Samurai Champloo OST: Departure",
+            yt_id = "sfGOsDg31mo",
+            yt_title = "Nujabes/Fat Jon - Departure (Samurai Champloo OST) [Full album]",
+            yt_duration_s = 4233,
+
+            yt_start_s = 0,
+            yt_end_s = 230,
             
             volume_multiplier = 1.0,
-            album_cover_filename = "tatami_galaxy_ost.jpg",
+            album_cover_filename = "samurai_champloo_ost_departure.jpg",
         )
 
     if mode == "move":

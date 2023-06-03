@@ -138,7 +138,7 @@ h3.invalid-video, h4.invalid-video, p.invalid-video, span.invalid-video {
 
 h3, p {
   font-family: Helvetica, sans-serif;
-  line-height: calc(var(--scale)*25px);
+  line-height: calc(var(--scale)*30px);
   position: relative;
   max-width: 80%;
   overflow: hidden;
@@ -149,7 +149,6 @@ h3, p {
 h3 {
   font-weight: bold;
   font-size: calc(var(--scale)*24px);
-  top: calc(var(--scale)*3px);
   color: white;
 }
 
@@ -169,7 +168,6 @@ h4 {
 
 p {
   font-size: calc(var(--scale)*16px);
-  top: calc(var(--scale)*5px);
   color: rgb(200, 200, 200);
 }
 
