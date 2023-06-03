@@ -64,23 +64,19 @@ def disable(df, indexes):
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 1268,
-
-            title = "Just Forget",
-            artists = "Force of Nature",
-
+            index = 1271,
+            title = "Kujaku (Transcendence)",
+            artists = "Nujabes",
             album = "Samurai Champloo OST: Departure",
-            yt_id = "sfGOsDg31mo",
-            yt_title = "Nujabes/Fat Jon - Departure (Samurai Champloo OST) [Full album]",
-            yt_duration_s = 4233,
-
+            yt_id = "SGf3XFkK8RQ",
+            yt_title = "Nujabes - Kujaku (Samurai Champloo OST) . Track 04",
+            yt_duration_s = 721,
             yt_start_s = 0,
-            yt_end_s = 230,
-            
+            yt_end_s = 717,
             volume_multiplier = 1.0,
             album_cover_filename = "samurai_champloo_ost_departure.jpg",
         )
