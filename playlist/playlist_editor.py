@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 
 def add(df,
@@ -62,23 +61,24 @@ def disable(df, indexes):
 # TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
 
 if __name__ == "__main__":
+    import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
     mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 1271,
-            title = "Kujaku (Transcendence)",
-            artists = "Nujabes",
-            album = "Samurai Champloo OST: Departure",
-            yt_id = "SGf3XFkK8RQ",
-            yt_title = "Nujabes - Kujaku (Samurai Champloo OST) . Track 04",
-            yt_duration_s = 721,
+            index = 401,
+            title = "sans.",
+            artists = "Toby Fox",
+            album = "Undertale OST",
+            yt_id = "Zzo6L3wsf8c",
+            yt_title = "Undertale OST: 15 - sans.",
+            yt_duration_s = 50,
             yt_start_s = 0,
-            yt_end_s = 717,
+            yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "samurai_champloo_ost_departure.jpg",
+            album_cover_filename = "2M2Ae2SvZe3fmzUtlVOV5Z_UNDERTALE_Soundtrack.jpg",
         )
 
     if mode == "move":
