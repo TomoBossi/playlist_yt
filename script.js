@@ -3,26 +3,26 @@
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
 const frontend = "https://piped.kavin.rocks/watch?v="; // "https://yewtu.be/watch?v=";
 const randomStarterTrack = true;
-var debug = false;
-var debugUnplayable = []
-var playerAPIready = false;
-var currentPlayerState = -1;
-var currentTrackDuration = 0;
-var currentTrackElapsed = 0;
-var playableTracks = [];
-var currentVolume = 50;
-var shuffle = false;
-var replay = false;
-var paused = false;
-var muted = false;
-var digitLogger = "";
-var currentTrackIndex;
-var playlistLength;
-var currentTrack;
-var playlist;
-var player;
+let debug = false;
+let debugUnplayable = []
+let playerAPIready = false;
+let currentPlayerState = -1;
+let currentTrackDuration = 0;
+let currentTrackElapsed = 0;
+let playableTracks = [];
+let currentVolume = 50;
+let shuffle = false;
+let replay = false;
+let paused = false;
+let muted = false;
+let digitLogger = "";
+let currentTrackIndex;
+let playlistLength;
+let currentTrack;
+let playlist;
+let player;
 
-var prevState = -1;
+let prevState = -1;
 const playerStateMap = {
   UNSTARTED: -1,
   ENDED: 0,
@@ -41,9 +41,9 @@ async function init() {
   currentTrack = playlist[currentTrackIndex];
   buildHTML();
   // This code loads the IFrame Player API code asynchronously
-  var tag = document.createElement("script");
+  let tag = document.createElement("script");
   tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName("script")[0];
+  let firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
@@ -128,7 +128,7 @@ function playNext(step = 1) {
 }
 
 function movedIndex(increment) {
-  var index = currentTrackIndex;
+  let index = currentTrackIndex;
   if (!replay) {
     if (shuffle) {
       index = randomIndex();
@@ -181,7 +181,7 @@ function changeVolume(volumeDelta, mute = false) {
 
 function playLogged() {
   if (digitLogger) {
-    var index = Number(digitLogger) % playlistLength;
+    let index = Number(digitLogger) % playlistLength;
     if (playableTracks.includes(index.toString())) {
       replay = false;
       muted = false;
@@ -221,8 +221,8 @@ function randomIndex() {
 
 function validYtVideo(index, callback = console.log) {
   // https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
-  var valid;
-  var img = new Image();
+  let valid;
+  let img = new Image();
   img.src = "http://img.youtube.com/vi/" + playlist[index]["yt_id"] + "/mqdefault.jpg";
   img.onload = () => {
     valid = !(img.width === 120);
@@ -302,7 +302,7 @@ function buildHTML() {
   cover_large.classList.add("prevent-select");
   cover_large_div.appendChild(cover_large);
   cover_large_div.setAttribute("onclick", "hideCover()");
-  var totalPlaylistDuration = 0;
+  let totalPlaylistDuration = 0;
 
   Object.keys(playlist).forEach(index => {
     const div_row = document.createElement("div");
@@ -313,9 +313,9 @@ function buildHTML() {
     const duration = document.createElement("h4");
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
-    var thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
-    var trackDuration = trackDurationForDisplay(index);
-    var formattedDuration = "??:??"
+    let thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
+    let trackDuration = trackDurationForDisplay(index);
+    let formattedDuration = "??:??"
 
     title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + playlist[index]["title"]}`;
     album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
@@ -371,7 +371,7 @@ function buildHTML() {
 }
 
 function showCover(index) {
-  var cover_large_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_440.jpg";
+  let cover_large_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_440.jpg";
   const cover_large_div = document.getElementById("cover_large_div");
   const cover_large = document.getElementById("cover_large");
   cover_large.setAttribute("src", cover_large_path);
@@ -388,9 +388,9 @@ function hideCover() {
 }
 
 function openTab(index) {
-  var link = frontend + playlist[index]["yt_id"];
-  var start = playlist[index]["yt_start_s"];
-  var end = playlist[index]["yt_end_s"];
+  let link = frontend + playlist[index]["yt_id"];
+  let start = playlist[index]["yt_start_s"];
+  let end = playlist[index]["yt_end_s"];
   if (start) { link += "&start=" + Math.floor(start) + "s"; }
   if (end) { link += "&end=" + Math.floor(end) + "s"; }
   window.open(link, "_blank");
@@ -418,7 +418,7 @@ function updateDisplay() {
 }
 
 function updateTitle() {
-  var title = currentTrack["title"] + " - " + currentTrack["artists"];
+  let title = currentTrack["title"] + " - " + currentTrack["artists"];
   title += " | \u{1F50A}" + currentVolume + "%";
   title = "\u{1F507} ".repeat(muted) + title;
   title = "\u25B6\uFE0F ".repeat(!paused) + title;
@@ -429,27 +429,27 @@ function updateTitle() {
 }
 
 function trackDurationForDisplay(index) {
-  var displayDuration = Math.max(playlist[index]["yt_end_s"] - playlist[index]["yt_start_s"], 0);
+  let displayDuration = Math.max(playlist[index]["yt_end_s"] - playlist[index]["yt_start_s"], 0);
   displayDuration += (playlist[index]["yt_duration_s"] - playlist[index]["yt_start_s"]) * (displayDuration == 0);
   return displayDuration;
 }
 
 function parseDuration(seconds) {
   seconds = Math.floor(seconds)
-  var perDay = 60*60*24;
-  var perHr = 60*60;
-  var perMin = 60;
-  var days = Math.floor(seconds / perDay);
+  let perDay = 60*60*24;
+  let perHr = 60*60;
+  let perMin = 60;
+  let days = Math.floor(seconds / perDay);
   seconds -= days*perDay;
-  var hours = Math.floor(seconds / perHr);
+  let hours = Math.floor(seconds / perHr);
   seconds -= hours*perHr;
-  var minutes = Math.floor(seconds / perMin);
+  let minutes = Math.floor(seconds / perMin);
   seconds -= minutes*perMin;
   return [days, hours, minutes, seconds];
 }
 
-function formattedParsedDuration(seconds) {
-  var [days, hours, minutes, seconds] = parseDuration(seconds);
+function formattedParsedDuration(totalSeconds) {
+  let [days, hours, minutes, seconds] = parseDuration(totalSeconds);
   minutes = minutes + 60*hours + 24*60*days;
   return minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
 }
