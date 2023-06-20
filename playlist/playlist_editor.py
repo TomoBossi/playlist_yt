@@ -68,17 +68,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 401,
-            title = "sans.",
-            artists = "Toby Fox",
-            album = "Undertale OST",
-            yt_id = "Zzo6L3wsf8c",
-            yt_title = "Undertale OST: 15 - sans.",
-            yt_duration_s = 50,
+            index = 746,
+            title = "Guggenheim Assemble",
+            artists = "Daniel Pemberton",
+            album = "Spider-Man: Across the Spider-Verse OST",
+            yt_id = "S3MVZDN193Q",
+            yt_title = "Guggenheim Assemble | Spider-Man: Across the Spider-Verse (Original Score)",
+            yt_duration_s = 277,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "2M2Ae2SvZe3fmzUtlVOV5Z_UNDERTALE_Soundtrack.jpg",
+            album_cover_filename = "daniel_pemberton_spiderman_across_ost.jpg",
         )
 
     if mode == "move":
