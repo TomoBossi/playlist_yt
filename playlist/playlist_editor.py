@@ -68,13 +68,13 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 746,
-            title = "Guggenheim Assemble",
+            index = 747,
+            title = "Across the Spider-Verse (Start a Band)",
             artists = "Daniel Pemberton",
             album = "Spider-Man: Across the Spider-Verse OST",
-            yt_id = "S3MVZDN193Q",
-            yt_title = "Guggenheim Assemble | Spider-Man: Across the Spider-Verse (Original Score)",
-            yt_duration_s = 277,
+            yt_id = "DGwW4EHgV6o",
+            yt_title = "Across the Spider-Verse (Start a Band) | Spider-Man: Across the Spider-Verse (Original Score)",
+            yt_duration_s = 235,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
