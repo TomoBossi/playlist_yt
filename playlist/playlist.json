@@ -7664,6 +7664,22 @@
     "album_cover_filename": "6F0hb7PmDDZHtLyx2KrkQH_Steven_Universe_-_Season_4_(Score_from_the_Original_Soundtrack).jpg"
   },
   "479": {
+    "title": "QUARK",
+    "artists": "Jun Fukamachi",
+    "album": "\u30af\u30aa\u30fc\u30af",
+    "sp_datetime_added": "2023-01-27T19:09:05Z",
+    "sp_duration_s": 617,
+    "sp_track_URI": "spotify:track:0gCIYUMd7pf4jMgBrbSRsC",
+    "sp_album_URI": "spotify:album:7wBx5WyE8lW6feEE5JrudW",
+    "yt_id": "q0cMYvWzt7M",
+    "yt_title": "Quark",
+    "yt_duration_s": 617,
+    "yt_start_s": 0.0,
+    "yt_end_s": 0.0,
+    "volume_multiplier": 1.0,
+    "album_cover_filename": "7wBx5WyE8lW6feEE5JrudW_\u30af\u30aa\u30fc\u30af.jpg"
+  },
+  "480": {
     "title": "Fruit On Grass (Garden)",
     "artists": "Arvi Teikari",
     "album": "Baba Is You OST",
@@ -7679,7 +7695,7 @@
     "volume_multiplier": 1.0,
     "album_cover_filename": "arvi_teikari_baba_is_you_ost.jpg"
   },
-  "480": {
+  "481": {
     "title": "Dire Dire Docks",
     "artists": "Koji Kondo",
     "album": "Super Mario 64 OST",
@@ -7695,7 +7711,7 @@
     "volume_multiplier": 1.0,
     "album_cover_filename": "super_mario_64_ost.jpg"
   },
-  "481": {
+  "482": {
     "title": "Hip Shop",
     "artists": "Toby Fox",
     "album": "DELTARUNE OST",
@@ -7711,7 +7727,7 @@
     "volume_multiplier": 1.0,
     "album_cover_filename": "6putGW0KxGMrgTZzplp2pF_DELTARUNE_Chapter_1_(Original_Game_Soundtrack).jpg"
   },
-  "482": {
+  "483": {
     "title": "Stickerbush Symphony",
     "artists": "David Wise",
     "album": "Donkey Kong Country 2 Diddy's Kong Quest OST",
@@ -7726,22 +7742,6 @@
     "yt_end_s": 0.0,
     "volume_multiplier": 1.0,
     "album_cover_filename": "dkc2dkq_ost.jpg"
-  },
-  "483": {
-    "title": "QUARK",
-    "artists": "Jun Fukamachi",
-    "album": "\u30af\u30aa\u30fc\u30af",
-    "sp_datetime_added": "2023-01-27T19:09:05Z",
-    "sp_duration_s": 617,
-    "sp_track_URI": "spotify:track:0gCIYUMd7pf4jMgBrbSRsC",
-    "sp_album_URI": "spotify:album:7wBx5WyE8lW6feEE5JrudW",
-    "yt_id": "q0cMYvWzt7M",
-    "yt_title": "Quark",
-    "yt_duration_s": 617,
-    "yt_start_s": 0.0,
-    "yt_end_s": 0.0,
-    "volume_multiplier": 1.0,
-    "album_cover_filename": "7wBx5WyE8lW6feEE5JrudW_\u30af\u30aa\u30fc\u30af.jpg"
   },
   "484": {
     "title": "Donkey Kong Country - Aquatic Ambience",
