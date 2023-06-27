@@ -68,17 +68,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 747,
-            title = "Across the Spider-Verse (Start a Band)",
-            artists = "Daniel Pemberton",
-            album = "Spider-Man: Across the Spider-Verse OST",
-            yt_id = "DGwW4EHgV6o",
-            yt_title = "Across the Spider-Verse (Start a Band) | Spider-Man: Across the Spider-Verse (Original Score)",
-            yt_duration_s = 235,
+            index = 554,
+            title = "Konga Conga Kappa",
+            artists = "Danny Baranowsky",
+            album = "Crypt of the NecroDancer OST",
+            yt_id = "WUAq7-YpO0w",
+            yt_title = "Crypt of the NecroDancer OST - Konga Conga Kappa (King Conga)",
+            yt_duration_s = 144,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "daniel_pemberton_spiderman_across_ost.jpg",
+            album_cover_filename = "crypt_of_the_necrodancer_ost.jpg",
         )
 
     if mode == "move":
