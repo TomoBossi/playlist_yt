@@ -68,17 +68,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 554,
-            title = "Konga Conga Kappa",
-            artists = "Danny Baranowsky",
-            album = "Crypt of the NecroDancer OST",
-            yt_id = "WUAq7-YpO0w",
-            yt_title = "Crypt of the NecroDancer OST - Konga Conga Kappa (King Conga)",
-            yt_duration_s = 144,
+            index = 1065,
+            title = "Theme of Stone Ocean",
+            artists = "Yugo Kanno",
+            album = "JBA: Stone Ocean OST: Vol. 1",
+            yt_id = "gFAk1RgX2Zo",
+            yt_title = "Theme of Stone Ocean",
+            yt_duration_s = 283,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "crypt_of_the_necrodancer_ost.jpg",
+            album_cover_filename = "stone_ocean_ost.jpg",
         )
 
     if mode == "move":
