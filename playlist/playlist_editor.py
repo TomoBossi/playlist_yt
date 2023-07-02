@@ -68,17 +68,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1065,
-            title = "Theme of Stone Ocean",
-            artists = "Yugo Kanno",
-            album = "JBA: Stone Ocean OST: Vol. 1",
-            yt_id = "gFAk1RgX2Zo",
-            yt_title = "Theme of Stone Ocean",
-            yt_duration_s = 283,
+            index = 412,
+            title = "Heart of the Mountain",
+            artists = "Lena Raine",
+            album = "Celeste OST",
+            yt_id = "DNOuancg5RY",
+            yt_title = "[Official] Celeste Original Soundtrack - 20 - Heart of the Mountain",
+            yt_duration_s = 382,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "stone_ocean_ost.jpg",
+            album_cover_filename = "1ZfETfec0U02KrKNI8w3Gf_Celeste_(Original_Soundtrack).jpg",
         )
 
     if mode == "move":
