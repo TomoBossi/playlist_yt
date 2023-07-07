@@ -136,7 +136,7 @@ h3.invalid-video, h4.invalid-video, p.invalid-video, span.invalid-video {
   color: rgb(50, 50, 50);
 }
 
-h3, p {
+h3, p, ul, li {
   font-family: Helvetica, sans-serif;
   line-height: calc(var(--scale)*30px);
   position: relative;
@@ -166,8 +166,8 @@ h4 {
   color: rgb(125, 125, 125);
 }
 
-p {
-  font-size: calc(var(--scale)*16px);
+p, ul {
+  font-size: calc(var(--scale)*15px);
   color: rgb(200, 200, 200);
 }
 
@@ -193,7 +193,7 @@ p {
   position:relative;
 }
 
-#readme > p {
+#readme > p, ul {
   max-width: 100%;
   white-space: normal;
   text-align: justify;
@@ -202,6 +202,18 @@ p {
   padding-top: 0;
   margin: calc(var(--scale)*10px);
   margin-top: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+#kb_controls {
+  color: rgb(170, 170, 170);
+}
+
+#hidden_li {
+  color: black;
 }
 
 #playlist_duration {
