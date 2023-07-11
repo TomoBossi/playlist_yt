@@ -190,7 +190,7 @@ p, ul {
 
 #readme {
   min-height: 98vh;
-  position:relative;
+  position: relative;
 }
 
 #readme > p, ul {
@@ -206,6 +206,11 @@ p, ul {
 
 ul {
   list-style: none;
+}
+
+li {
+  max-width: 100%;
+  white-space: normal;
 }
 
 #kb_controls {
