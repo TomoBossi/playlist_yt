@@ -64,21 +64,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 480,
-            title = "think_as_a_smart",
-            artists = "Y!YWTGR?SHYG!NLSYCT! Sound team",
-            album = "Y!YWTGR?SHYG!NLSYCT! OST",
-            yt_id = "YL3ICIwNG2I",
-            yt_title = "Parking Lot (YEAH! YOU WANT \"THOSE GAMES,\" RIGHT? Soundtrack)",
-            yt_duration_s = 69,
+            index = 222,
+            title = "Erfüllte Sehnsucht",
+            artists = "Berolina Sound Orchestra, Siegfried Mai",
+            album = "French Riviera",
+            yt_id = "tIUTRrF8MoU",
+            yt_title = "Erfüllte Sehnsucht (feat. Siegfried Mai)",
+            yt_duration_s = 205,
             yt_start_s = 0,
-            yt_end_s = 69,
+            yt_end_s = 205,
             volume_multiplier = 1.0,
-            album_cover_filename = "yeah_you_want_those_games_ost.jpg",
+            album_cover_filename = "1zGjmNUUwgqkHDDKdQxunV_French_Riviera.jpg",
         )
 
     if mode == "move":
