@@ -68,17 +68,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 222,
-            title = "Erfüllte Sehnsucht",
-            artists = "Berolina Sound Orchestra, Siegfried Mai",
-            album = "French Riviera",
-            yt_id = "tIUTRrF8MoU",
-            yt_title = "Erfüllte Sehnsucht (feat. Siegfried Mai)",
-            yt_duration_s = 205,
+            index = 44,
+            title = "To One In Paradise",
+            artists = "The Alan Parsons Project",
+            album = "Tales Of Mystery And Imagination ~ Edgar Allan Poe",
+            yt_id = "9xGWSWOXYd8",
+            yt_title = "To One In Paradise (1987 Remix)",
+            yt_duration_s = 286,
             yt_start_s = 0,
-            yt_end_s = 205,
+            yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "1zGjmNUUwgqkHDDKdQxunV_French_Riviera.jpg",
+            album_cover_filename = "alan_parsons_poe.jpg",
         )
 
     if mode == "move":
