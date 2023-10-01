@@ -59,6 +59,7 @@ def disable(df, indexes):
 # Who can it be now y dos temas de luxury elite fuera de lugar
 # Born Slippy en el DnB
 # TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
+# TODO add https://open.spotify.com/collection/tracks
 
 if __name__ == "__main__":
     import os
@@ -68,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 44,
-            title = "To One In Paradise",
-            artists = "The Alan Parsons Project",
-            album = "Tales Of Mystery And Imagination ~ Edgar Allan Poe",
-            yt_id = "9xGWSWOXYd8",
-            yt_title = "To One In Paradise (1987 Remix)",
-            yt_duration_s = 286,
+            index = 1177,
+            title = "狂言「九十九星降」",
+            artists = "凋叶棕, ZUN",
+            album = "伝",
+            yt_id = "Fa9Wqxq5yRM",
+            yt_title = "【東方Instrumental】 「狂言「九十九星降」」 【凋叶棕】",
+            yt_duration_s = 226,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "alan_parsons_poe.jpg",
+            album_cover_filename = "touhou_8.jpg",
         )
 
     if mode == "move":
