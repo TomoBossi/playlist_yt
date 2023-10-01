@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1177,
-            title = "狂言「九十九星降」",
-            artists = "凋叶棕, ZUN",
-            album = "伝",
-            yt_id = "Fa9Wqxq5yRM",
-            yt_title = "【東方Instrumental】 「狂言「九十九星降」」 【凋叶棕】",
-            yt_duration_s = 226,
+            index = 47,
+            title = "El Aliento de Dios",
+            artists = "Arco Iris",
+            album = "Sudamérica o el Regreso a la Aurora",
+            yt_id = "eIufLbWB5lQ",
+            yt_title = "El Aliento de Dios",
+            yt_duration_s = 194,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "touhou_8.jpg",
+            album_cover_filename = "sudamerica.jpg",
         )
 
     if mode == "move":
