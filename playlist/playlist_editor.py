@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 47,
-            title = "El Aliento de Dios",
-            artists = "Arco Iris",
-            album = "Sudamérica o el Regreso a la Aurora",
-            yt_id = "eIufLbWB5lQ",
-            yt_title = "El Aliento de Dios",
-            yt_duration_s = 194,
+            index = 10,
+            title = "Lizard (Prince Rupert Awakes / Bolero / The Battle Of Glass Tears / Big Top)",
+            artists = "King Crimson",
+            album = "Lizard",
+            yt_id = "SUc8luH-I6c",
+            yt_title = "King Crimson - Lizard (Prince Rupert Awakes / Bolero / The Battle Of Glass Tears / Big Top)",
+            yt_duration_s = 1399,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "sudamerica.jpg",
+            album_cover_filename = "lizard.jpg",
         )
 
     if mode == "move":
