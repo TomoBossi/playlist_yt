@@ -65,21 +65,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 11,
-            title = "Larks' Tongues In Aspic, Part One",
-            artists = "King Crimson",
-            album = "Larks' Tongues In Aspic",
-            yt_id = "VtxFAA0xlg8",
-            yt_title = "King Crimson - Larks' Tongues In Aspic, Part One",
-            yt_duration_s = 815,
+            index = 310,
+            title = "Everybody Knows",
+            artists = "Leonard Cohen",
+            album = "I'm Your Man",
+            yt_id = "Gxd23UVID7k",
+            yt_title = "Leonard Cohen - Everybody Knows (Audio)",
+            yt_duration_s = 337,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "larks.jpg",
+            album_cover_filename = "your_man.jpg",
         )
 
     if mode == "move":
