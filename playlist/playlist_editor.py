@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 10,
-            title = "Lizard (Prince Rupert Awakes / Bolero / The Battle Of Glass Tears / Big Top)",
-            artists = "King Crimson",
-            album = "Lizard",
-            yt_id = "SUc8luH-I6c",
-            yt_title = "King Crimson - Lizard (Prince Rupert Awakes / Bolero / The Battle Of Glass Tears / Big Top)",
-            yt_duration_s = 1399,
+            index = 37,
+            title = "The Little House I Used To Live In",
+            artists = "Frank Zappa, The Mothers Of Invention",
+            album = "Burnt Weeny Sandwich",
+            yt_id = "XduaWFznN5s",
+            yt_title = "The Little House I Used To Live In",
+            yt_duration_s = 1126,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "lizard.jpg",
+            album_cover_filename = "burnt_weenie_sandwich.jpg",
         )
 
     if mode == "move":
