@@ -65,21 +65,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 37,
-            title = "The Little House I Used To Live In",
-            artists = "Frank Zappa, The Mothers Of Invention",
-            album = "Burnt Weeny Sandwich",
-            yt_id = "XduaWFznN5s",
-            yt_title = "The Little House I Used To Live In",
-            yt_duration_s = 1126,
+            index = 11,
+            title = "Larks' Tongues In Aspic, Part One",
+            artists = "King Crimson",
+            album = "Larks' Tongues In Aspic",
+            yt_id = "VtxFAA0xlg8",
+            yt_title = "King Crimson - Larks' Tongues In Aspic, Part One",
+            yt_duration_s = 815,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "burnt_weenie_sandwich.jpg",
+            album_cover_filename = "larks.jpg",
         )
 
     if mode == "move":
