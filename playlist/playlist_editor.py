@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 310,
-            title = "Everybody Knows",
-            artists = "Leonard Cohen",
-            album = "I'm Your Man",
-            yt_id = "Gxd23UVID7k",
-            yt_title = "Leonard Cohen - Everybody Knows (Audio)",
-            yt_duration_s = 337,
+            index = _,
+            title = "4:00 A.M.",
+            artists = "Taeko Onuki",
+            album = "Mignonne",
+            yt_id = "_sOKkON_UnQ",
+            yt_title = "4:00 A.M.",
+            yt_duration_s = 336,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "your_man.jpg",
+            album_cover_filename = "mignonne.jpg",
         )
 
     if mode == "move":
