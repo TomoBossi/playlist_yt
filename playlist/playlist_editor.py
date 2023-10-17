@@ -65,21 +65,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 521,
-            title = "Akrillic//Catching Fleas",
-            artists = "Tim Follin, Geoff Follin",
-            album = "Plok! OST",
-            yt_id = "ranweBZaoTQ",
-            yt_title = "Plok! - Akrillic (Restored)",
-            yt_duration_s = 451,
-            yt_start_s = 0,
-            yt_end_s = 0,
+            index = 511,
+            title = "白ヶ丘 - マロミのテーマ",
+            artists = "Susumu Hirasawa",
+            album = "Paranoia Agent OST",
+            yt_id = "pIkHBwRXBpU",
+            yt_title = "Paranoia Agent Original Soundtrack",
+            yt_duration_s = 3163,
+            yt_start_s = 2775,
+            yt_end_s = 2866,
             volume_multiplier = 1.0,
-            album_cover_filename = "plok.jpg",
+            album_cover_filename = "paranoia_agent_ost.jpg",
         )
 
     if mode == "move":
