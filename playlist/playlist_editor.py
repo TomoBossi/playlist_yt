@@ -65,21 +65,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
             index = 475,
-            title = "RAVE SHIT",
+            title = "Tag Walls, Punch Fascists",
             artists = "2 Mello",
-            album = "Sounds of Tokyo-To Future",
-            yt_id = "AlHtotv0O5g",
-            yt_title = "2 Mello - RAVE SHIT (Official Audio)",
-            yt_duration_s = 263,
+            album = "Memories of Tokyo-To",
+            yt_id = "ETe9TI2i70k",
+            yt_title = "Memories Of Tokyo-To - 15 - Tag Walls, Punch Fascists [OFFICIAL]",
+            yt_duration_s = 191,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "tokyo_future_2_mello.jpg",
+            album_cover_filename = "tokyo_memories_2_mello.jpg",
         )
 
     if mode == "move":
