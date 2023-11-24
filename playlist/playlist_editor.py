@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 475,
-            title = "Tag Walls, Punch Fascists",
-            artists = "2 Mello",
-            album = "Memories of Tokyo-To",
-            yt_id = "ETe9TI2i70k",
-            yt_title = "Memories Of Tokyo-To - 15 - Tag Walls, Punch Fascists [OFFICIAL]",
-            yt_duration_s = 191,
+            index = 46,
+            title = "Et sted under himmelhvelvet",
+            artists = "Lars Fredrik Frøislie",
+            album = "Fire Fortellinger",
+            yt_id = "3X0VT5OSZFI",
+            yt_title = "Et sted under himmelhvelvet",
+            yt_duration_s = 413,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "tokyo_memories_2_mello.jpg",
+            album_cover_filename = "fire_fortellinger.jpg",
         )
 
     if mode == "move":
