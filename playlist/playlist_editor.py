@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 46,
-            title = "Et sted under himmelhvelvet",
-            artists = "Lars Fredrik Frøislie",
-            album = "Fire Fortellinger",
-            yt_id = "3X0VT5OSZFI",
-            yt_title = "Et sted under himmelhvelvet",
-            yt_duration_s = 413,
+            index = 354,
+            title = "the perfect pair",
+            artists = "beabadoobee",
+            album = "Beatopia",
+            yt_id = "HwtEBQiuX-c",
+            yt_title = "beabadoobee - the perfect pair (Official Audio)",
+            yt_duration_s = 177,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "fire_fortellinger.jpg",
+            album_cover_filename = "beatopia.jpg",
         )
 
     if mode == "move":
