@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 13,
-            title = "Islands",
-            artists = "King Crimson",
-            album = "Islands",
-            yt_id = "jY7dbRyoHfE",
-            yt_title = "King Crimson - Islands",
-            yt_duration_s = 713,
+            index = 1279,
+            title = "windows breakcore",
+            artists = "proloxx",
+            album = "windows",
+            yt_id = "AMc4kuUHmhw",
+            yt_title = "windows breakcore -proloxx (out on spotify!!)",
+            yt_duration_s = 189,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "islands.jpg",
+            album_cover_filename = "win.jpg",
         )
 
     if mode == "move":
