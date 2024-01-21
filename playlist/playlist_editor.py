@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 786,
-            title = "Dance of the Dream Man",
-            artists = "Angelo Badalamenti",
-            album = "Twin Peaks OST",
-            yt_id = "kBn_lQBh9JA",
-            yt_title = "Dance of the Dream Man (Instrumental)",
-            yt_duration_s = 221,
+            index = 732,
+            title = "Nome da Musica",
+            artists = "Windows 96, Gavriel",
+            album = "Dated New Aesthetic",
+            yt_id = "fjiQX74gqpk",
+            yt_title = "Windows96 - Dated New Aesthetic",
+            yt_duration_s = 2025,
             yt_start_s = 0,
-            yt_end_s = 0,
+            yt_end_s = 221.4,
             volume_multiplier = 1.0,
-            album_cover_filename = "6iGX2bbzKEocRY0HzdQ9zX_Soundtrack_From_Twin_Peaks.jpg",
+            album_cover_filename = "dated_new_aesthetic.jpg",
         )
 
     if mode == "move":
