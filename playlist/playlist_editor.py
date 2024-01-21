@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1279,
-            title = "windows breakcore",
-            artists = "proloxx",
-            album = "windows",
-            yt_id = "AMc4kuUHmhw",
-            yt_title = "windows breakcore -proloxx (out on spotify!!)",
-            yt_duration_s = 189,
+            index = 786,
+            title = "Dance of the Dream Man",
+            artists = "Angelo Badalamenti",
+            album = "Twin Peaks OST",
+            yt_id = "kBn_lQBh9JA",
+            yt_title = "Dance of the Dream Man (Instrumental)",
+            yt_duration_s = 221,
             yt_start_s = 0,
             yt_end_s = 0,
             volume_multiplier = 1.0,
-            album_cover_filename = "win.jpg",
+            album_cover_filename = "6iGX2bbzKEocRY0HzdQ9zX_Soundtrack_From_Twin_Peaks.jpg",
         )
 
     if mode == "move":
