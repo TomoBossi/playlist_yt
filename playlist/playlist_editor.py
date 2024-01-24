@@ -69,15 +69,15 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 732,
-            title = "Nome da Musica",
+            index = 734,
+            title = "Takeaguess",
             artists = "Windows 96, Gavriel",
             album = "Dated New Aesthetic",
             yt_id = "fjiQX74gqpk",
             yt_title = "Windows96 - Dated New Aesthetic",
             yt_duration_s = 2025,
-            yt_start_s = 0,
-            yt_end_s = 221.4,
+            yt_start_s = 411,
+            yt_end_s = 603,
             volume_multiplier = 1.0,
             album_cover_filename = "dated_new_aesthetic.jpg",
         )
