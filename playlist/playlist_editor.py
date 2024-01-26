@@ -65,21 +65,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 734,
-            title = "Takeaguess",
-            artists = "Windows 96, Gavriel",
-            album = "Dated New Aesthetic",
-            yt_id = "fjiQX74gqpk",
-            yt_title = "Windows96 - Dated New Aesthetic",
-            yt_duration_s = 2025,
-            yt_start_s = 411,
-            yt_end_s = 603,
+            index = 1284,
+            title = "Gods Garden",
+            artists = "DUSQK",
+            album = "Heaven/EXE",
+            yt_id = "z9e8CPULjW4",
+            yt_title = "Heaven/EXE [Jungle\Breakcore\DnB\Dreamcast\PSX]",
+            yt_duration_s = 2691,
+            yt_start_s = 116.9,
+            yt_end_s = 365,
             volume_multiplier = 1.0,
-            album_cover_filename = "dated_new_aesthetic.jpg",
+            album_cover_filename = "heaven.jpg",
         )
 
     if mode == "move":
