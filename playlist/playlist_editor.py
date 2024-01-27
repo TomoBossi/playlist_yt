@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 346,
-            title = "Losing My Way",
-            artists = "FKJ, Tom Misch",
-            album = "Losing My Way",
-            yt_id = "X4Q7d0CtYyk",
-            yt_title = "FKJ & Tom Misch - Losing My Way",
-            yt_duration_s = 257,
+            index = 610,
+            title = "My Only Chance",
+            artists = "The Toxic Avenger",
+            album = "Furi OST",
+            yt_id = "SeAAi7jWOl8",
+            yt_title = "The Toxic Avenger - My Only Chance (from Furi original soundtrack)",
+            yt_duration_s = 408,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "losing_my_way.jpg",
+            album_cover_filename = "1NCt4W6d8fNGkBQAjXDVrA_Furi_(Original_Game_Soundtrack).jpg",
         )
 
     if mode == "move":
