@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1284,
-            title = "Gods Garden",
-            artists = "DUSQK",
-            album = "Heaven/EXE",
-            yt_id = "z9e8CPULjW4",
-            yt_title = "Heaven/EXE [Jungle\Breakcore\DnB\Dreamcast\PSX]",
-            yt_duration_s = 2691,
-            yt_start_s = 116.9,
-            yt_end_s = 365,
+            index = 346,
+            title = "Losing My Way",
+            artists = "FKJ, Tom Misch",
+            album = "Losing My Way",
+            yt_id = "X4Q7d0CtYyk",
+            yt_title = "FKJ & Tom Misch - Losing My Way",
+            yt_duration_s = 257,
+            yt_start_s = 0.0,
+            yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "heaven.jpg",
+            album_cover_filename = "losing_my_way.jpg",
         )
 
     if mode == "move":
