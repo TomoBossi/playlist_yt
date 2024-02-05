@@ -65,21 +65,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 610,
-            title = "7:53",
-            artists = "Danger",
-            album = "Furi OST",
-            yt_id = "nk1UqObbpLo",
-            yt_title = " Danger - 7:53 (from Furi original soundtrack) ",
-            yt_duration_s = 157,
-            yt_start_s = 0.0,
-            yt_end_s = 0.0,
+            index = 116,
+            title = "雪女",
+            artists = "Yoshiko Sai",
+            album = "萬花鏡 (Mangekyō)",
+            yt_id = "3Vz4QH0TfiI",
+            yt_title = "MANGEKYŌ FULL ALBUM HQ ～ YOSHIKO SAI — 萬花鏡 ～ 佐井 好子 (1975)",
+            yt_duration_s = 2928,
+            yt_start_s = 2284.0,
+            yt_end_s = 2774.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "1NCt4W6d8fNGkBQAjXDVrA_Furi_(Original_Game_Soundtrack).jpg",
+            album_cover_filename = "mangekyou.jpg",
         )
 
     if mode == "move":
