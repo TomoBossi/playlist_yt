@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 116,
-            title = "雪女",
-            artists = "Yoshiko Sai",
-            album = "萬花鏡 (Mangekyō)",
-            yt_id = "3Vz4QH0TfiI",
-            yt_title = "MANGEKYŌ FULL ALBUM HQ ～ YOSHIKO SAI — 萬花鏡 ～ 佐井 好子 (1975)",
-            yt_duration_s = 2928,
-            yt_start_s = 2284.0,
-            yt_end_s = 2774.0,
+            index = 299,
+            title = "Moanin'",
+            artists = "Mingus Big Band",
+            album = "Nostalgia in Times Square",
+            yt_id = "T2WTqjC-vPs",
+            yt_title = "Moanin'",
+            yt_duration_s = 539,
+            yt_start_s = 0.0,
+            yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "mangekyou.jpg",
+            album_cover_filename = "nostalgia.jpg",
         )
 
     if mode == "move":
