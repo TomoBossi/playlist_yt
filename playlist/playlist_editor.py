@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 299,
-            title = "Moanin'",
-            artists = "Mingus Big Band",
-            album = "Nostalgia in Times Square",
-            yt_id = "T2WTqjC-vPs",
-            yt_title = "Moanin'",
-            yt_duration_s = 539,
+            index = 1414,
+            title = "Modal Soul",
+            artists = "Nujabes, Uyama Hiroto",
+            album = "Modal Soul",
+            yt_id = "hwJo9Cs7vSU",
+            yt_title = "Nujabes - Modal Soul (feat. Uyama Hiroto) [Official Audio]",
+            yt_duration_s = 281,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "nostalgia.jpg",
+            album_cover_filename = "6nVACH6a27eOWiumAJhDWS_Modal_Soul.jpg",
         )
 
     if mode == "move":
