@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1169,
-            title = "SPECIALZ",
-            artists = "King Gnu",
-            album = "SPECIALZ",
-            yt_id = "5RaU8K8sLTM",
-            yt_title = "SPECIALZ",
-            yt_duration_s = 232,
+            index = 832,
+            title = "Silver Stream",
+            artists = "Tetsukazu Nakanishi, Hiroshi Okubo",
+            album = "Rage Racer OST",
+            yt_id = "z53CuMsHIcE",
+            yt_title = "Tetsukazu Nakanishi & Hiroshi Okubo - Silver Stream",
+            yt_duration_s = 310,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "specialz.jpg",
+            album_cover_filename = "rage_racer.jpg",
         )
 
     if mode == "move":
