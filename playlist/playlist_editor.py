@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 832,
-            title = "Silver Stream",
-            artists = "Tetsukazu Nakanishi, Hiroshi Okubo",
-            album = "Rage Racer OST",
-            yt_id = "z53CuMsHIcE",
-            yt_title = "Tetsukazu Nakanishi & Hiroshi Okubo - Silver Stream",
-            yt_duration_s = 310,
+            index = 1190,
+            title = "Mistic",
+            artists = "アトラスサウンドチーム",
+            album = "PERSONA3 OST",
+            yt_id = "_8gT61NVLDk",
+            yt_title = "Persona 3 OST - Mistic",
+            yt_duration_s = 194,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "rage_racer.jpg",
+            album_cover_filename = "persona3_ost.jpg",
         )
 
     if mode == "move":
