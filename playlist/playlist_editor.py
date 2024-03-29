@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1190,
-            title = "Mistic",
-            artists = "アトラスサウンドチーム",
-            album = "PERSONA3 OST",
-            yt_id = "_8gT61NVLDk",
-            yt_title = "Persona 3 OST - Mistic",
-            yt_duration_s = 194,
+            index = 115,
+            title = "Your Latest Trick",
+            artists = "Dire Straits",
+            album = "Brothers in Arms",
+            yt_id = "blPf0-WphFQ",
+            yt_title = "Your Latest Trick (Remastered 1996)",
+            yt_duration_s = 389,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "persona3_ost.jpg",
+            album_cover_filename = "brothers_in_arms.jpg",
         )
 
     if mode == "move":
