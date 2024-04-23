@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 115,
-            title = "Your Latest Trick",
-            artists = "Dire Straits",
-            album = "Brothers in Arms",
-            yt_id = "blPf0-WphFQ",
-            yt_title = "Your Latest Trick (Remastered 1996)",
-            yt_duration_s = 389,
+            index = 1321,
+            title = "Gaia/Breaks",
+            artists = "DUSQK",
+            album = "Gaia/RAE",
+            yt_id = "VaUoTl2nHfM",
+            yt_title = "Gaia/Breaks",
+            yt_duration_s = 329,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "brothers_in_arms.jpg",
+            album_cover_filename = "gaia.jpg",
         )
 
     if mode == "move":
