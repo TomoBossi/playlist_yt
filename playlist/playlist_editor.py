@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1321,
-            title = "Gaia/Breaks",
-            artists = "DUSQK",
-            album = "Gaia/RAE",
-            yt_id = "VaUoTl2nHfM",
-            yt_title = "Gaia/Breaks",
-            yt_duration_s = 329,
+            index = 365,
+            title = "The Bug",
+            artists = "Crumb",
+            album = "AMAMA",
+            yt_id = "gaN3pxkOgDY",
+            yt_title = "Crumb - The Bug [Official Video]",
+            yt_duration_s = 244,
             yt_start_s = 0.0,
-            yt_end_s = 0.0,
+            yt_end_s = 235.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "gaia.jpg",
+            album_cover_filename = "amama.jpg",
         )
 
     if mode == "move":
