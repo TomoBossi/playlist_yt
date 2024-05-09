@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 365,
-            title = "The Bug",
-            artists = "Crumb",
-            album = "AMAMA",
-            yt_id = "gaN3pxkOgDY",
-            yt_title = "Crumb - The Bug [Official Video]",
-            yt_duration_s = 244,
+            index = 1474,
+            title = "En aften ved svanefossen",
+            artists = "Beik Poel",
+            album = "En aften ved svanefossen",
+            yt_id = "KBl-QdasurU",
+            yt_title = "En aften ved svanefossen",
+            yt_duration_s = 470,
             yt_start_s = 0.0,
-            yt_end_s = 235.0,
+            yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "amama.jpg",
+            album_cover_filename = "svanefossen.jpg",
         )
 
     if mode == "move":
