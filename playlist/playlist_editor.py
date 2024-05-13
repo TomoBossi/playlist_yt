@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1474,
-            title = "En aften ved svanefossen",
-            artists = "Beik Poel",
-            album = "En aften ved svanefossen",
-            yt_id = "KBl-QdasurU",
-            yt_title = "En aften ved svanefossen",
-            yt_duration_s = 470,
-            yt_start_s = 0.0,
-            yt_end_s = 0.0,
+            index = 770,
+            title = "Space Pinball",
+            artists = "Windows96",
+            album = "Yes Da Da Da",
+            yt_id = "9unfRDODtks",
+            yt_title = "Windows96 - Yes Da Da Da",
+            yt_duration_s = 3071,
+            yt_start_s = 601.0,
+            yt_end_s = 941.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "svanefossen.jpg",
+            album_cover_filename = "dadada.jpg",
         )
 
     if mode == "move":
