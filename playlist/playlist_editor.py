@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 770,
-            title = "Space Pinball",
+            index = 786,
+            title = "Lead",
             artists = "Windows96",
-            album = "Yes Da Da Da",
-            yt_id = "9unfRDODtks",
-            yt_title = "Windows96 - Yes Da Da Da",
-            yt_duration_s = 3071,
-            yt_start_s = 601.0,
-            yt_end_s = 941.0,
+            album = "Enchanted Instrumentals and Whispers",
+            yt_id = "Qo6AiI-ddEg",
+            yt_title = "Lead",
+            yt_duration_s = 152,
+            yt_start_s = 0.0,
+            yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "dadada.jpg",
+            album_cover_filename = "4JLZmlctwzJ6wnrkc3pu7N_Enchanted_Instrumentals_and_Whispers.jpg",
         )
 
     if mode == "move":
