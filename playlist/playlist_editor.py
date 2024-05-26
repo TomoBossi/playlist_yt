@@ -69,13 +69,13 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 419,
-            title = "Greedy Groove",
+            index = 420,
+            title = "Lax Lullaby",
             artists = "eebrozgi",
             album = "Elegy of the Stars - Void Stranger OST",
-            yt_id = "6uHakdCsj0c",
-            yt_title = "Void Stranger OST - Greedy Groove",
-            yt_duration_s = 160,
+            yt_id = "8Jo5v0yo1Mg",
+            yt_title = "Void Stranger OST - Lax Lullaby",
+            yt_duration_s = 360,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
