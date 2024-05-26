@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 786,
-            title = "Lead",
-            artists = "Windows96",
-            album = "Enchanted Instrumentals and Whispers",
-            yt_id = "Qo6AiI-ddEg",
-            yt_title = "Lead",
-            yt_duration_s = 152,
+            index = 419,
+            title = "Greedy Groove",
+            artists = "eebrozgi",
+            album = "Elegy of the Stars - Void Stranger OST",
+            yt_id = "6uHakdCsj0c",
+            yt_title = "Void Stranger OST - Greedy Groove",
+            yt_duration_s = 160,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "4JLZmlctwzJ6wnrkc3pu7N_Enchanted_Instrumentals_and_Whispers.jpg",
+            album_cover_filename = "void_stranger.jpg",
         )
 
     if mode == "move":
