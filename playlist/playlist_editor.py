@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 420,
-            title = "Lax Lullaby",
-            artists = "eebrozgi",
-            album = "Elegy of the Stars - Void Stranger OST",
-            yt_id = "8Jo5v0yo1Mg",
-            yt_title = "Void Stranger OST - Lax Lullaby",
-            yt_duration_s = 360,
+            index = _,
+            title = "This Masquerade",
+            artists = "George Benson",
+            album = "Breezin'",
+            yt_id = "j9W0g3NGSj4",
+            yt_title = "This Masquerade (2000 Remaster)",
+            yt_duration_s = 483,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "void_stranger.jpg",
+            album_cover_filename = "breezin.jpg",
         )
 
     if mode == "move":
