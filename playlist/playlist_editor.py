@@ -70,16 +70,16 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = _,
-            title = "This Masquerade",
-            artists = "George Benson",
-            album = "Breezin'",
-            yt_id = "j9W0g3NGSj4",
-            yt_title = "This Masquerade (2000 Remaster)",
-            yt_duration_s = 483,
+            title = "Wild Flower",
+            artists = "The New Birth",
+            album = "It's Been a Long Time",
+            yt_id = "YE0pbXD5ILA",
+            yt_title = "Wild Flower",
+            yt_duration_s = 390,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "breezin.jpg",
+            album_cover_filename = "long_time.jpg",
         )
 
     if mode == "move":
