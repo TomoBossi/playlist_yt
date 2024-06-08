@@ -65,11 +65,11 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 916,
+            index = _,
             title = "Money Trees",
             artists = "Kendrick Lamar",
             album = "good kid, m.A.A.d. city",
