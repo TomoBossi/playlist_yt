@@ -65,21 +65,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = _,
-            title = "Money Trees",
-            artists = "Kendrick Lamar",
-            album = "good kid, m.A.A.d. city",
-            yt_id = "smqhSl0u_sI",
-            yt_title = "Kendrick Lamar - Money Trees (Feat. Jay Rock)",
-            yt_duration_s = 386,
-            yt_start_s = 0.0,
-            yt_end_s = 0.0,
+            index = 864,
+            title = "Desire",
+            artists = "Jungle Fatigue Kru, Thought-Forms",
+            album = "Jungle Fatigue Vol. 3",
+            yt_id = "ugiugMgIiZw",
+            yt_title = "Jungle Fatigue Vol 3 (2023)",
+            yt_duration_s = 6716,
+            yt_start_s = 4727.0,
+            yt_end_s = 5183.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "maad_city.jpg",
+            album_cover_filename = "jungle_fatigue3.jpg",
         )
 
     if mode == "move":
