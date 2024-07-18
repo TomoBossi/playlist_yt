@@ -52,7 +52,7 @@ def disable(df, indexes):
 
 # Regiones trabajables:
 # OSTs jazzeros entre Hotline Miami
-# lounge previo al DnB muy desorganizado.
+# lounge previo al DnB muy desorganizado
 # Edge theme y temas del Trails se sienten medio fuera de lugar entre canciones rápidas
 # Hana Valley
 # The Fall, Evil Thoughts, MJ-xx y Mental Diving cerca del lounge
@@ -65,21 +65,21 @@ if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(__file__))
     df = pd.read_json("playlist.json", orient = "index")
-    mode = ["add", "move", "remove", "disable"][0] # safety [4]th
+    mode = ["add", "move", "remove", "disable"][4] # safety [4]th
 
     if mode == "add":
         df = add(df,
-            index = 864,
-            title = "Desire",
-            artists = "Jungle Fatigue Kru, Thought-Forms",
-            album = "Jungle Fatigue Vol. 3",
-            yt_id = "ugiugMgIiZw",
-            yt_title = "Jungle Fatigue Vol 3 (2023)",
-            yt_duration_s = 6716,
-            yt_start_s = 4727.0,
-            yt_end_s = 5183.0,
+            index = _,
+            title = "Starman",
+            artists = "David Bowie",
+            album = "The Rise and Fall of Ziggy Stardust and the Spiders from Mars",
+            yt_id = "aBKEt3MhNMM",
+            yt_title = "Starman (2012 Remaster)",
+            yt_duration_s = 254,
+            yt_start_s = 0.0,
+            yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "jungle_fatigue3.jpg",
+            album_cover_filename = "starman.jpg",
         )
 
     if mode == "move":
