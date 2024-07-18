@@ -116,6 +116,10 @@ img.cover-thumb:hover {
   opacity:0.75;
 }
 
+.info {
+  max-width: 70%;
+}  
+
 .fade {
   -webkit-mask-image: linear-gradient(90deg, #000 70%, transparent);
   -moz-mask-image: linear-gradient(90deg, #000 70%, transparent);
@@ -140,7 +144,7 @@ h3, p, ul, li {
   font-family: Helvetica, sans-serif;
   line-height: calc(var(--scale)*30px);
   position: relative;
-  max-width: 80%;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   margin: 0;
