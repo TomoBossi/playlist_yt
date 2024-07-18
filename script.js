@@ -1,7 +1,7 @@
 // Inner logic / Backend
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
-const frontend = "https://piped.kavin.rocks/watch?v="; // "https://yewtu.be/watch?v=";
+const frontend = "https://youtube.com/watch?v="; // "https://yewtu.be/watch?v="; "https://piped.kavin.rocks/watch?v=";
 const randomStarterTrack = true;
 let debug = false;
 let debugUnplayable = []
@@ -15,11 +15,16 @@ let shuffle = false;
 let replay = false;
 let paused = false;
 let muted = false;
+let custom = false;
+let anchor = false;
+let anchorScrollException = false;
 let digitLogger = "";
-let currentTrackIndex;
-let playlistLength;
+let currentTrackFullPlaylistIndex;
+let fullPlaylistLength;
 let currentTrack;
-let playlist;
+let fullPlaylist;
+let playlist = [];
+let currentTrackIndex = -1;
 let player;
 
 let prevState = -1;
@@ -35,10 +40,10 @@ init();
 
 async function init() {
   const res = await fetch("playlist/playlist.json");
-  playlist = await res.json();
-  playlistLength = Object.keys(playlist).length;
-  currentTrackIndex = randomIndex() * randomStarterTrack;
-  currentTrack = playlist[currentTrackIndex];
+  fullPlaylist = await res.json();
+  fullPlaylistLength = Object.keys(fullPlaylist).length;
+  currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
+  currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
   buildHTML();
   // This code loads the IFrame Player API code asynchronously
   let tag = document.createElement("script");
@@ -69,23 +74,25 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   checkForStateChanges();
   player.setVolume(currentVolume);
-  playIndex(currentTrackIndex);
+  playIndex(currentTrackFullPlaylistIndex);
 }
 
 function checkForStateChanges() {
   // https://stackoverflow.com/a/39160557
   setInterval(() => {
-    currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
-    currentPlayerState = player.getPlayerState();
-  },
-    100);
+      currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
+      currentPlayerState = player.getPlayerState();
+      updatePlayedBar();
+    },
+    100
+  );
 }
 
 function onPlayerStateChange(event) {
   if (videoIs("ENDED") && !videoWas("UNSTARTED")) { // Second condition prevents unwanted triggers probably caused by a blocked ad ending
     playNext();
   }
-  if (debug && videoIs("PLAYING")) { // Toggle debug to test all tracks
+  if (debug && videoIs("PLAYING")) { // Toggle debug to test all tracks the looooong way
     playNext();
   }
   highlightCurrentTrack();
@@ -102,9 +109,9 @@ function videoWas(state) {
 }
 
 function tryNext(event) {
-  console.log("Error: Can't play track " + currentTrackIndex, playlist[currentTrackIndex]["title"]);
-  if (!debugUnplayable.includes(currentTrackIndex) && playlist[currentTrackIndex]["yt_id"]) {
-    debugUnplayable.push(currentTrackIndex);
+  console.log("Error: Can't play track " + currentTrackFullPlaylistIndex, fullPlaylist[currentTrackFullPlaylistIndex]["title"]);
+  if (!debugUnplayable.includes(currentTrackFullPlaylistIndex) && fullPlaylist[currentTrackFullPlaylistIndex]["yt_id"]) {
+    debugUnplayable.push(currentTrackFullPlaylistIndex);
   }
   replay = false;
   playNext();
@@ -112,8 +119,9 @@ function tryNext(event) {
 
 function playIndex(index) {
   paused = false;
-  currentTrackIndex = index;
-  currentTrack = playlist[currentTrackIndex];
+  currentTrackFullPlaylistIndex = index;
+  updateCurrentTrackIndex();
+  currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
   changeVolume(0, muted);
   player.loadVideoById({
     videoId: currentTrack["yt_id"],
@@ -121,6 +129,9 @@ function playIndex(index) {
     endSeconds: currentTrack["yt_end_s"]
   });
   updateDisplay();
+  if (anchor) {
+    autoScroll();
+  }
 }
 
 function playNext(step = 1) {
@@ -128,13 +139,19 @@ function playNext(step = 1) {
 }
 
 function movedIndex(increment) {
-  let index = currentTrackIndex;
+  let index = currentTrackFullPlaylistIndex;
   if (!replay) {
     if (shuffle) {
       index = randomIndex();
     } else {
-      index += playlistLength + increment;
-      index %= playlistLength;
+      if (playlist.length > 0) {
+        index = playlist.length + currentTrackIndex + increment;
+        index %= playlist.length;
+        index = playlist[index];
+      } else {
+        index += fullPlaylistLength + increment;
+        index %= fullPlaylistLength;
+      }
     }
   }
   return index;
@@ -181,7 +198,7 @@ function changeVolume(volumeDelta, mute = false) {
 
 function playLogged() {
   if (digitLogger) {
-    let index = Number(digitLogger) % playlistLength;
+    let index = Number(digitLogger) % fullPlaylistLength;
     if (playableTracks.includes(index.toString())) {
       replay = false;
       muted = false;
@@ -202,6 +219,12 @@ function toggleReplay() {
   replay = !replay;
 }
 
+function toggleAnchor(event) {
+  event.preventDefault();
+  anchor = !anchor;
+  autoScroll();
+}
+
 function updateCurrentTrackDuration() {
   currentTrackDuration = Math.max(currentTrack["yt_end_s"] - currentTrack["yt_start_s"], 0);
   currentTrackDuration += (player.getDuration() - currentTrack["yt_start_s"]) * (currentTrackDuration == 0);
@@ -216,14 +239,24 @@ function updateDigitLogger(key) {
 }
 
 function randomIndex() {
-  return Math.floor(Math.random() * (playlistLength + 1));
+  if (playlist.length > 0) {
+    return playlist[Math.floor(Math.random() * playlist.length)];
+  }
+  return Math.floor(Math.random() * fullPlaylistLength);
+}
+
+function updateCurrentTrackIndex() {
+  let index = playlist.indexOf(currentTrackFullPlaylistIndex);
+  if (index > -1) {
+    currentTrackIndex = index;
+  }
 }
 
 function validYtVideo(index, callback = console.log) {
   // https://gist.github.com/tonY1883/a3b85925081688de569b779b4657439b
   let valid;
   let img = new Image();
-  img.src = "http://img.youtube.com/vi/" + playlist[index]["yt_id"] + "/mqdefault.jpg";
+  img.src = "http://img.youtube.com/vi/" + fullPlaylist[index]["yt_id"] + "/mqdefault.jpg";
   img.onload = () => {
     valid = !(img.width === 120);
     callback(valid);
@@ -231,6 +264,18 @@ function validYtVideo(index, callback = console.log) {
 }
 
 // Interaction
+
+document.addEventListener(
+  "scroll", 
+  (event) => {
+    if (!anchorScrollException) {
+      anchor = false;
+      updateTitle();
+    } else {
+      anchorScrollException = false;
+    }
+  }
+);
 
 document.addEventListener(
   "keydown",
@@ -276,12 +321,22 @@ document.addEventListener(
         case "KeyE":
           skip(5);
           break;
+        case "KeyP":
+          editPlaylist();
+          updatePlaylistDisplay();
+          break;
         case "Period":
           seekLogged();
           break;
         case "Tab":
-          event.preventDefault();
-          autoScroll();
+          toggleAnchor(event);
+          break;
+        case "Backspace":
+          digitLogger = "";
+          break;
+        case "Escape":
+          deletePlaylist();
+          updatePlaylistDisplay(true);
           break;
       }
       updateDigitLogger(event.key);
@@ -304,22 +359,26 @@ function buildHTML() {
   cover_large_div.setAttribute("onclick", "hideCover()");
   let totalPlaylistDuration = 0;
 
-  Object.keys(playlist).forEach(index => {
+  Object.keys(fullPlaylist).forEach(index => {
     const div_row = document.createElement("div");
     const div_info = document.createElement("div");
     const title = document.createElement("h3");
     const album_artists = document.createElement("p");
     const outButton = document.createElement("span");
     const duration = document.createElement("h4");
+    const playlistIndex = document.createElement("h5");
     const cover_div = document.createElement("div");
     const cover = document.createElement("img");
-    let thumb_cover_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
+    let thumb_cover_path = "images/cover_art/" + fullPlaylist[index]["album_cover_filename"].slice(0, -4) + "_50.jpg";
     let trackDuration = trackDurationForDisplay(index);
-    let formattedDuration = "??:??"
+    let formattedDuration = "??:??";
+    let formattedPlaylistIndex = "0000 |";
 
-    title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + playlist[index]["title"]}`;
-    album_artists.innerHTML = `${playlist[index]["album"] + " - " + playlist[index]["artists"]}`;
+    title.innerHTML = `${"<span class=\"index\">" + index.padStart(4, '0') + "</span> " + fullPlaylist[index]["title"]}`;
+    album_artists.innerHTML = `${fullPlaylist[index]["album"] + " - " + fullPlaylist[index]["artists"]}`;
     outButton.innerHTML = "arrow_outward";
+    playlistIndex.innerHTML = formattedPlaylistIndex;
+
     cover.setAttribute("src", thumb_cover_path);
     cover.setAttribute("onclick", `showCover(${index})`);
     cover.classList.add("cover-thumb");
@@ -328,13 +387,15 @@ function buildHTML() {
     outButton.classList.add("material-symbols-outlined");
     outButton.classList.add("prevent-select");
     duration.classList.add("prevent-select");
+    playlistIndex.classList.add("prevent-select");
     cover.classList.add("prevent-select");
     div_info.classList.add("info");
 
     div_info.appendChild(title);
     div_info.appendChild(album_artists);
-    div_info.append(outButton);
+    div_info.appendChild(outButton);
     div_info.appendChild(duration);
+    div_info.appendChild(playlistIndex);
     cover_div.appendChild(cover);
     div_row.appendChild(cover_div);
     div_row.appendChild(div_info);
@@ -345,7 +406,7 @@ function buildHTML() {
     div_row.setAttribute("id", index);
     if (!isMobile) { div_row.classList.add("hover"); }
 
-    if (playlist[index]["yt_id"]) {
+    if (fullPlaylist[index]["yt_id"]) {
       playableTracks.push(index);
       div_row.setAttribute("ondblclick", `playIndex(${index})`);
       outButton.setAttribute("onclick", `openTab(${index})`);
@@ -371,7 +432,7 @@ function buildHTML() {
 }
 
 function showCover(index) {
-  let cover_large_path = "images/cover_art/" + playlist[index]["album_cover_filename"].slice(0, -4) + "_440.jpg";
+  let cover_large_path = "images/cover_art/" + fullPlaylist[index]["album_cover_filename"].slice(0, -4) + "_440.jpg";
   const cover_large_div = document.getElementById("cover_large_div");
   const cover_large = document.getElementById("cover_large");
   cover_large.setAttribute("src", cover_large_path);
@@ -388,22 +449,23 @@ function hideCover() {
 }
 
 function openTab(index) {
-  let link = frontend + playlist[index]["yt_id"];
-  let start = playlist[index]["yt_start_s"];
-  let end = playlist[index]["yt_end_s"];
+  let link = frontend + fullPlaylist[index]["yt_id"];
+  let start = fullPlaylist[index]["yt_start_s"];
+  let end = fullPlaylist[index]["yt_end_s"];
   if (start) { link += "&start=" + Math.floor(start) + "s"; }
   if (end) { link += "&end=" + Math.floor(end) + "s"; }
   window.open(link, "_blank");
 }
 
 function autoScroll() {
-  window.scrollTo(0, window.scrollY + document.getElementById(currentTrackIndex).getBoundingClientRect().top);
+  anchorScrollException = true;
+  window.scrollTo(0, window.scrollY + document.getElementById(currentTrackFullPlaylistIndex).getBoundingClientRect().top);
 }
 
 function highlightCurrentTrack() {
   // Naive
-  Object.keys(playlist).forEach(index => {
-    if (index == currentTrackIndex) {
+  Object.keys(fullPlaylist).forEach(index => {
+    if (index == currentTrackFullPlaylistIndex) {
       document.getElementById(index).setAttribute("playing", "true");
     } else {
       document.getElementById(index).setAttribute("playing", "false");
@@ -414,6 +476,7 @@ function highlightCurrentTrack() {
 function updateDisplay() {
   if (playerAPIready) {
     updateTitle();
+    updatePlayedBar();
   }
 }
 
@@ -421,17 +484,24 @@ function updateTitle() {
   let title = currentTrack["title"] + " - " + currentTrack["artists"];
   title += " | \u{1F50A}" + currentVolume + "%";
   title = "\u{1F507} ".repeat(muted) + title;
+  title = "\u2693\uFE0F ".repeat(anchor) + title;
   title = "\u25B6\uFE0F ".repeat(!paused) + title;
   title = "\u23F8\uFE0F ".repeat(paused) + title;
   title = "\u{1F500} ".repeat(shuffle) + title;
   title = "\u{1F501} ".repeat(replay) + title;
+  title = "\u{1F49F} ".repeat(custom) + title;
   document.title = title;
 }
 
 function trackDurationForDisplay(index) {
-  let displayDuration = Math.max(playlist[index]["yt_end_s"] - playlist[index]["yt_start_s"], 0);
-  displayDuration += (playlist[index]["yt_duration_s"] - playlist[index]["yt_start_s"]) * (displayDuration == 0);
+  let displayDuration = Math.max(fullPlaylist[index]["yt_end_s"] - fullPlaylist[index]["yt_start_s"], 0);
+  displayDuration += (fullPlaylist[index]["yt_duration_s"] - fullPlaylist[index]["yt_start_s"]) * (displayDuration == 0);
   return displayDuration;
+}
+
+function updatePlayedBar() {
+  let played_proportion = Math.min(currentTrackElapsed/trackDurationForDisplay(currentTrackFullPlaylistIndex), 1);
+  document.getElementById("played_bar").style.width = `${100*played_proportion}%`;
 }
 
 function parseDuration(seconds) {
@@ -452,4 +522,57 @@ function formattedParsedDuration(totalSeconds) {
   let [days, hours, minutes, seconds] = parseDuration(totalSeconds);
   minutes = minutes + 60*hours + 24*60*days;
   return minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+}
+
+function deletePlaylist() {
+  playlist = [];
+  currentTrackIndex = -1;
+  custom = false;
+}
+
+function editPlaylist() {
+  let index = playlist.indexOf(currentTrackFullPlaylistIndex);
+  custom = true;
+  if (index > -1) {
+    playlist.splice(index, 1);
+    if (playlist.length === 0) {
+        custom = false;
+    }
+  } else {
+    if (digitLogger) {
+      index = Number(digitLogger) % playlist.length;
+      playlist.splice(index, 0, currentTrackFullPlaylistIndex);
+      currentTrackIndex = index;
+    } else {
+      playlist.push(currentTrackFullPlaylistIndex);
+      currentTrackIndex = playlist.length - 1;
+    }
+  }
+  updateDisplay();
+}
+
+function getInsideContainer(containerID, childID) {
+    let element = document.getElementById(childID);
+    let parent = element ? element.parentNode : {};
+    return (parent.id && parent.id === containerID) ? element : {};
+}
+
+
+function updatePlaylistDisplay(clear = false) {
+  let div_row;
+  let indexDisplay;
+  Object.keys(fullPlaylist).forEach(index => {
+    div_row = document.getElementById(index);
+    indexDisplay = div_row.querySelector("h5");
+    div_row.setAttribute("playlist", "false");
+    indexDisplay.innerHTML = "0000 |";
+  });
+  if (!clear) {
+    for ([playlistIndex, index] of playlist.entries()) {
+      div_row = document.getElementById(index);
+      indexDisplay = div_row.querySelector("h5");
+      div_row.setAttribute("playlist", "true");
+      indexDisplay.innerHTML = `${playlistIndex.toString().padStart(4, '0') + " |"}`;
+    }
+  }
 }

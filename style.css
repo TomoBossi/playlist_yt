@@ -166,6 +166,24 @@ h4 {
   color: rgb(125, 125, 125);
 }
 
+h5 {
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+  max-width: 100%;
+  position: absolute;
+  margin-right: calc(var(--scale)*80px);
+  margin-top: calc(var(--scale)*2px);
+  right: 0;
+  top: calc(var(--scale)*3px);
+  text-align: right;
+  font-size: calc(var(--scale)*20px);
+  color: rgb(40, 40, 40);
+}
+
+div[playlist="true"] h5 {
+  color: rgb(20, 240, 240);
+}
+
 p, ul {
   font-size: calc(var(--scale)*15px);
   color: rgb(200, 200, 200);
@@ -226,4 +244,23 @@ li {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+#played_bar { 
+  height: 2px;
+  width: 0%; 
+  background-color: rgb(20, 240, 240);
+  opacity: 1;
+  z-index: 50;
+}
+
+#played_bar_bg { 
+  height: 2px; 
+  position: fixed; 
+  bottom: 0%;
+  width: 100%; 
+  background-color: #7d7d7d; 
+  opacity: 1;
+  z-index: 50;
+  border-top: 1px solid black;
 }
