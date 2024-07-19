@@ -181,11 +181,12 @@ h5 {
   top: calc(var(--scale)*3px);
   text-align: right;
   font-size: calc(var(--scale)*20px);
-  color: rgb(40, 40, 40);
+  color: rgb(255, 255, 255);
+  opacity: 5%;
 }
 
 div[playlist="true"] h5 {
-  color: rgb(20, 240, 240);
+  opacity: 60%;
 }
 
 p, ul {
