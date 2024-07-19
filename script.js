@@ -3,6 +3,7 @@
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
 const frontend = "https://youtube.com/watch?v="; // "https://yewtu.be/watch?v="; "https://piped.kavin.rocks/watch?v=";
 const randomStarterTrack = true;
+
 let debug = false;
 let debugUnplayable = []
 let playerAPIready = false;
@@ -35,6 +36,8 @@ const playerStateMap = {
   PAUSED: 2,
   BUFFERING: 3,
 };
+
+let played_bar = document.getElementById("played_bar_bg");
 
 init();
 
@@ -176,13 +179,17 @@ function seek(seconds) {
   }
 }
 
+function seekFraction(fraction) {
+  seek(fraction * currentTrackDuration + currentTrack["yt_start_s"]);
+}
+
 function skip(seconds) {
   seek(player.getCurrentTime() + seconds);
 }
 
 function seekLogged() {
   if (digitLogger) {
-    seek(parseFloat("0." + digitLogger) * currentTrackDuration + currentTrack["yt_start_s"]);
+    seekFraction(parseFloat("0." + digitLogger));
   }
 }
 
@@ -274,6 +281,14 @@ document.addEventListener(
     } else {
       anchorScrollException = false;
     }
+  }
+);
+
+played_bar.addEventListener(
+  "click",
+  (event) => {
+    console.log(event.clientX/played_bar.offsetWidth);
+    seekFraction(event.clientX/played_bar.offsetWidth);
   }
 );
 
@@ -500,7 +515,7 @@ function trackDurationForDisplay(index) {
 }
 
 function updatePlayedBar() {
-  let played_proportion = Math.min(currentTrackElapsed/trackDurationForDisplay(currentTrackFullPlaylistIndex), 1);
+  let played_proportion = Math.min(currentTrackElapsed/currentTrackDuration, 1);
   document.getElementById("played_bar").style.width = `${100*played_proportion}%`;
 }
 
@@ -556,7 +571,6 @@ function getInsideContainer(containerID, childID) {
     let parent = element ? element.parentNode : {};
     return (parent.id && parent.id === containerID) ? element : {};
 }
-
 
 function updatePlaylistDisplay(clear = false) {
   let div_row;
