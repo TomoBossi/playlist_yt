@@ -287,7 +287,6 @@ document.addEventListener(
 played_bar.addEventListener(
   "click",
   (event) => {
-    console.log(event.clientX/played_bar.offsetWidth);
     seekFraction(event.clientX/played_bar.offsetWidth);
   }
 );
