@@ -70,16 +70,16 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = _,
-            title = "Starman",
-            artists = "David Bowie",
-            album = "The Rise and Fall of Ziggy Stardust and the Spiders from Mars",
-            yt_id = "aBKEt3MhNMM",
-            yt_title = "Starman (2012 Remaster)",
-            yt_duration_s = 254,
+            title = "rainy nite rhapsody",
+            artists = "2 Mello",
+            album = "PHD ~ PORTABLE HEADPHONE DANCEFLOOR",
+            yt_id = "g2e-mGqocEs",
+            yt_title = "2 Mello - rainy nite rhapsody (Official Audio)",
+            yt_duration_s = 291,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "starman.jpg",
+            album_cover_filename = "phd.jpg",
         )
 
     if mode == "move":
