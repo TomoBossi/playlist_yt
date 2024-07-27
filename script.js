@@ -51,8 +51,8 @@ async function init() {
   fullPlaylist = await res.json();
   fullPlaylistLength = Object.keys(fullPlaylist).length;
 
-  currentTrackFullPlaylistIndex =  trackIndexFromURL();
-  if (!isNaN(currentTrackFullPlaylistIndex)) {
+  currentTrackFullPlaylistIndex = trackIndexFromURL();
+  if (isNaN(currentTrackFullPlaylistIndex)) {
     currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
   }
 
@@ -547,6 +547,11 @@ function updateTitle() {
   title = "\u{1F501} ".repeat(replay) + title;
   title = "\u{1F49F} ".repeat(custom) + title;
   document.title = title;
+  updateUrl(title);
+}
+
+function updateUrl(title) {
+  window.history.pushState(null, title, window.location.href.split('?')[0]+"?track="+currentTrackFullPlaylistIndex);
 }
 
 function trackDurationForDisplay(index) {
@@ -654,7 +659,6 @@ function flagContinuing() {
 }
 
 function trackIndexFromURL() {
-  let url = new URL(window.location.href);
-  let trackIndex = url.pathname.split('/').pop();
+  let trackIndex = window.location.href.split('=').pop();
   return Number(trackIndex);
 }
