@@ -25,6 +25,7 @@ let fullPlaylistLength;
 let currentTrack;
 let fullPlaylist;
 let playlist = [];
+let continuingTracks;
 let currentTrackIndex = -1;
 let player;
 
@@ -47,6 +48,7 @@ async function init() {
   fullPlaylistLength = Object.keys(fullPlaylist).length;
   currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
+  continuingTracks = flagContinued();
   buildHTML();
   // This code loads the IFrame Player API code asynchronously
   let tag = document.createElement("script");
@@ -86,8 +88,13 @@ function checkForStateChanges() {
       currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
       currentPlayerState = player.getPlayerState();
       updatePlayedBar();
+      if (videoIs("PLAYING") && currentTrackElapsed > currentTrackDuration) {
+        playNext(); 
+        highlightCurrentTrack();
+        updateCurrentTrackDuration();
+      }
     },
-    100
+    10
   );
 }
 
@@ -117,28 +124,45 @@ function tryNext(event) {
     debugUnplayable.push(currentTrackFullPlaylistIndex);
   }
   replay = false;
-  playNext();
+  playNext(forceSkip = true);
 }
 
-function playIndex(index) {
+function playIndex(index, continued = false) {
   paused = false;
   currentTrackFullPlaylistIndex = index;
   updateCurrentTrackIndex();
+
+  if (continued && Math.abs(currentTrackElapsed - currentTrackDuration) > 0.1) {
+    player.seekTo(currentTrack["yt_end_s"]);
+  }
+
+  let end = currentTrack["yt_end_s"];
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
-  changeVolume(0, muted);
-  player.loadVideoById({
-    videoId: currentTrack["yt_id"],
-    startSeconds: currentTrack["yt_start_s"],
-    endSeconds: currentTrack["yt_end_s"]
-  });
+  if (!continued) {
+    changeVolume(0, muted);
+    if (continuingTracks[currentTrackFullPlaylistIndex][0]) {
+      end = continuingTracks[currentTrackFullPlaylistIndex][1];
+    }
+    player.loadVideoById({
+      videoId: currentTrack["yt_id"],
+      startSeconds: currentTrack["yt_start_s"],
+      endSeconds: end
+    });
+  }
+
   updateDisplay();
   if (anchor) {
     autoScroll();
   }
 }
 
-function playNext(step = 1) {
-  playIndex(movedIndex(step));
+function playNext(step = 1, forceSkip = false) {
+  let nextIndex = movedIndex(step);
+  let continued = false;
+  if (!forceSkip) {
+    nextIndex == currentTrackFullPlaylistIndex + 1 && continuingTracks[currentTrackFullPlaylistIndex][0];
+  }
+  playIndex(nextIndex, continued);
 }
 
 function movedIndex(increment) {
@@ -588,4 +612,25 @@ function updatePlaylistDisplay(clear = false) {
       indexDisplay.innerHTML = `${playlistIndex.toString().padStart(4, '0') + " |"}`;
     }
   }
+}
+
+function flagContinued() {
+  let res = [];
+  Object.keys(fullPlaylist).forEach(index => {
+    res[index] = [
+      index < fullPlaylistLength - 1 && 
+      fullPlaylist[index]["yt_id"] == fullPlaylist[Number(index)+1]["yt_id"] &&
+      fullPlaylist[index]["yt_end_s"] == fullPlaylist[Number(index)+1]["yt_start_s"], 
+      null
+    ];
+  });
+  let last_seen_end_s = null;
+  for (let i = fullPlaylistLength - 1; i >= 0; i--) {
+    if (res[i][0]) {
+        res[i][1] = last_seen_end_s;
+    } else {
+        last_seen_end_s = fullPlaylist[i]["yt_end_s"]
+    }
+  }
+  return res;
 }
