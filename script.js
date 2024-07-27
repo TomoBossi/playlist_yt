@@ -119,7 +119,6 @@ function onPlayerStateChange(event) {
   if (debug && videoIs("PLAYING")) { // Toggle debug to test all tracks the looooong way
     playNext(1, false);
   }
-  updateCurrentTrackDuration();
   prevState = player.getPlayerState();
 }
 
