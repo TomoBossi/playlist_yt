@@ -21,7 +21,7 @@ let muted = false;
 let custom = false;
 let anchor = false;
 let anchorScrollException = false;
-let allowAsyncPlayNext = true;
+let currentTrackYtIdMatch = true;
 let digitLogger = "";
 let currentTrackFullPlaylistIndex;
 let fullPlaylistLength;
@@ -31,6 +31,8 @@ let playlist = [];
 let continuingTracks;
 let currentTrackIndex = -1;
 let player;
+let counterMs = 0;
+let lowerDurationLimitMs = 5000;
 
 let prevState = -1;
 const playerStateMap = {
@@ -97,23 +99,26 @@ function checkForStateChanges() {
   setInterval(() => {
       currentPlayerState = player.getPlayerState();
       currentTrackYtId = player.getVideoUrl().split('=').pop();
-      allowAsyncPlayNext = currentTrack["yt_id"] == currentTrackYtId;
+      currentTrackYtIdMatch = currentTrack["yt_id"] == currentTrackYtId;
       currentTrackElapsed = 0;
-      if (allowAsyncPlayNext && player.getVideoLoadedFraction() > 0) {
+      if (player.getVideoLoadedFraction() > 0) {
         currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
       }
 
       updateCurrentTrackDuration();
       updatePlayedBar();
 
-      if (!processingPlayIndex &&
-          allowAsyncPlayNext &&
+      if (counterMs >= lowerDurationLimitMs &&
+          !processingPlayIndex &&
+          currentTrackYtIdMatch &&
           !videoWas("UNSTARTED") && 
           (videoIs("PLAYING") && currentTrackElapsed > currentTrackDuration ||
           videoIs("ENDED"))) {
-        allowAsyncPlayNext = false;
         playNext(1, false);
       }
+
+      counterMs += eventLoopRefreshMs;
+
     },
     eventLoopRefreshMs
   );
@@ -151,6 +156,7 @@ function playIndex(index, continuing = false, manual = false) {
 
   if (continuing && manual && currentTrackDuration - currentTrackElapsed > 2*eventLoopRefreshMs/1000) {
     player.seekTo(currentTrack["yt_end_s"]);
+    counterMs = lowerDurationLimitMs;
   }
 
   if (continuing && replay) {
@@ -177,6 +183,7 @@ function playIndex(index, continuing = false, manual = false) {
     autoScroll();
   }
   processingPlayIndex = false;
+  counterMs = 0;
 }
 
 function playNext(step = 1, manual = false) {
@@ -225,6 +232,7 @@ function seek(seconds) {
   } else {
     player.seekTo(seconds);
   }
+  counterMs = lowerDurationLimitMs;
 }
 
 function seekFraction(fraction) {
