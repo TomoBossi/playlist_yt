@@ -31,8 +31,6 @@ let playlist = [];
 let continuingTracks;
 let currentTrackIndex = -1;
 let player;
-let counterMs = 0;
-let lowerDurationLimitMs = 5000;
 
 let prevState = -1;
 const playerStateMap = {
@@ -108,19 +106,13 @@ function checkForStateChanges() {
       updateCurrentTrackDuration();
       updatePlayedBar();
 
-      console.log(videoIs("PLAYING"), videoIs("ENDED"), processingPlayIndex, currentTrackYtId, currentTrackYtIdMatch, currentTrackElapsed, currentTrackDuration);
+      console.log(videoIs("PLAYING"), videoIs("ENDED"), currentTrackYtId, currentTrackYtIdMatch, currentTrackElapsed, currentTrackDuration);
 
-      if (//counterMs >= lowerDurationLimitMs &&
-          !processingPlayIndex &&
-          currentTrackYtIdMatch &&
+      if (currentTrackYtIdMatch &&
           !videoWas("UNSTARTED") && 
-          (videoIs("PLAYING") && currentTrackElapsed > currentTrackDuration ||
-          videoIs("ENDED"))) {
+          currentTrackElapsed > currentTrackDuration) {
         playNext(1, false);
       }
-
-      counterMs += eventLoopRefreshMs;
-
     },
     eventLoopRefreshMs
   );
@@ -151,14 +143,12 @@ function tryNext(event) {
 }
 
 function playIndex(index, continuing = false, manual = false) {
-  processingPlayIndex = true;
   paused = false;
   currentTrackFullPlaylistIndex = index;
   updateCurrentTrackIndex();
 
   if (continuing && manual && currentTrackDuration - currentTrackElapsed > 2*eventLoopRefreshMs/1000) {
     player.seekTo(currentTrack["yt_end_s"]);
-    counterMs = lowerDurationLimitMs;
   }
 
   if (continuing && replay) {
@@ -184,8 +174,6 @@ function playIndex(index, continuing = false, manual = false) {
   if (anchor) {
     autoScroll();
   }
-  processingPlayIndex = false;
-  counterMs = 0;
 }
 
 function playNext(step = 1, manual = false) {
@@ -234,7 +222,6 @@ function seek(seconds) {
   } else {
     player.seekTo(seconds);
   }
-  counterMs = lowerDurationLimitMs;
 }
 
 function seekFraction(fraction) {
