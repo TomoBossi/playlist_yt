@@ -51,14 +51,17 @@ async function init() {
   fullPlaylist = await res.json();
   fullPlaylistLength = Object.keys(fullPlaylist).length;
 
+  buildHTML();
+  
   currentTrackFullPlaylistIndex = trackIndexFromURL();
   if (isNaN(currentTrackFullPlaylistIndex)) {
     currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
+  } else {
+    autoScroll();
   }
-
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
   continuingTracks = flagContinuing();
-  buildHTML();
+
   // This code loads the IFrame Player API code asynchronously
   let tag = document.createElement("script");
   tag.src = "https://www.youtube.com/iframe_api";
