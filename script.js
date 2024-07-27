@@ -10,7 +10,6 @@ let playerAPIready = false;
 let currentPlayerState = -1;
 let currentTrackDuration = 0;
 let currentTrackElapsed = 0;
-let currentTrackYtId;
 let processingPlayIndex = false;
 let playableTracks = [];
 let currentVolume = 50 + 50*isMobile;
@@ -98,7 +97,6 @@ function checkForStateChanges() {
   // https://stackoverflow.com/a/39160557
   setInterval(() => {
       currentPlayerState = player.getPlayerState();
-      currentTrackYtId = player.getVideoUrl().split('=').pop();
       currentTrackElapsed = 0;
 
       if (player.getVideoLoadedFraction() > 0) {
