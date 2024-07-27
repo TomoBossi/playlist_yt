@@ -21,7 +21,6 @@ let muted = false;
 let custom = false;
 let anchor = false;
 let anchorScrollException = false;
-let currentTrackYtIdMatch = true;
 let digitLogger = "";
 let currentTrackFullPlaylistIndex;
 let fullPlaylistLength;
@@ -97,17 +96,16 @@ function checkForStateChanges() {
   setInterval(() => {
       currentPlayerState = player.getPlayerState();
       currentTrackYtId = player.getVideoUrl().split('=').pop();
-      currentTrackYtIdMatch = currentTrack["yt_id"] == currentTrackYtId;
       currentTrackElapsed = 0;
+
       if (player.getVideoLoadedFraction() > 0) {
         currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
       }
 
       updateCurrentTrackDuration();
       updatePlayedBar();
-      
-      if (currentTrackYtIdMatch &&
-          !videoWas("UNSTARTED") && 
+
+      if (!videoWas("UNSTARTED") &&
           currentTrackElapsed > currentTrackDuration) {
         playNext(1, false);
       }
@@ -278,6 +276,7 @@ function toggleAnchor(event) {
 function updateCurrentTrackDuration() {
   currentTrackDuration = Math.max(currentTrack["yt_end_s"] - currentTrack["yt_start_s"], 0);
   currentTrackDuration += (player.getDuration() - currentTrack["yt_start_s"]) * (currentTrackDuration == 0);
+  currentTrackDuration = Math.max(currentTrackDuration, 0);
 }
 
 function updateDigitLogger(key) {
