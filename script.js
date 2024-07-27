@@ -97,6 +97,7 @@ function onPlayerReady(event) {
 function checkForStateChanges() {
   // https://stackoverflow.com/a/39160557
   setInterval(() => {
+      console.log(currentTrackYtId, currentTrackYtIdMatch, currentTrackElapsed, currentTrackDuration);
       currentPlayerState = player.getPlayerState();
       currentTrackYtId = player.getVideoUrl().split('=').pop();
       currentTrackYtIdMatch = currentTrack["yt_id"] == currentTrackYtId;
@@ -108,7 +109,7 @@ function checkForStateChanges() {
       updateCurrentTrackDuration();
       updatePlayedBar();
 
-      if (counterMs >= lowerDurationLimitMs &&
+      if (//counterMs >= lowerDurationLimitMs &&
           !processingPlayIndex &&
           currentTrackYtIdMatch &&
           !videoWas("UNSTARTED") && 
