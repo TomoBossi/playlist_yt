@@ -10,6 +10,7 @@ let playerAPIready = false;
 let currentPlayerState = -1;
 let currentTrackDuration = 0;
 let currentTrackElapsed = 0;
+let currentTrackYtId;
 let playableTracks = [];
 let currentVolume = 50 + 50*isMobile;
 let shuffle = false;
@@ -19,6 +20,7 @@ let muted = false;
 let custom = false;
 let anchor = false;
 let anchorScrollException = false;
+let allowAsyncPlayNext = true;
 let digitLogger = "";
 let currentTrackFullPlaylistIndex;
 let fullPlaylistLength;
@@ -38,6 +40,8 @@ const playerStateMap = {
   BUFFERING: 3,
 };
 
+let eventLoopRefreshMs = 50;
+
 let played_bar = document.getElementById("played_bar_bg");
 
 init();
@@ -46,9 +50,14 @@ async function init() {
   const res = await fetch("playlist/playlist.json");
   fullPlaylist = await res.json();
   fullPlaylistLength = Object.keys(fullPlaylist).length;
-  currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
+
+  currentTrackFullPlaylistIndex =  trackIndexFromURL();
+  if (!isNaN(currentTrackFullPlaylistIndex)) {
+    currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
+  }
+
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
-  continuingTracks = flagContinued();
+  continuingTracks = flagContinuing();
   buildHTML();
   // This code loads the IFrame Player API code asynchronously
   let tag = document.createElement("script");
@@ -85,27 +94,29 @@ function onPlayerReady(event) {
 function checkForStateChanges() {
   // https://stackoverflow.com/a/39160557
   setInterval(() => {
-      currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
       currentPlayerState = player.getPlayerState();
+      currentTrackYtId = player.getVideoUrl().split('=').pop();
+      currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
+      allowAsyncPlayNext = currentTrack["yt_id"] == currentTrackYtId;
+      updateCurrentTrackDuration();
       updatePlayedBar();
-      if (videoIs("PLAYING") && currentTrackElapsed > currentTrackDuration) {
-        playNext(); 
-        highlightCurrentTrack();
-        updateCurrentTrackDuration();
+
+      if (allowAsyncPlayNext &&
+          !videoWas("UNSTARTED") && 
+          (videoIs("PLAYING") && currentTrackElapsed > currentTrackDuration ||
+          videoIs("ENDED"))) {
+        allowAsyncPlayNext = false;
+        playNext(1, false);
       }
     },
-    10
+    eventLoopRefreshMs
   );
 }
 
 function onPlayerStateChange(event) {
-  if (videoIs("ENDED") && !videoWas("UNSTARTED")) { // Second condition prevents unwanted triggers probably caused by a blocked ad ending
-    playNext();
-  }
   if (debug && videoIs("PLAYING")) { // Toggle debug to test all tracks the looooong way
-    playNext();
+    playNext(1, false);
   }
-  highlightCurrentTrack();
   updateCurrentTrackDuration();
   prevState = player.getPlayerState();
 }
@@ -127,21 +138,21 @@ function tryNext(event) {
   playIndex(movedIndex(1));
 }
 
-function playIndex(index, continued = false) {
+function playIndex(index, continuing = false, manual = false) {
   paused = false;
   currentTrackFullPlaylistIndex = index;
   updateCurrentTrackIndex();
 
-  if (continued && Math.abs(currentTrackElapsed - currentTrackDuration) > 0.1) {
+  if (continuing && manual && currentTrackDuration - currentTrackElapsed > 2*eventLoopRefreshMs/1000) {
     player.seekTo(currentTrack["yt_end_s"]);
   }
 
-  if (continued && replay) {
+  if (continuing && replay) {
     seek(0);
   }
 
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
-  if (!continued) {
+  if (!continuing) {
     changeVolume(0, muted);
     let end = currentTrack["yt_end_s"];
     if (continuingTracks[currentTrackFullPlaylistIndex][0]) {
@@ -154,16 +165,21 @@ function playIndex(index, continued = false) {
     });
   }
   
-  updateDisplay(); 
+  updateDisplay();
+  highlightCurrentTrack();
   if (anchor) {
     autoScroll();
   }
 }
 
-function playNext(step = 1) {
+function playNext(step = 1, manual = false) {
   let nextIndex = movedIndex(step);
-  continued = step > 0 && !shuffle && nextIndex == currentTrackFullPlaylistIndex + 1 && continuingTracks[currentTrackFullPlaylistIndex][0]
-  playIndex(nextIndex, continued);
+  continuing = 
+    step > 0 && 
+    !shuffle && 
+    nextIndex == currentTrackFullPlaylistIndex + 1 && 
+    continuingTracks[currentTrackFullPlaylistIndex][0];
+  playIndex(nextIndex, continuing, manual);
 }
 
 function movedIndex(step) {
@@ -198,7 +214,7 @@ function togglePause() {
 function seek(seconds) {
   seconds = Math.max(seconds, currentTrack["yt_start_s"]);
   if (seconds >= currentTrackDuration + currentTrack["yt_start_s"]) {
-    playNext();
+    playNext(1, true);
   } else {
     player.seekTo(seconds);
   }
@@ -234,7 +250,7 @@ function playLogged() {
     if (playableTracks.includes(index.toString())) {
       replay = false;
       muted = false;
-      playIndex(index);
+      playIndex(index, false, true);
     }
   }
 }
@@ -349,10 +365,10 @@ document.addEventListener(
           changeVolume(5);
           break;
         case "KeyA":
-          playNext(-1);
+          playNext(-1, true);
           break;
         case "KeyD":
-          playNext(1);
+          playNext(1, true);
           break;
         case "KeyQ":
           skip(-5);
@@ -615,7 +631,7 @@ function updatePlaylistDisplay(clear = false) {
   }
 }
 
-function flagContinued() {
+function flagContinuing() {
   let res = [];
   Object.keys(fullPlaylist).forEach(index => {
     res[index] = [
@@ -634,4 +650,10 @@ function flagContinued() {
     }
   }
   return res;
+}
+
+function trackIndexFromURL() {
+  let url = new URL(window.location.href);
+  let trackIndex = url.pathname.split('/').pop();
+  return Number(trackIndex);
 }
