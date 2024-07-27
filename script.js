@@ -1,7 +1,7 @@
 // Inner logic / Backend
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
-const frontend = "https://youtube.com/watch?v="; // "https://yewtu.be/watch?v="; "https://piped.kavin.rocks/watch?v=";
+const linkTo = "https://youtube.com/watch?v="; // "https://yewtu.be/watch?v="; "https://piped.kavin.rocks/watch?v=";
 const randomStarterTrack = true;
 
 let debug = false;
@@ -143,6 +143,7 @@ function tryNext(event) {
 
 function playIndex(index, continuing = false, manual = false) {
   paused = false;
+  dehighlightCurrentTrack();
   currentTrackFullPlaylistIndex = index;
   updateCurrentTrackIndex();
 
@@ -169,7 +170,6 @@ function playIndex(index, continuing = false, manual = false) {
   }
   
   updateDisplay();
-  highlightCurrentTrack();
   if (anchor) {
     autoScroll();
   }
@@ -405,7 +405,7 @@ document.addEventListener(
   false
 );
 
-// Graphics / Frontend
+// Graphics / linkTo
 
 function buildHTML() {
   const tracklist = document.getElementById("tracklist");
@@ -508,7 +508,7 @@ function hideCover() {
 }
 
 function openTab(index) {
-  let link = frontend + fullPlaylist[index]["yt_id"];
+  let link = linkTo + fullPlaylist[index]["yt_id"];
   let start = fullPlaylist[index]["yt_start_s"];
   let end = fullPlaylist[index]["yt_end_s"];
   if (start) { link += "&start=" + Math.floor(start) + "s"; }
@@ -522,20 +522,18 @@ function autoScroll() {
 }
 
 function highlightCurrentTrack() {
-  // Naive
-  Object.keys(fullPlaylist).forEach(index => {
-    if (index == currentTrackFullPlaylistIndex) {
-      document.getElementById(index).setAttribute("playing", "true");
-    } else {
-      document.getElementById(index).setAttribute("playing", "false");
-    }
-  });
+  document.getElementById(currentTrackFullPlaylistIndex).setAttribute("playing", "true");
+}
+
+function dehighlightCurrentTrack() {
+  document.getElementById(currentTrackFullPlaylistIndex).setAttribute("playing", "false");
 }
 
 function updateDisplay() {
   if (playerAPIready) {
     updateTitle();
     updatePlayedBar();
+    highlightCurrentTrack();
   }
 }
 
