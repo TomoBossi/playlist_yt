@@ -11,6 +11,7 @@ let currentPlayerState = -1;
 let currentTrackDuration = 0;
 let currentTrackElapsed = 0;
 let currentTrackYtId;
+let processingPlayIndex = false;
 let playableTracks = [];
 let currentVolume = 50 + 50*isMobile;
 let shuffle = false;
@@ -101,7 +102,8 @@ function checkForStateChanges() {
       updateCurrentTrackDuration();
       updatePlayedBar();
 
-      if (allowAsyncPlayNext &&
+      if (!processingPlayIndex &&
+          allowAsyncPlayNext &&
           !videoWas("UNSTARTED") && 
           (videoIs("PLAYING") && currentTrackElapsed > currentTrackDuration ||
           videoIs("ENDED"))) {
@@ -139,6 +141,7 @@ function tryNext(event) {
 }
 
 function playIndex(index, continuing = false, manual = false) {
+  processingPlayIndex = true;
   paused = false;
   currentTrackFullPlaylistIndex = index;
   updateCurrentTrackIndex();
@@ -170,6 +173,7 @@ function playIndex(index, continuing = false, manual = false) {
   if (anchor) {
     autoScroll();
   }
+  processingPlayIndex = false;
 }
 
 function playNext(step = 1, manual = false) {
