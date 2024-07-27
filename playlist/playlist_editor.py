@@ -70,16 +70,16 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = _,
-            title = "rainy nite rhapsody",
-            artists = "2 Mello",
-            album = "PHD ~ PORTABLE HEADPHONE DANCEFLOOR",
-            yt_id = "g2e-mGqocEs",
-            yt_title = "2 Mello - rainy nite rhapsody (Official Audio)",
-            yt_duration_s = 291,
+            title = "劣勢",
+            artists = "MUSASHI PROJECT",
+            album = "Naruto OST: Vol. I",
+            yt_id = "Z6IqTpvB8PM",
+            yt_title = "Naruto OST 1 - Bad Situation",
+            yt_duration_s = 82,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "phd.jpg",
+            album_cover_filename = "6NrJzDuBPZvp3ZRXnIqs1P_NARUTO_-\u30ca\u30eb\u30c8-_\u30aa\u30ea\u30b8\u30ca\u30eb\u30b5\u30a6\u30f3\u30c9\u30c8\u30e9\u30c3\u30af.jpg"
         )
 
     if mode == "move":
