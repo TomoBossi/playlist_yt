@@ -99,10 +99,10 @@ function checkForStateChanges() {
       currentTrackYtId = player.getVideoUrl().split('=').pop();
       allowAsyncPlayNext = currentTrack["yt_id"] == currentTrackYtId;
       currentTrackElapsed = 0;
-      if (allowAsyncPlayNext) {
+      if (allowAsyncPlayNext && player.getVideoLoadedFraction() > 0) {
         currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
       }
-      
+
       updateCurrentTrackDuration();
       updatePlayedBar();
 
