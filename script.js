@@ -108,7 +108,7 @@ function checkForStateChanges() {
       updateCurrentTrackDuration();
       updatePlayedBar();
 
-      console.log(currentTrackYtId, currentTrackYtIdMatch, currentTrackElapsed, currentTrackDuration);
+      console.log(videoIs("PLAYING"), videoIs("ENDED"), processingPlayIndex, currentTrackYtId, currentTrackYtIdMatch, currentTrackElapsed, currentTrackDuration);
 
       if (//counterMs >= lowerDurationLimitMs &&
           !processingPlayIndex &&
