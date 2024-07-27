@@ -124,7 +124,7 @@ function tryNext(event) {
     debugUnplayable.push(currentTrackFullPlaylistIndex);
   }
   replay = false;
-  playNext(forceSkip = true);
+  playIndex(movedIndex(1));
 }
 
 function playIndex(index, continued = false) {
@@ -136,10 +136,14 @@ function playIndex(index, continued = false) {
     player.seekTo(currentTrack["yt_end_s"]);
   }
 
-  let end = currentTrack["yt_end_s"];
+  if (continued && replay) {
+    seek(0);
+  }
+
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
   if (!continued) {
     changeVolume(0, muted);
+    let end = currentTrack["yt_end_s"];
     if (continuingTracks[currentTrackFullPlaylistIndex][0]) {
       end = continuingTracks[currentTrackFullPlaylistIndex][1];
     }
@@ -149,34 +153,31 @@ function playIndex(index, continued = false) {
       endSeconds: end
     });
   }
-
-  updateDisplay();
+  
+  updateDisplay(); 
   if (anchor) {
     autoScroll();
   }
 }
 
-function playNext(step = 1, forceSkip = false) {
+function playNext(step = 1) {
   let nextIndex = movedIndex(step);
-  let continued = false;
-  if (!forceSkip) {
-    nextIndex == currentTrackFullPlaylistIndex + 1 && continuingTracks[currentTrackFullPlaylistIndex][0];
-  }
+  continued = step > 0 && !shuffle && nextIndex == currentTrackFullPlaylistIndex + 1 && continuingTracks[currentTrackFullPlaylistIndex][0]
   playIndex(nextIndex, continued);
 }
 
-function movedIndex(increment) {
+function movedIndex(step) {
   let index = currentTrackFullPlaylistIndex;
   if (!replay) {
     if (shuffle) {
       index = randomIndex();
     } else {
       if (playlist.length > 0) {
-        index = playlist.length + currentTrackIndex + increment;
+        index = playlist.length + currentTrackIndex + step;
         index %= playlist.length;
         index = playlist[index];
       } else {
-        index += fullPlaylistLength + increment;
+        index += fullPlaylistLength + step;
         index %= fullPlaylistLength;
       }
     }
@@ -351,7 +352,7 @@ document.addEventListener(
           playNext(-1);
           break;
         case "KeyD":
-          playNext();
+          playNext(1);
           break;
         case "KeyQ":
           skip(-5);
