@@ -30,7 +30,6 @@ let playlist = [];
 let continuingTracks;
 let currentTrackIndex = -1;
 let player;
-let title;
 
 let prevState = -1;
 const playerStateMap = {
@@ -558,7 +557,7 @@ function updateDisplay() {
 }
 
 function updateTitle() {
-  title = currentTrack["title"] + " - " + currentTrack["artists"];
+  let title = currentTrack["title"] + " - " + currentTrack["artists"];
   title += " | \u{1F50A}" + currentVolume + "%";
   title = "\u{1F507} ".repeat(muted) + title;
   title = "\u2693\uFE0F ".repeat(anchor) + title;
@@ -571,7 +570,7 @@ function updateTitle() {
 }
 
 function updateUrl() {
-  window.history.pushState(null, title, window.location.href.split('?')[0]+"?track="+currentTrackFullPlaylistIndex);
+  window.history.pushState(null, "", "?track="+currentTrackFullPlaylistIndex);
 }
 
 function trackDurationForDisplay(index) {
@@ -679,6 +678,6 @@ function flagContinuing() {
 }
 
 function trackIndexFromURL() {
-  let trackIndex = window.location.href.split('=').pop();
+  let trackIndex = window.location.href.split("=").pop();
   return Number(trackIndex);
 }
