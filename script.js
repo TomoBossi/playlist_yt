@@ -1,3 +1,5 @@
+// TODO add separate playlist qs param that is tracked by the state history
+
 // Inner logic / Backend
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
