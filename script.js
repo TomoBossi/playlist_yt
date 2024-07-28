@@ -115,7 +115,7 @@ function checkForStateChanges() {
       currentTrackElapsed = 0;
       currentTrackDuration = 0;
 
-      if (player.getVideoLoadedFraction() > 0) {
+      if (videoIsLoaded()) {
         currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
         updateCurrentTrackDuration();
       }
@@ -145,6 +145,10 @@ function videoIs(state) {
 
 function videoWas(state) {
   return prevState == playerStateMap[state];
+}
+
+function videoIsLoaded() {
+  return player.getVideoLoadedFraction() > 0;
 }
 
 function tryNext(event) {
@@ -234,7 +238,7 @@ function togglePause() {
 
 function seek(seconds) {
   seconds = Math.max(seconds, currentTrack["yt_start_s"]);
-  if (seconds >= currentTrackDuration + currentTrack["yt_start_s"]) {
+  if (videoIsLoaded() && seconds >= currentTrackDuration + currentTrack["yt_start_s"]) {
     playNext(1, true);
   } else {
     player.seekTo(seconds);
