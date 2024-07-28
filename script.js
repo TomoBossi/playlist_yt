@@ -3,9 +3,7 @@
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
 const linkTo = "https://youtube.com/watch?v="; // "https://yewtu.be/watch?v="; "https://piped.kavin.rocks/watch?v=";
 const randomStarterTrack = true;
-if ("scrollRestoration" in history) {
-  history.scrollRestoration = "manual";
-}
+history.scrollRestoration = "manual";
 
 let debug = false;
 let debugUnplayable = []
