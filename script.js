@@ -577,7 +577,12 @@ function updateTitle() {
 }
 
 function updateUrl() {
-  window.history.pushState(null, "", "?track="+currentTrackFullPlaylistIndex);
+  let qs = currentTrackFullPlaylistIndex;
+  if (playlist.length > 0 && playlist.indexOf(currentTrackFullPlaylistIndex) > -1) {
+    qs = playlist.slice(currentTrackIndex).concat(playlist.slice(0, currentTrackIndex));
+    qs = qs.join(",")
+  }
+  window.history.pushState(null, "", "?track="+qs);
 }
 
 function trackDurationForDisplay(index) {
@@ -686,5 +691,5 @@ function flagContinuing() {
 
 function trackIndexesFromURL() {
   let trackIndexes = window.location.href.split("=").pop().split(",");
-  return trackIndexes.map((idx) => Number(idx) % fullPlaylistLength).filter((idx) => !isNaN(idx));;
+  return [...new Set(trackIndexes.map((idx) => Number(idx) % fullPlaylistLength).filter((idx) => !isNaN(idx)))];
 }
