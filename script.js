@@ -1,12 +1,10 @@
-// TODO add separate playlist qs param that is tracked by the state history
-// TODO fix background play ending bug
-
 // Inner logic / Backend
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
 const linkTo = "https://youtube.com/watch?v="; // "https://yewtu.be/watch?v="; "https://piped.kavin.rocks/watch?v=";
 const randomStarterTrack = true;
 history.scrollRestoration = "manual";
+let qsParams;
 
 let debug = false;
 let debugUnplayable = []
@@ -57,18 +55,20 @@ async function init() {
 
   buildHTML();
   
-  let onLoadTrackIndexes = trackIndexesFromURL();
-  if (onLoadTrackIndexes.length == 0) {
+  qsParams = parseQsParams();
+  if (isNaN(qsParams.track) && qsParams.playlist.length == 0) {
     currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
   } else {
-    currentTrackFullPlaylistIndex = onLoadTrackIndexes[0];
-    autoScroll();
-    if (onLoadTrackIndexes.length > 1) {
-      playlist = onLoadTrackIndexes;
-      currentTrackIndex = 0;
-      custom = true;
-      updatePlaylistDisplay();
+    if (!isNaN(qsParams.track)) {
+      currentTrackFullPlaylistIndex = qsParams.track;
     }
+    if (qsParams.playlist.length > 0) {
+      if (!currentTrackFullPlaylistIndex) {
+        currentTrackFullPlaylistIndex = qsParams.playlist[0];
+      }
+      setPlaylist(qsParams.playlist);
+    }
+    autoScroll();
   }
 
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
@@ -119,6 +119,7 @@ function checkForStateChanges() {
       updatePlayedBar();
 
       if (!videoWas("UNSTARTED") &&
+          currentTrackElapsed > 0 &&
           currentTrackElapsed >= currentTrackDuration) {
         playNext(1, false);
       }
@@ -271,12 +272,13 @@ function playLogged() {
   }
 }
 
-function playStateTrack() {
-  let indexes = trackIndexesFromURL();
-  if (!isNaN(indexes[0])) {
+function playState() {
+  qsParams = parseQsParams();
+  if (!isNaN(qsParams.track) && qsParams.track != currentTrackFullPlaylistIndex) {
     replay = false;
-    playIndex(indexes[0], false, true, false);
+    playIndex(qsParams.track, false, true, false);
   }
+  setPlaylist(qsParams.playlist);
 }
 
 function toggleMute() {
@@ -357,8 +359,8 @@ played_bar.addEventListener(
   }
 );
 
-window.addEventListener("popstate", playStateTrack);
-window.addEventListener("pushstate", playStateTrack);
+window.addEventListener("popstate", playState);
+window.addEventListener("pushstate", playState);
 
 document.addEventListener(
   "keydown",
@@ -584,12 +586,16 @@ function updateTitle() {
 }
 
 function updateUrl() {
-  let qs = currentTrackFullPlaylistIndex;
-  if (playlist.length > 0 && playlist.indexOf(currentTrackFullPlaylistIndex) > -1) {
-    qs = playlist.slice(currentTrackIndex).concat(playlist.slice(0, currentTrackIndex));
-    qs = qs.join(",")
+  let paramsTrack = currentTrackFullPlaylistIndex;
+  let paramsPlaylist = playlist.join(",");
+  let qs = "?track=" + paramsTrack;
+  if (paramsPlaylist) {
+    qs += "&playlist=" + paramsPlaylist;
   }
-  window.history.pushState(null, "", "?track="+qs);
+  window.history.pushState(null, "", qs);
+  // if (playlist.length > 0 && playlist.indexOf(currentTrackFullPlaylistIndex) > -1) {
+  //   playlist.slice(currentTrackIndex).concat(playlist.slice(0, currentTrackIndex)).join(",");
+  // }
 }
 
 function trackDurationForDisplay(index) {
@@ -648,6 +654,17 @@ function editPlaylist() {
     }
   }
   updateDisplay();
+  updateUrl();
+}
+
+function setPlaylist(newPlaylist) {
+  custom = newPlaylist.length > 0;
+  playlist = newPlaylist;
+  updatePlaylistDisplay();
+  currentTrackIndex = playlist.indexOf(currentTrackFullPlaylistIndex);
+  if (custom && currentTrackIndex == -1) {
+    currentTrackIndex = 0;
+  }
 }
 
 function getInsideContainer(containerID, childID) {
@@ -697,7 +714,18 @@ function flagContinuing() {
   return res;
 }
 
-function trackIndexesFromURL() {
-  let trackIndexes = window.location.href.split("=").pop().split(",");
-  return [...new Set(trackIndexes.map((idx) => Number(idx) % fullPlaylistLength).filter((idx) => !isNaN(idx)))];
+function parseQsParams() {
+  let params = new URLSearchParams(window.location.href.split("?").pop());
+  let paramsTrack = NaN;
+  let paramsPlaylist = [];
+  if (params.has("track")) {
+    paramsTrack = Number(params.get("track")) % fullPlaylistLength;
+  }
+  if (params.has("playlist")) {
+    paramsPlaylist = [...new Set(params.get("playlist").split(",").map((idx) => Number(idx) % fullPlaylistLength).filter((idx) => !isNaN(idx)))]
+  }
+  return {
+    track: paramsTrack,
+    playlist: paramsPlaylist
+  };
 }
