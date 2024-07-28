@@ -53,12 +53,20 @@ async function init() {
 
   buildHTML();
   
-  currentTrackFullPlaylistIndex = trackIndexFromURL() % fullPlaylistLength;
-  if (isNaN(currentTrackFullPlaylistIndex)) {
+  let onLoadTrackIndexes = trackIndexesFromURL();
+  if (onLoadTrackIndexes.length == 0) {
     currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
   } else {
+    currentTrackFullPlaylistIndex = onLoadTrackIndexes[0];
     autoScroll();
+    if (onLoadTrackIndexes.length > 1) {
+      playlist = onLoadTrackIndexes;
+      currentTrackIndex = 0;
+      custom = true;
+      updatePlaylistDisplay();
+    }
   }
+
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
   continuingTracks = flagContinuing();
 
@@ -261,11 +269,10 @@ function playLogged() {
 }
 
 function playStateTrack() {
-  let index = trackIndexFromURL();
-  if (!isNaN(index)) {
-    index %= fullPlaylistLength;
+  let indexes = trackIndexesFromURL();
+  if (!isNaN(indexes[0])) {
     replay = false;
-    playIndex(index, false, true, false);
+    playIndex(indexes[0], false, true, false);
   }
 }
 
@@ -677,7 +684,7 @@ function flagContinuing() {
   return res;
 }
 
-function trackIndexFromURL() {
-  let trackIndex = window.location.href.split("=").pop();
-  return Number(trackIndex);
+function trackIndexesFromURL() {
+  let trackIndexes = window.location.href.split("=").pop().split(",");
+  return trackIndexes.map((idx) => Number(idx) % fullPlaylistLength).filter((idx) => !isNaN(idx));;
 }
