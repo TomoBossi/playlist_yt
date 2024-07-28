@@ -1,37 +1,18 @@
 // Inner logic / Backend
 
+history.scrollRestoration = "manual";
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent);
 const linkTo = "https://youtube.com/watch?v="; // "https://yewtu.be/watch?v="; "https://piped.kavin.rocks/watch?v=";
 const randomStarterTrack = true;
-history.scrollRestoration = "manual";
-let qsParams;
+const statefullPlaylistEditing = false;
+const eventLoopRefreshMs = 50;
+let currentVolume = 50 + 50*isMobile;
 
+let player;
 let debug = false;
 let debugUnplayable = []
 let playerAPIready = false;
 let currentPlayerState = -1;
-let currentTrackDuration = 0;
-let currentTrackElapsed = 0;
-let processingPlayIndex = false;
-let playableTracks = [];
-let currentVolume = 50 + 50*isMobile;
-let shuffle = false;
-let replay = false;
-let paused = false;
-let muted = false;
-let custom = false;
-let anchor = false;
-let anchorScrollException = false;
-let digitLogger = "";
-let currentTrackFullPlaylistIndex;
-let fullPlaylistLength;
-let currentTrack;
-let fullPlaylist;
-let playlist = [];
-let continuingTracks;
-let currentTrackIndex = -1;
-let player;
-
 let prevState = -1;
 const playerStateMap = {
   UNSTARTED: -1,
@@ -41,7 +22,29 @@ const playerStateMap = {
   BUFFERING: 3,
 };
 
-let eventLoopRefreshMs = 50;
+let shuffle = false;
+let replay = false;
+let paused = false;
+let muted = false;
+let custom = false;
+let anchor = false;
+let anchorScrollException = false;
+
+let fullPlaylist;
+let fullPlaylistLength;
+let currentTrackFullPlaylistIndex;
+let currentTrack;
+let currentTrackDuration = 0;
+let currentTrackElapsed = 0;
+
+let playlist = [];
+let currentTrackIndex = -1;
+
+let continuingTracks;
+
+let qsParams;
+let digitLogger = "";
+let playableTracks = [];
 
 let played_bar = document.getElementById("played_bar_bg");
 
@@ -632,7 +635,7 @@ function formattedParsedDuration(totalSeconds) {
 function deletePlaylist() {
   playlist = [];
   currentTrackIndex = -1;
-  if (custom) {
+  if (custom && statefullPlaylistEditing) {
     updateUrl();
   }
   custom = false;
@@ -657,7 +660,9 @@ function editPlaylist() {
     }
   }
   updateDisplay();
-  updateUrl();
+  if (statefullPlaylistEditing) {
+    updateUrl();
+  }
 }
 
 function setPlaylist(newPlaylist) {
