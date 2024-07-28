@@ -53,7 +53,7 @@ async function init() {
 
   buildHTML();
   
-  currentTrackFullPlaylistIndex = trackIndexFromURL();
+  currentTrackFullPlaylistIndex = trackIndexFromURL() % fullPlaylistLength;
   if (isNaN(currentTrackFullPlaylistIndex)) {
     currentTrackFullPlaylistIndex = randomIndex() * randomStarterTrack;
   } else {
@@ -140,7 +140,7 @@ function tryNext(event) {
   playIndex(movedIndex(1));
 }
 
-function playIndex(index, continuing = false, manual = false) {
+function playIndex(index, continuing = false, manual = false, updateState = true) {
   paused = false;
   dehighlightCurrentTrack();
   currentTrackFullPlaylistIndex = index;
@@ -169,9 +169,11 @@ function playIndex(index, continuing = false, manual = false) {
   }
   
   updateDisplay();
-  updateUrl();
   if (anchor) {
     autoScroll();
+  }
+  if (updateState) {
+    updateUrl();
   }
 }
 
@@ -258,6 +260,15 @@ function playLogged() {
   }
 }
 
+function playStateTrack() {
+  let index = trackIndexFromURL();
+  if (!isNaN(index)) {
+    index %= fullPlaylistLength;
+    replay = false;
+    playIndex(index, false, true, false);
+  }
+}
+
 function toggleMute() {
   changeVolume(0, !muted);
 }
@@ -335,6 +346,9 @@ played_bar.addEventListener(
     seekFraction(event.clientX/played_bar.offsetWidth);
   }
 );
+
+window.addEventListener("popstate", playStateTrack);
+window.addEventListener("pushstate", playStateTrack);
 
 document.addEventListener(
   "keydown",
