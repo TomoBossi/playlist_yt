@@ -632,6 +632,9 @@ function formattedParsedDuration(totalSeconds) {
 function deletePlaylist() {
   playlist = [];
   currentTrackIndex = -1;
+  if (custom) {
+    updateUrl();
+  }
   custom = false;
 }
 
