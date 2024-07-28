@@ -1,4 +1,5 @@
 // TODO add separate playlist qs param that is tracked by the state history
+// TODO fix background play ending bug
 
 // Inner logic / Backend
 
@@ -52,6 +53,7 @@ async function init() {
   const res = await fetch("playlist/playlist.json");
   fullPlaylist = await res.json();
   fullPlaylistLength = Object.keys(fullPlaylist).length;
+  continuingTracks = flagContinuing();
 
   buildHTML();
   
@@ -70,7 +72,6 @@ async function init() {
   }
 
   currentTrack = fullPlaylist[currentTrackFullPlaylistIndex];
-  continuingTracks = flagContinuing();
 
   // This code loads the IFrame Player API code asynchronously
   let tag = document.createElement("script");
@@ -118,7 +119,7 @@ function checkForStateChanges() {
       updatePlayedBar();
 
       if (!videoWas("UNSTARTED") &&
-          currentTrackElapsed > currentTrackDuration) {
+          currentTrackElapsed >= currentTrackDuration) {
         playNext(1, false);
       }
     },
@@ -493,6 +494,10 @@ function buildHTML() {
     div_row.setAttribute("id", index);
     if (!isMobile) { div_row.classList.add("hover"); }
 
+    if (continuingTracks[index][0]) {
+      div_row.classList.add("continuing");
+    }
+
     if (fullPlaylist[index]["yt_id"]) {
       playableTracks.push(index);
       div_row.setAttribute("ondblclick", `playIndex(${index})`);
@@ -675,6 +680,7 @@ function flagContinuing() {
   Object.keys(fullPlaylist).forEach(index => {
     res[index] = [
       index < fullPlaylistLength - 1 && 
+      fullPlaylist[index]["yt_id"] &&
       fullPlaylist[index]["yt_id"] == fullPlaylist[Number(index)+1]["yt_id"] &&
       fullPlaylist[index]["yt_end_s"] == fullPlaylist[Number(index)+1]["yt_start_s"], 
       null
