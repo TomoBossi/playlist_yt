@@ -29,6 +29,7 @@ let playlist = [];
 let continuingTracks;
 let currentTrackIndex = -1;
 let player;
+let title;
 
 let prevState = -1;
 const playerStateMap = {
@@ -168,6 +169,7 @@ function playIndex(index, continuing = false, manual = false) {
   }
   
   updateDisplay();
+  updateUrl();
   if (anchor) {
     autoScroll();
   }
@@ -339,6 +341,7 @@ document.addEventListener(
   (event) => {
     // console.log(event.key);
     // console.log(event.code);
+    let caseMatched = true;
     if (playerAPIready) {
       switch (event.code) {
         case "Enter":
@@ -395,9 +398,13 @@ document.addEventListener(
           deletePlaylist();
           updatePlaylistDisplay(true);
           break;
+        default:
+          caseMatched = false;
       }
       updateDigitLogger(event.key);
-      updateDisplay();
+      if (caseMatched) {
+        updateDisplay();
+      }
     }
   },
   false
@@ -536,7 +543,7 @@ function updateDisplay() {
 }
 
 function updateTitle() {
-  let title = currentTrack["title"] + " - " + currentTrack["artists"];
+  title = currentTrack["title"] + " - " + currentTrack["artists"];
   title += " | \u{1F50A}" + currentVolume + "%";
   title = "\u{1F507} ".repeat(muted) + title;
   title = "\u2693\uFE0F ".repeat(anchor) + title;
@@ -546,10 +553,9 @@ function updateTitle() {
   title = "\u{1F501} ".repeat(replay) + title;
   title = "\u{1F49F} ".repeat(custom) + title;
   document.title = title;
-  updateUrl(title);
 }
 
-function updateUrl(title) {
+function updateUrl() {
   window.history.pushState(null, title, window.location.href.split('?')[0]+"?track="+currentTrackFullPlaylistIndex);
 }
 
