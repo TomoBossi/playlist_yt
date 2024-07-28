@@ -113,16 +113,17 @@ function checkForStateChanges() {
   setInterval(() => {
       currentPlayerState = player.getPlayerState();
       currentTrackElapsed = 0;
+      currentTrackDuration = 0;
 
       if (player.getVideoLoadedFraction() > 0) {
         currentTrackElapsed = player.getCurrentTime() - currentTrack["yt_start_s"];
+        updateCurrentTrackDuration();
       }
-
-      updateCurrentTrackDuration();
       updatePlayedBar();
 
       if (!videoWas("UNSTARTED") &&
           currentTrackElapsed > 0 &&
+          currentTrackDuration > 0 &&
           currentTrackElapsed >= currentTrackDuration) {
         playNext(1, false);
       }
