@@ -188,10 +188,10 @@ function playIndex(index, continuing = false, manual = false, updateState = true
     });
   }
   
-  updateDisplay();
   if (updateState) {
     updateUrl();
   }
+  updateDisplay();
   if (anchor) {
     autoScroll();
   }
