@@ -696,7 +696,7 @@ function updatePlaylistDisplay(clear = false) {
     indexDisplay.innerHTML = "0000 |";
   });
   if (!clear) {
-    for ([playlistIndex, index] of playlist.entries()) {
+    for (let [playlistIndex, index] of playlist.entries()) {
       div_row = document.getElementById(index);
       indexDisplay = div_row.querySelector("h5");
       div_row.setAttribute("playlist", "true");
