@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = _,
-            title = "Something About Us",
-            artists = "Daft Punk",
-            album = "Discovery",
-            yt_id = "em0MknB6wFo",
-            yt_title = "Daft Punk - Something About Us (Official Audio)",
-            yt_duration_s = 232,
+            index = 1174,
+            title = "The Hidden Sand Village",
+            artists = "Chikayo Fukuda",
+            album = "Naruto Shippuden: Narutimate Accel 2 OST",
+            yt_id = "54uvMpFnuyY",
+            yt_title = "Naruto Shippuden: Ultimate Ninja 5 OST - 12 - The Hidden Sand Village",
+            yt_duration_s = 116,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "2noRn2Aes5aoNVsU6iWThc_Discovery.jpg"
+            album_cover_filename = "narutimate_accel_2.jpg"
         )
 
     if mode == "move":
