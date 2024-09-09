@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1174,
-            title = "The Hidden Sand Village",
-            artists = "Chikayo Fukuda",
-            album = "Naruto Shippuden: Narutimate Accel 2 OST",
-            yt_id = "54uvMpFnuyY",
-            yt_title = "Naruto Shippuden: Ultimate Ninja 5 OST - 12 - The Hidden Sand Village",
-            yt_duration_s = 116,
+            index = 20,
+            title = "Arriving Somewhere But Not Here",
+            artists = "Porcupine Tree",
+            album = "Deadwing",
+            yt_id = "Kpeip2B8l2E",
+            yt_title = "Arriving Somewhere But Not Here",
+            yt_duration_s = 722,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "narutimate_accel_2.jpg"
+            album_cover_filename = "deadwing.jpg"
         )
 
     if mode == "move":
