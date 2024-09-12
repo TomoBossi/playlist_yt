@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 20,
-            title = "Arriving Somewhere But Not Here",
-            artists = "Porcupine Tree",
-            album = "Deadwing",
-            yt_id = "Kpeip2B8l2E",
+            index = 699,
+            title = "The Dreamer and the Dreamed",
+            artists = "Golden Living Room",
+            album = "This Is Where I Am Right Now",
+            yt_id = "8hMfC7UkJdE",
             yt_title = "Arriving Somewhere But Not Here",
-            yt_duration_s = 722,
+            yt_duration_s = 198,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "deadwing.jpg"
+            album_cover_filename = "dreamer.jpg"
         )
 
     if mode == "move":
