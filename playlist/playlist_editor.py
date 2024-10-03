@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 699,
-            title = "The Dreamer and the Dreamed",
-            artists = "Golden Living Room",
-            album = "This Is Where I Am Right Now",
-            yt_id = "8hMfC7UkJdE",
-            yt_title = "Arriving Somewhere But Not Here",
-            yt_duration_s = 198,
+            index = 1321,
+            title = "UFO Recovery Team",
+            artists = "Eirik Suhrke",
+            album = "UFO 50 OST",
+            yt_id = "nobJ3U5H8fQ",
+            yt_title = "Eirik Suhrke - UFO Recovery Team",
+            yt_duration_s = 47,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "dreamer.jpg"
+            album_cover_filename = "ufo_50_ost.jpg"
         )
 
     if mode == "move":
