@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 1321,
-            title = "UFO Recovery Team",
-            artists = "Eirik Suhrke",
-            album = "UFO 50 OST",
-            yt_id = "nobJ3U5H8fQ",
-            yt_title = "Eirik Suhrke - UFO Recovery Team",
-            yt_duration_s = 47,
+            index = _,
+            title = "Beneath The Null Moon",
+            artists = "Akira Yamaoka",
+            album = "Silent Hill 2 Remake OST",
+            yt_id = "EIhERKiq5fc",
+            yt_title = "Silent Hill 2 Remake OST - Beneath The Null Moon Original Soundtrack",
+            yt_duration_s = 253,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "ufo_50_ost.jpg"
+            album_cover_filename = "silent_hill_2_remake_ost.jpg"
         )
 
     if mode == "move":
