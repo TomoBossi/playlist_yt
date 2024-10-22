@@ -244,13 +244,6 @@ li {
   color: black;
 }
 
-#playlist_duration {
-  top: auto;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
 #played_bar { 
   height: 2px;
   width: 0%; 

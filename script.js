@@ -415,8 +415,12 @@ document.addEventListener(
         case "KeyE":
           skip(5);
           break;
+        case "KeyI":
+          editPlaylist(currentTrackFullPlaylistIndex);
+          updatePlaylistDisplay();
+          break;
         case "KeyP":
-          editPlaylist();
+          insertToPlaylist();
           updatePlaylistDisplay();
           break;
         case "Period":
@@ -646,8 +650,8 @@ function deletePlaylist() {
   custom = false;
 }
 
-function editPlaylist() {
-  let index = playlist.indexOf(currentTrackFullPlaylistIndex);
+function editPlaylist(trackIndex) {
+  let index = playlist.indexOf(trackIndex);
   custom = true;
   if (index > -1) {
     playlist.splice(index, 1);
@@ -657,16 +661,26 @@ function editPlaylist() {
   } else {
     if (digitLogger) {
       index = Number(digitLogger) % playlist.length;
-      playlist.splice(index, 0, currentTrackFullPlaylistIndex);
+      playlist.splice(index, 0, trackIndex);
       currentTrackIndex = index;
     } else {
-      playlist.push(currentTrackFullPlaylistIndex);
+      playlist.push(trackIndex);
       currentTrackIndex = playlist.length - 1;
     }
   }
   updateDisplay();
   if (statefullPlaylistEditing) {
     updateUrl();
+  }
+}
+
+function insertToPlaylist() {
+  if (digitLogger) {
+    let trackIndex = Number(digitLogger) % fullPlaylistLength;
+    digitLogger = "";
+    editPlaylist(trackIndex);
+  } else {
+    editPlaylist(currentTrackFullPlaylistIndex);
   }
 }
 
