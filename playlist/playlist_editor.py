@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = _,
-            title = "Beneath The Null Moon",
-            artists = "Akira Yamaoka",
-            album = "Silent Hill 2 Remake OST",
-            yt_id = "EIhERKiq5fc",
-            yt_title = "Silent Hill 2 Remake OST - Beneath The Null Moon Original Soundtrack",
-            yt_duration_s = 253,
+            index = 15,
+            title = "Book Of Saturday",
+            artists = "King Crimson",
+            album = "Larks' Tongues In Aspic",
+            yt_id = "lPutToA0ZHs",
+            yt_title = "King Crimson - Book Of Saturday",
+            yt_duration_s = 175,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "silent_hill_2_remake_ost.jpg"
+            album_cover_filename = "larks.jpg"
         )
 
     if mode == "move":
