@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 15,
-            title = "Book Of Saturday",
-            artists = "King Crimson",
-            album = "Larks' Tongues In Aspic",
-            yt_id = "lPutToA0ZHs",
-            yt_title = "King Crimson - Book Of Saturday",
-            yt_duration_s = 175,
+            index = _,
+            title = "Crowded Street (Yang's theme)",
+            artists = "Hideki Okugawa",
+            album = "Street Fighter III 2nd Impact OST",
+            yt_id = "nKf6P_5Ftb8",
+            yt_title = "Yang Stage ~ Street Fighter III 2nd Impact OST",
+            yt_duration_s = 176,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "larks.jpg"
+            album_cover_filename = "SF32nd_OST.jpg"
         )
 
     if mode == "move":
