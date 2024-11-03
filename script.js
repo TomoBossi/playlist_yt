@@ -270,6 +270,7 @@ function changeVolume(volumeDelta, mute = false) {
 }
 
 function playLogged() {
+  setSelectedAsDigitLogger();
   if (digitLogger) {
     let index = Number(digitLogger) % fullPlaylistLength;
     if (playableTracks.includes(index.toString())) {
@@ -379,6 +380,7 @@ document.addEventListener(
     if (playerAPIready) {
       switch (event.code) {
         case "Enter":
+          event.preventDefault();
           playLogged();
           break;
         case "Space":
@@ -675,6 +677,7 @@ function editPlaylist(trackIndex) {
 }
 
 function insertToPlaylist() {
+  setSelectedAsDigitLogger();
   if (digitLogger) {
     let trackIndex = Number(digitLogger) % fullPlaylistLength;
     digitLogger = "";
@@ -755,4 +758,22 @@ function parseQsParams() {
     track: paramsTrack,
     playlist: paramsPlaylist
   };
+}
+
+function isNumeric(value) {
+  return /^-?\d+$/.test(value);
+}
+
+function getSelected() {
+  let selected = getSelection().focusNode.parentNode.parentNode.parentNode.id;
+  if (isNumeric(selected)) {
+    return selected;
+  }
+}
+
+function setSelectedAsDigitLogger() {
+  let selected = getSelected();
+  if (!digitLogger && selected != undefined) {
+    digitLogger = selected;
+  }
 }
