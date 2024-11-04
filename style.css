@@ -151,8 +151,8 @@ h3 {
   position: absolute;
   text-align: left;
   left: calc(var(--scale)*65px);
-  top: calc(var(--scale)*6.5px);
-  width: 70%;
+  top: calc(var(--scale)*5px);
+  width: 60%;
 }
 
 .info > p {
