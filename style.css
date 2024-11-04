@@ -118,6 +118,7 @@ img.cover-thumb:hover {
 
 .info {
   max-width: 70%;
+  height: calc(var(--scale)*60px);
 }  
 
 .fade {
@@ -154,7 +155,23 @@ h3 {
   font-weight: bold;
   font-size: calc(var(--scale)*24px);
   color: white;
+  position: absolute;
+  margin-right: calc(var(--scale)*80px);
+  margin-top: calc(var(--scale)*2px);
+  left: calc(var(--scale)*66px);
+  top: calc(var(--scale)*3px);
+  width: 70%;
 }
+
+.info > p {
+  position: absolute;
+  margin-right: calc(var(--scale)*80px);
+  margin-top: calc(var(--scale)*2px);
+  left: calc(var(--scale)*66px);
+  top: calc(var(--scale)*34px);
+  width: 70%;
+}
+
 
 h4 {
   font-weight: bold;
