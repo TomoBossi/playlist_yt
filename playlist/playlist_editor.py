@@ -70,16 +70,16 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = _,
-            title = "Crowded Street (Yang's theme)",
-            artists = "Hideki Okugawa",
-            album = "Street Fighter III 2nd Impact OST",
-            yt_id = "nKf6P_5Ftb8",
-            yt_title = "Yang Stage ~ Street Fighter III 2nd Impact OST",
-            yt_duration_s = 176,
+            title = "It's Going Down Now",
+            artists = "\u30a2\u30c8\u30e9\u30b9\u30b5\u30a6\u30f3\u30c9\u30c1\u30fc\u30e0",
+            album = "PERSONA3 Reload OST",
+            yt_id = "2KuWjZD6PBA",
+            yt_title = "It's Going Down Now",
+            yt_duration_s = 186,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "SF32nd_OST.jpg"
+            album_cover_filename = "p3reload.jpg"
         )
 
     if mode == "move":
