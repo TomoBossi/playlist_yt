@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = _,
-            title = "SNAKE WAY 蛇の道 (The Rippingtons - Tourist in Paradise)",
-            artists = "MAITRO",
-            album = "Dragonball Wave",
-            yt_id = "v7Srbp8WPMY",
-            yt_title = "MAITRO - SNAKE WAY 蛇の道",
-            yt_duration_s = 187,
+            index = 884,
+            title = "Revlimit Funk",
+            artists = "Kohta Takahashi",
+            album = "R4 / Ridge Racer Type 4 OST",
+            yt_id = "cxh7DHkCcdE",
+            yt_title = "13 - Revlimit Funk - R4 / Ridge Racer Type 4 / Direct Audio",
+            yt_duration_s = 195,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "dragonball_wave_artzie.jpg"
+            album_cover_filename = "ridge.jpg"
         )
 
     if mode == "move":
