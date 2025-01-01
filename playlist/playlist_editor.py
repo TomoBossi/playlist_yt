@@ -69,17 +69,17 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = 884,
-            title = "Revlimit Funk",
-            artists = "Kohta Takahashi",
-            album = "R4 / Ridge Racer Type 4 OST",
-            yt_id = "cxh7DHkCcdE",
-            yt_title = "13 - Revlimit Funk - R4 / Ridge Racer Type 4 / Direct Audio",
-            yt_duration_s = 195,
+            index = ,
+            title = "Alone In The Town",
+            artists = "Akira Yamaoka",
+            album = "Silent Hill 2 OST",
+            yt_id = "qTKlVbNenn4",
+            yt_title = "Alone In The Town",
+            yt_duration_s = 139,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "ridge.jpg"
+            album_cover_filename = "silent_hill_2_ost.jpg"
         )
 
     if mode == "move":
