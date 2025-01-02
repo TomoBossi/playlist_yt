@@ -70,16 +70,16 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = ,
-            title = "Alone In The Town",
-            artists = "Akira Yamaoka",
-            album = "Silent Hill 2 OST",
-            yt_id = "qTKlVbNenn4",
-            yt_title = "Alone In The Town",
-            yt_duration_s = 139,
+            title = "Windowlicker",
+            artists = "Aphex Twin",
+            album = "Windowlicker",
+            yt_id = "go6-MliYCAs",
+            yt_title = "Windowlicker",
+            yt_duration_s = 365,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "silent_hill_2_ost.jpg"
+            album_cover_filename = "windowlicker.jpg"
         )
 
     if mode == "move":
