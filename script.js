@@ -765,10 +765,12 @@ function isNumeric(value) {
 }
 
 function getSelected() {
-  let selected = document.getSelection().focusNode.parentNode.parentNode.parentNode.id;
-  if (isNumeric(selected)) {
-    return selected;
-  }
+  try {
+    let selected = document.getSelection().focusNode.parentNode.parentNode.parentNode.id;
+    if (isNumeric(selected)) {
+      return selected;
+    }
+  } catch {}
 }
 
 function setSelectedAsDigitLogger() {

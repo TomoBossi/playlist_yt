@@ -58,7 +58,6 @@ def disable(df, indexes):
 # The Fall, Evil Thoughts, MJ-xx y Mental Diving cerca del lounge
 # Who can it be now y dos temas de luxury elite fuera de lugar
 # Born Slippy en el DnB
-# TODO add https://gist.github.com/TomoBossi/58d971fa9e2d666deb275405bb34bbd9
 # TODO add https://open.spotify.com/collection/tracks
 
 if __name__ == "__main__":
