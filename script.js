@@ -45,6 +45,7 @@ let continuingTracks;
 let qsParams;
 let digitLogger = "";
 let playableTracks = [];
+let uidMap = {}
 
 let played_bar = document.getElementById("played_bar_bg");
 
@@ -55,6 +56,10 @@ async function init() {
   fullPlaylist = await res.json();
   fullPlaylistLength = Object.keys(fullPlaylist).length;
   continuingTracks = flagContinuing();
+
+  for (let index in fullPlaylist) {
+    uidMap[fullPlaylist[index]["uid"]] = index;
+  }
 
   buildHTML();
   
@@ -600,8 +605,8 @@ function updateTitle() {
 }
 
 function updateUrl() {
-  let paramsTrack = currentTrackFullPlaylistIndex;
-  let paramsPlaylist = playlist.join(",");
+  let paramsTrack = currentTrack["uid"];
+  let paramsPlaylist = playlist.map(idx => fullPlaylist[idx]["uid"]).join(",");
   let qs = "?track=" + paramsTrack;
   if (paramsPlaylist) {
     qs += "&playlist=" + paramsPlaylist;
@@ -749,10 +754,11 @@ function parseQsParams() {
   let paramsTrack = NaN;
   let paramsPlaylist = [];
   if (params.has("track")) {
-    paramsTrack = Number(params.get("track")) % fullPlaylistLength;
+    let input = params.get("track");
+    paramsTrack = Number(uidMap[input] ?? input) % fullPlaylistLength;
   }
   if (params.has("playlist")) {
-    paramsPlaylist = [...new Set(params.get("playlist").split(",").map((idx) => Number(idx) % fullPlaylistLength).filter((idx) => !isNaN(idx)))]
+    paramsPlaylist = [...new Set(params.get("playlist").split(",").map((input) => Number(uidMap[input] ?? input) % fullPlaylistLength).filter((input) => !isNaN(input)))]
   }
   return {
     track: paramsTrack,
