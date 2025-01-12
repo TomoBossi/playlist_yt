@@ -2,6 +2,7 @@ import pandas as pd
 
 def add(df,
         index, 
+        uid,
         title, 
         artists, 
         album, 
@@ -12,22 +13,26 @@ def add(df,
         yt_start_s = 0,
         yt_end_s = 0,
         volume_multiplier = 1.0):
-    df.loc[index - 0.5] = [
-        title, 
-        artists, 
-        album,
-        "",
-        "",
-        "",
-        "",
-        yt_id,
-        yt_title,
-        yt_duration_s,
-        yt_start_s,
-        yt_end_s,
-        volume_multiplier,
-        album_cover_filename]
-    df = df.sort_index().reset_index(drop=True)
+    if uid not in df["uid"].values:
+        df.loc[index - 0.5] = [
+            uid,
+            title, 
+            artists, 
+            album,
+            "",
+            "",
+            "",
+            "",
+            yt_id,
+            yt_title,
+            yt_duration_s,
+            yt_start_s,
+            yt_end_s,
+            volume_multiplier,
+            album_cover_filename]
+        df = df.sort_index().reset_index(drop=True)
+    else:
+        print("Provided UID is not unique")
     return df
 
 def move(df, origin, destination):
@@ -69,6 +74,7 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = ,
+            uid = "",
             title = "Windowlicker",
             artists = "Aphex Twin",
             album = "Windowlicker",
