@@ -74,17 +74,17 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = ,
-            uid = "",
-            title = "Windowlicker",
-            artists = "Aphex Twin",
-            album = "Windowlicker",
-            yt_id = "go6-MliYCAs",
-            yt_title = "Windowlicker",
-            yt_duration_s = 365,
+            uid = "PHLSLS",
+            title = "LEVEL SELECT",
+            artists = "Pizza Hotline",
+            album = "LEVEL SELECT",
+            yt_id = "hN0VnAkLewg",
+            yt_title = "Level Select",
+            yt_duration_s = 325,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "windowlicker.jpg"
+            album_cover_filename = "level_select.jpg"
         )
 
     if mode == "move":
