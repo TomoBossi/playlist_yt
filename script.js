@@ -61,7 +61,7 @@ async function init() {
     uidMap[fullPlaylist[index]["uid"]] = index;
   }
 
-  buildHTML();
+  await buildHTML();
   
   qsParams = parseQsParams();
   if (isNaN(qsParams.track) && qsParams.playlist.length == 0) {
@@ -457,7 +457,7 @@ document.addEventListener(
 
 // Graphics / linkTo
 
-function buildHTML() {
+async function buildHTML() {
   const tracklist = document.getElementById("tracklist");
   const cover_large_div = document.getElementById("cover_large_div");
   const cover_large = document.createElement("img");
@@ -468,7 +468,12 @@ function buildHTML() {
   cover_large_div.setAttribute("onclick", "hideCover()");
   let totalPlaylistDuration = 0;
 
+  const r = await miscRequestPalestineData();
+
   Object.keys(fullPlaylist).forEach(index => {
+    if (r.total !== undefined && fullPlaylist[index]["album"] == "NO TITLE AS OF 13 FEBRUARY 2024 28,340 DEAD") {
+      fullPlaylist[index]["album"] = `NO TITLE AS OF ${r.day} ${r.month} ${r.year} ${r.total} DEAD`;
+    }
     const div_row = document.createElement("div");
     const div_info = document.createElement("div");
     const title = document.createElement("h3");
@@ -783,5 +788,47 @@ function setSelectedAsDigitLogger() {
   let selected = getSelected();
   if (!digitLogger && selected != undefined) {
     digitLogger = selected;
+  }
+}
+
+// Miscellaneous
+
+async function miscRequestPalestineData() {
+  try {
+    const response = await fetch("https://en.wikipedia.org/wiki/Casualties_of_the_Israel%E2%80%93Hamas_war");
+    const text = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    const wikitable = doc.querySelector('.wikitable');
+    
+    let total;
+    let i = 0;
+    
+    const rows = wikitable.querySelectorAll('tr');
+    rows.forEach(row => {
+      const dataCells = row.querySelectorAll('td');
+      if (dataCells.length >= 2) {
+        const number = dataCells[1].textContent.split('[')[0];
+        if (number !== '') {
+          if (i === 1) {
+            total = number;
+          }
+          i++;
+        }
+        if (i > 1) {
+          return;
+        }
+      }
+    });
+    
+    const today = new Date();
+    return {
+      total: total,
+      day: today.getDate().toString().padStart(2, '0'),
+      month: today.toLocaleString('default', { month: 'long' }).toUpperCase(),
+      year: today.getFullYear()
+    };
+  } catch (e) {
+    return {};
   }
 }
