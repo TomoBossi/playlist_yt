@@ -74,17 +74,17 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = ,
-            uid = "PHLSLS",
-            title = "LEVEL SELECT",
-            artists = "Pizza Hotline",
-            album = "LEVEL SELECT",
-            yt_id = "hN0VnAkLewg",
-            yt_title = "Level Select",
-            yt_duration_s = 325,
+            uid = "",
+            title = "",
+            artists = "",
+            album = "",
+            yt_id = "",
+            yt_title = "",
+            yt_duration_s = ,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "level_select.jpg"
+            album_cover_filename = ".jpg"
         )
 
     if mode == "move":
