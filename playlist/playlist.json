@@ -18530,9 +18530,9 @@
     "album_cover_filename": "55RTkgUCP7t80hiTUhATMH_The_Lord_of_the_Rings_-_The_Fellowship_of_the_Ring_-_the_Complete_Recordings.jpg"
   },
   "1090": {
-    "uid": "MMP@E9HCL",
-    "title": "IX. The Hut on Chicken's Legs",
-    "artists": "Modest Mussorgsky",
+    "uid": "MMP@EHHL",
+    "title": "The Hut on Hen's Legs (Baba Yaga)",
+    "artists": "Modest Mussorgsky, Maurice Ravel",
     "album": "Pictures At An Exhibition",
     "sp_datetime_added": "2022-04-03T18:39:18Z",
     "sp_duration_s": 212,
@@ -18544,7 +18544,7 @@
     "yt_start_s": 0.0,
     "yt_end_s": 0.0,
     "volume_multiplier": 1.0,
-    "album_cover_filename": "pictures_at_an_exhibition.jpg"
+    "album_cover_filename": "hut_hens_legs.jpg"
   },
   "1091": {
     "uid": "KOSCP",
