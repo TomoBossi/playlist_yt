@@ -74,17 +74,17 @@ if __name__ == "__main__":
     if mode == "add":
         df = add(df,
             index = _,
-            uid = "GYBENTRCL",
-            title = "RAINDROPS CAST IN LEAD",
-            artists = "Godspeed You! Black Emperor",
-            album = "NO TITLE AS OF 13 FEBRUARY 2024 28,340 DEAD",
-            yt_id = "IKTBbVJ8bCg",
-            yt_title = "RAINDROPS CAST IN LEAD",
-            yt_duration_s = 413,
+            uid = "SMB66SMB66MQN",
+            title = "Mais Que Nada",
+            artists = "Sergio Mendes & Brasil '66",
+            album = "Herb Alpert Presents Sergio Mendes & Brasil '66",
+            yt_id = "30IePC8c99g",
+            yt_title = "Mais Que Nada",
+            yt_duration_s = 161,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "no_title.jpg"
+            album_cover_filename = "mais_que_nada.jpg"
         )
 
     if mode == "move":
