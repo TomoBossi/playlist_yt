@@ -73,18 +73,18 @@ if __name__ == "__main__":
 
     if mode == "add":
         df = add(df,
-            index = _,
-            uid = "SMB66SMB66MQN",
-            title = "Mais Que Nada",
-            artists = "Sergio Mendes & Brasil '66",
-            album = "Herb Alpert Presents Sergio Mendes & Brasil '66",
-            yt_id = "30IePC8c99g",
-            yt_title = "Mais Que Nada",
-            yt_duration_s = 161,
+            index = 241,
+            uid = "GPBSKN",
+            title = "Some Kind of Nature",
+            artists = "Gorillaz, Lou Reed",
+            album = "Plastic Beach",
+            yt_id = "1KC2-EZ1ee0",
+            yt_title = "Gorillaz - Some Kind of Nature - Plastic Beach",
+            yt_duration_s = 180,
             yt_start_s = 0.0,
             yt_end_s = 0.0,
             volume_multiplier = 1.0,
-            album_cover_filename = "mais_que_nada.jpg"
+            album_cover_filename = "2dIGnmEIy1WZIcZCFSj6i8_Plastic_Beach.jpg"
         )
 
     if mode == "move":
