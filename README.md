@@ -1,1 +1,1 @@
-https://tomobossi.github.io/playlist/
+https://tomobossi.github.io/playlist_yt/
